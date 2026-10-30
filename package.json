@@ -144,27 +144,28 @@
       "identity": null,
       "icon": "build/icon.icns",
       "category": "public.app-category.graphics-design",
-      "artifactName": "${productName}-${version}-${arch}.dmg",
+      "artifactName": "${productName}-${version}-${arch}.${ext}",
       "target": [
         {
           "target": "dmg",
           "arch": [
-            "x64",
-            "arm64"
+            "arm64",
+            "x64"
           ]
         },
         {
           "target": "zip",
           "arch": [
-            "x64",
-            "arm64"
+            "arm64",
+            "x64"
           ]
         }
       ],
       "gatekeeperAssess": false
     },
     "dmg": {
-      "title": "${productName} ${version}",
+      "title": "${productName} ${version} ${arch}",
+      "artifactName": "${productName}-${version}-${arch}.dmg",
       "contents": [
         {
           "x": 130,

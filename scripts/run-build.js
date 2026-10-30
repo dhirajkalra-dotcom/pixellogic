@@ -53,6 +53,9 @@ function main() {
   try {
     run(ebWithArgs, { env: process.env });
   } catch (e) {
+    console.error('electron-builder failed with status:', e.status);
+    if (e.stdout) console.log('STDOUT:\n', e.stdout.toString());
+    if (e.stderr) console.error('STDERR:\n', e.stderr.toString());
     process.exit(e.status || 1);
   }
 }
