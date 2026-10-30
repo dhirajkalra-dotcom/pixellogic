@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Get access to Pixelogic, Eventflow Schematics and StageCue — 15-day free trials and full professional versions for all three apps." />
+  <title>Get Access — Pixelogic Studio</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta property="og:title" content="Get Access — Pixelogic Studio" />
+  <meta property="og:description" content="15-day free trials and full professional access for Pixelogic, Eventflow Schematics and StageCue." />
+  <meta property="og:image" content="https://www.pixelogic.co.in/og-image.png" />
+  <meta property="og:url" content="https://www.pixelogic.co.in/access.html" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── PAGE LOADER ──────────────────────────────────────── -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-content">
+      <img src="pixelogic-logo.png" alt="Pixelogic" class="loader-logo">
+      <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ── AMBIENT BACKGROUND ───────────────────────────────── -->
+  <div class="world-bg" aria-hidden="true">
+    <div class="wb-blob wb-blob-a"></div>
+    <div class="wb-blob wb-blob-b"></div>
+    <div class="wb-blob wb-blob-c"></div>
+  </div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ── NAVBAR ───────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a class="nav-logo" href="index.html">
+        <div class="logo-icon">
+          <img src="pixelogic-logo.png" alt="Pixelogic" class="nav-logo-img">
+        </div>
+        <span>Pixelogic Studio</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pixelogic.html">Pixelogic</a></li>
+        <li><a href="projection-logic.html">Projection Logic</a></li>
+        <li><a href="eventflow.html">Eventflow</a></li>
+        <li><a href="stagecue.html">StageCue</a></li>
+        <li><a href="access.html" class="nav-active">Access</a></li>
+        <li><a href="about.html">Creator</a></li>
+        <li class="nav-cta-mobile"><a href="#full-version" class="btn btn-primary">Get Full Access</a></li>
+      </ul>
+      <a href="#full-version" class="btn btn-primary nav-cta-desktop">Get Full Access</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── PAGE HERO ────────────────────────────────────────── -->
+  <section class="page-hero" id="page-hero" style="min-height:50vh;">
+    <canvas id="page-hero-canvas" aria-hidden="true"></canvas>
+    <div class="container" style="position:relative;z-index:2;text-align:center;padding-top:120px;padding-bottom:60px;">
+      <div class="hero-badge ph-entrance" style="--del:0;display:inline-flex;">
+        <span class="badge-dot"></span>
+        Try free for 15 days &mdash; no subscriptions, no internet required
+      </div>
+      <h1 class="hero-title ph-entrance" style="--del:1;font-size:clamp(2.4rem,5vw,3.8rem);">
+        One place.<br /><span class="gradient-text">All four apps.</span>
+      </h1>
+      <p class="hero-subtitle ph-entrance" style="--del:2;max-width:620px;margin:0 auto;">
+        Download a 15-day free trial of Pixelogic, Eventflow Schematics and StageCue, or request Projection Logic access &mdash; then get in touch to purchase full access for any or all four.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── DEMO DOWNLOADS ────────────────────────────────────── -->
+  <section id="demos" style="padding:80px 0 60px;">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:48px;">
+        <span class="section-label">Free Trials</span>
+        <h2>Try before you <span class="gradient-text">buy</span></h2>
+        <p>Full Windows installers &mdash; try everything free for 15 days, then get in touch to purchase a licence.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;" class="access-demo-grid">
+
+        <!-- Pixelogic Demo -->
+        <div class="pricing-card reveal" data-delay="0" style="border-color:rgba(99,102,241,0.25);">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+            <div class="prod-logo prod-logo-purple" style="width:44px;height:44px;flex-shrink:0;">
+              <div class="logo-icon sm"><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div></div>
+            </div>
+            <div>
+              <div class="pricing-tier" style="margin:0;color:#a5b4fc;">Pixelogic</div>
+              <div style="font-size:12px;color:var(--text-3);">LED Wall &amp; AV Engineering</div>
+            </div>
+          </div>
+          <div class="pricing-price"><span class="price-main">15-Day Trial</span></div>
+          <p class="pricing-sub">Core tools — pixel map designer, LED patching, power calculator, AV schematics.</p>
+          <ul class="pricing-list">
+            <li><span class="chk">✓</span> Pixel Map Designer (65+ presets)</li>
+            <li><span class="chk">✓</span> 2D &amp; 3D LED Wall Visualizer</li>
+            <li><span class="chk">✓</span> LED Processor Patching (22+)</li>
+            <li><span class="chk">✓</span> Power Calculator</li>
+            <li><span class="chk">✓</span> AV Schematics (50+ devices)</li>
+            <li><span class="chk">✓</span> PDF Export</li>
+            <li><span class="chk">✓</span> 100% offline</li>
+          </ul>
+          <a href="#request" data-demo-app="Pixelogic" class="btn btn-ghost btn-full"
+             style="border-color:rgba(99,102,241,0.4);color:#a5b4fc;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Get Pixelogic Demo v1.0.2
+          </a>
+          <p style="font-size:11px;color:var(--text-3);text-align:center;margin-top:8px;">Windows 10/11 · 64-bit</p>
+        </div>
+
+        <!-- Eventflow Demo -->
+        <div class="pricing-card pricing-featured reveal" data-delay="100" style="border-color:rgba(20,184,166,0.35);background:rgba(20,184,166,0.04);">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+            <div class="prod-logo prod-logo-teal" style="width:44px;height:44px;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <div class="pricing-tier" style="margin:0;color:#2dd4bf;">Eventflow Schematics</div>
+              <div style="font-size:12px;color:var(--text-3);">Event Production Diagrams</div>
+            </div>
+          </div>
+          <div class="pricing-price"><span class="price-main">15-Day Trial</span></div>
+          <p class="pricing-sub">490+ equipment symbols, signal tracing, cable schedules and PDF export.</p>
+          <ul class="pricing-list">
+            <li><span class="chk" style="color:#2dd4bf;">✓</span> 490+ Equipment Symbols</li>
+            <li><span class="chk" style="color:#2dd4bf;">✓</span> 9 Colour-coded Departments</li>
+            <li><span class="chk" style="color:#2dd4bf;">✓</span> 40+ Industry Protocols</li>
+            <li><span class="chk" style="color:#2dd4bf;">✓</span> Signal Path Tracing</li>
+            <li><span class="chk" style="color:#2dd4bf;">✓</span> Protocol Conflict Detection</li>
+            <li><span class="chk" style="color:#2dd4bf;">✓</span> Cable Schedule / BOM Export</li>
+            <li><span class="chk" style="color:#2dd4bf;">✓</span> 100% offline</li>
+          </ul>
+          <a href="#request" data-demo-app="Eventflow" class="btn btn-teal btn-full">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Get Eventflow Demo v0.3.1
+          </a>
+          <p style="font-size:11px;color:var(--text-3);text-align:center;margin-top:8px;">Windows 10/11 · 64-bit</p>
+        </div>
+
+        <!-- StageCue Demo -->
+        <div class="pricing-card reveal" data-delay="200" style="border-color:rgba(249,115,22,0.25);">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+            <div class="prod-logo prod-logo-orange" style="width:44px;height:44px;flex-shrink:0;padding:0;overflow:hidden;">
+              <img src="stagecue-logo.png" alt="StageCue" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+            </div>
+            <div>
+              <div class="pricing-tier" style="margin:0;color:#fb923c;">StageCue</div>
+              <div style="font-size:12px;color:var(--text-3);">Speaker Countdown Timer</div>
+            </div>
+          </div>
+          <div class="pricing-price"><span class="price-main">15-Day Trial</span></div>
+          <p class="pricing-sub">Fullscreen timer, operator controller, OBS source and phone remote.</p>
+          <ul class="pricing-list">
+            <li><span class="chk" style="color:#fb923c;">✓</span> Fullscreen Speaker Display</li>
+            <li><span class="chk" style="color:#fb923c;">✓</span> Operator Controller</li>
+            <li><span class="chk" style="color:#fb923c;">✓</span> Warning &amp; Overtime Modes</li>
+            <li><span class="chk" style="color:#fb923c;">✓</span> Speaker Message Presets</li>
+            <li><span class="chk" style="color:#fb923c;">✓</span> Phone Remote (QR)</li>
+            <li><span class="chk" style="color:#fb923c;">✓</span> OBS Browser Source</li>
+            <li><span class="chk" style="color:#fb923c;">✓</span> 100% offline</li>
+          </ul>
+          <a href="#request" data-demo-app="StageCue" class="btn btn-ghost btn-full"
+             style="border-color:rgba(249,115,22,0.4);color:#fb923c;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Get StageCue Demo v1.5.0
+          </a>
+          <p style="font-size:11px;color:var(--text-3);text-align:center;margin-top:8px;">Windows 10/11 · 64-bit</p>
+        </div>
+
+        <!-- Projection Logic Access -->
+        <div class="pricing-card reveal" data-delay="300" style="border-color:rgba(6,182,212,0.35);background:rgba(6,182,212,0.04);">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+            <div class="prod-logo" style="width:44px;height:44px;flex-shrink:0;padding:0;overflow:hidden;background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.3);">
+              <img src="projection-logic-logo.png" alt="Projection Logic" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+            </div>
+            <div>
+              <div class="pricing-tier" style="margin:0;color:#22d3ee;">Projection Logic</div>
+              <div style="font-size:12px;color:var(--text-3);">Projector Planning &amp; Alignment</div>
+            </div>
+          </div>
+          <div class="pricing-price"><span class="price-main">Access Request</span></div>
+          <p class="pricing-sub">Plan flat, curved and dome projection systems with calculation and alignment tools.</p>
+          <ul class="pricing-list">
+            <li><span class="chk" style="color:#22d3ee;">✓</span> Flat Screen Calculator</li>
+            <li><span class="chk" style="color:#22d3ee;">✓</span> Curved Screen Planning</li>
+            <li><span class="chk" style="color:#22d3ee;">✓</span> Dome &amp; Circular Calculator</li>
+            <li><span class="chk" style="color:#22d3ee;">✓</span> Blend Zone Calculations</li>
+            <li><span class="chk" style="color:#22d3ee;">✓</span> Projector Test Patterns</li>
+            <li><span class="chk" style="color:#22d3ee;">✓</span> Professional Windows App</li>
+          </ul>
+          <a href="projection-logic.html#request" class="btn btn-ghost btn-full" style="border-color:rgba(6,182,212,0.45);color:#67e8f9;">
+            Request Projection Logic Access
+          </a>
+          <p style="font-size:11px;color:var(--text-3);text-align:center;margin-top:8px;">Windows 10/11 · 64-bit</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIVIDER ───────────────────────────────────────────── -->
+  <div style="border-top:1px solid var(--glass-b);margin:0 auto;max-width:900px;"></div>
+
+  <!-- DEMO / TRIAL REQUEST FORM -->
+  <section class="req-section" id="request" style="padding:60px 0;">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:40px;">
+        <span class="section-label">Start Your Free Trial</span>
+        <h2>Get your <span class="gradient-text">15-day free trial</span></h2>
+        <p>Pick the app(s) you want, add your details, and your download links appear instantly &mdash; a copy is emailed to you too.</p>
+      </div>
+      <div class="req-layout reveal" style="grid-template-columns:1fr;max-width:780px;margin:0 auto;">
+        <div class="req-form-wrap">
+          <form class="req-form" id="req-form" novalidate>
+            <input type="hidden" name="access_key" value="aafd069e-ff20-437c-aaa9-5725bad2d2e9" />
+            <input type="hidden" name="subject" value="New Demo / Trial Request — Pixelogic Studio" />
+            <input type="hidden" name="from_name" value="Pixelogic Studio (Access Page)" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+            <div class="form-group" style="margin-bottom:24px;">
+              <label>Which app(s) do you want to try? <span class="req-star">*</span></label>
+              <div class="app-check-group" id="app-check-group" style="grid-template-columns:repeat(3,1fr);">
+                <label class="app-check">
+                  <input type="checkbox" name="apps" value="Pixelogic" />
+                  <div class="app-check-card">
+                    <div class="acc-icon acc-icon-purple">
+                      <div class="logo-icon sm"><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div></div>
+                    </div>
+                    <div class="acc-text"><span>Pixelogic</span><small>LED &amp; AV Engineering</small></div>
+                    <div class="acc-check"></div>
+                  </div>
+                </label>
+                <label class="app-check">
+                  <input type="checkbox" name="apps" value="Eventflow Schematics" />
+                  <div class="app-check-card">
+                    <div class="acc-icon acc-icon-teal">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div class="acc-text"><span>Eventflow Schematics</span><small>Event Production</small></div>
+                    <div class="acc-check"></div>
+                  </div>
+                </label>
+                <label class="app-check">
+                  <input type="checkbox" name="apps" value="StageCue" />
+                  <div class="app-check-card">
+                    <div class="acc-icon acc-icon-orange" style="padding:0;overflow:hidden">
+                      <img src="stagecue-logo.png" alt="StageCue" style="width:100%;height:100%;object-fit:cover;border-radius:10px">
+                    </div>
+                    <div class="acc-text"><span>StageCue</span><small>Speaker Countdown Timer</small></div>
+                    <div class="acc-check"></div>
+                  </div>
+                </label>
+              </div>
+              <span class="form-err" id="err-apps"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="req-name">Full Name <span class="req-star">*</span></label>
+                <input type="text" id="req-name" name="name" placeholder="Your full name" autocomplete="name" />
+                <span class="form-err" id="err-name"></span>
+              </div>
+              <div class="form-group">
+                <label for="req-email">Email Address <span class="req-star">*</span></label>
+                <input type="email" id="req-email" name="email" placeholder="you@company.com" autocomplete="email" />
+                <span class="form-err" id="err-email"></span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="req-company">Company / Organisation</label>
+                <input type="text" id="req-company" name="company" placeholder="Your company" autocomplete="organization" />
+              </div>
+              <div class="form-group">
+                <label for="req-role">Your Role</label>
+                <input type="text" id="req-role" name="role" placeholder="Video Engineer" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="req-msg">How will you use it? <span class="form-optional">(optional)</span></label>
+              <textarea id="req-msg" name="message" rows="3" placeholder="Brief description of your project or workflow..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-full req-submit" id="req-submit">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Get My Download Links
+            </button>
+          </form>
+
+          <div class="req-success" id="req-success" style="display:none">
+            <div class="rs-icon">&#10003;</div>
+            <h3>Thanks &mdash; your downloads are ready!</h3>
+            <p id="req-success-msg">Click below to download your app(s) for Windows. We&rsquo;ve also emailed you a copy of these links.</p>
+            <div id="req-download-area" style="display:flex;flex-direction:column;gap:10px;align-items:stretch;margin:18px 0 6px;">
+              <a id="req-download-pixelogic" href="downloads/Pixelogic-Setup-1.0.112.exe" class="btn btn-primary btn-lg" download style="display:none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-3px;margin-right:6px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Pixelogic Trial &nbsp;<span style="opacity:0.7;font-weight:400">(~98 MB &middot; Win 10/11)</span>
+              </a>
+              <a id="req-download-stagecue" href="downloads/StageCue-1.5.0-x64-Setup.exe" class="btn btn-orange btn-lg" download style="display:none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-3px;margin-right:6px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download StageCue Trial &nbsp;<span style="opacity:0.8;font-weight:400">(~76 MB)</span>
+              </a>
+              <a id="req-download-eventflow" href="downloads/EventFlow%20Schematics_0.3.1_x64-setup.exe" class="btn btn-teal btn-lg" download style="display:none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="vertical-align:-3px;margin-right:6px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Eventflow Trial &nbsp;<span style="opacity:0.8;font-weight:400">(Win 10/11)</span>
+              </a>
+            </div>
+            <p style="font-size:0.85rem;opacity:0.7;margin-top:8px">Having trouble? Email <a href="mailto:dhiraj.kalra@gmail.com">dhiraj.kalra@gmail.com</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    (function(){
+      document.querySelectorAll('a[data-demo-app]').forEach(function(a){
+        a.addEventListener('click', function(){
+          var v = a.getAttribute('data-demo-app');
+          var cb = document.querySelector('#app-check-group input[value^="' + v + '"]');
+          if (cb) cb.checked = true;
+        });
+      });
+    })();
+  </script>
+
+  <!-- ── FULL VERSION REQUEST ──────────────────────────────── -->
+  <section class="req-section" id="full-version" style="padding:80px 0 100px;">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:48px;">
+        <span class="section-label" style="color:#fbbf24;">Full Version</span>
+        <h2>Need the <span class="gradient-text">full access</span>?</h2>
+        <p>Select the app(s) you want, fill in your details and Dhiraj will send you the full-version package personally &mdash; usually within 24 hours.</p>
+      </div>
+
+      <div class="req-layout reveal" style="grid-template-columns:1fr;max-width:780px;margin:0 auto;">
+        <div class="req-form-wrap">
+          <form class="req-form" id="full-form" novalidate>
+            <input type="hidden" name="access_key" value="aafd069e-ff20-437c-aaa9-5725bad2d2e9" />
+            <input type="hidden" name="subject" value="FULL ACCESS REQUEST — Pixelogic Studio" />
+            <input type="hidden" name="from_name" value="Pixelogic Studio (Access Page)" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+            <!-- App selector (all 3, none pre-checked so user picks) -->
+            <div class="form-group" style="margin-bottom:24px;">
+              <label>Which app(s) do you need full access to? <span class="req-star">*</span></label>
+              <div class="app-check-group" id="full-app-check-group" style="grid-template-columns:repeat(4,1fr);">
+                <label class="app-check" data-val="pixelogic">
+                  <input type="checkbox" name="apps" value="Pixelogic" />
+                  <div class="app-check-card">
+                    <div class="acc-icon acc-icon-purple">
+                      <div class="logo-icon sm"><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div></div>
+                    </div>
+                    <div class="acc-text"><span>Pixelogic</span><small>LED &amp; AV Engineering</small></div>
+                    <div class="acc-check"></div>
+                  </div>
+                </label>
+                <label class="app-check" data-val="eventflow">
+                  <input type="checkbox" name="apps" value="Eventflow Schematics" />
+                  <div class="app-check-card">
+                    <div class="acc-icon acc-icon-teal">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div class="acc-text"><span>Eventflow</span><small>Event Production</small></div>
+                    <div class="acc-check"></div>
+                  </div>
+                </label>
+                <label class="app-check" data-val="stagecue">
+                  <input type="checkbox" name="apps" value="StageCue" />
+                  <div class="app-check-card">
+                    <div class="acc-icon" style="background:rgba(249,115,22,0.12);padding:0;overflow:hidden;">
+                      <img src="stagecue-logo.png" alt="StageCue" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">
+                    </div>
+                    <div class="acc-text"><span>StageCue</span><small>Stage Timer</small></div>
+                    <div class="acc-check"></div>
+                  </div>
+                </label>
+                <label class="app-check" data-val="projection-logic">
+                  <input type="checkbox" name="apps" value="Projection Logic" />
+                  <div class="app-check-card">
+                    <div class="acc-icon" style="background:rgba(6,182,212,0.12);padding:0;overflow:hidden;">
+                      <img src="projection-logic-logo.png" alt="Projection Logic" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">
+                    </div>
+                    <div class="acc-text"><span>Projection Logic</span><small>Projector Planning</small></div>
+                    <div class="acc-check"></div>
+                  </div>
+                </label>
+              </div>
+              <span class="form-err" id="full-err-apps"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="full-name">Full Name <span class="req-star">*</span></label>
+                <input type="text" id="full-name" name="name" placeholder="Your full name" autocomplete="name" />
+                <span class="form-err" id="full-err-name"></span>
+              </div>
+              <div class="form-group">
+                <label for="full-email">Email Address <span class="req-star">*</span></label>
+                <input type="email" id="full-email" name="email" placeholder="you@company.com" autocomplete="email" />
+                <span class="form-err" id="full-err-email"></span>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="full-company">Company / Organisation</label>
+                <input type="text" id="full-company" name="company" placeholder="Your company" autocomplete="organization" />
+              </div>
+              <div class="form-group">
+                <label for="full-phone">Phone <span class="form-optional">(optional)</span></label>
+                <input type="tel" id="full-phone" name="phone" placeholder="+971 5X XXX XXXX" autocomplete="tel" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="full-msg">Tell us about your use case <span class="form-optional">(optional)</span></label>
+              <textarea id="full-msg" name="message" rows="3" placeholder="Team size, event types, intended use, any specific features you need..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-full" id="full-submit"
+              style="background:linear-gradient(135deg,#f59e0b,#d97706);border-color:transparent;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Request Full Version
+            </button>
+            <p style="font-size:0.8rem;opacity:0.6;margin-top:8px;text-align:center;">
+              Your request goes directly to Dhiraj &mdash; you'll receive a personal reply with the full-version package within 24 hours.
+            </p>
+          </form>
+
+          <div class="req-success" id="full-success" style="display:none;">
+            <div class="rs-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">&#10003;</div>
+            <h3>Request received!</h3>
+            <p>Thanks &mdash; Dhiraj will get back to you personally via email within 24 hours with your full-version package.</p>
+            <a href="index.html" class="btn btn-ghost" style="margin-top:14px;">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ───────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="nav-logo" href="index.html">
+            <div class="logo-icon">
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+            </div>
+            <span>Pixelogic Studio</span>
+          </a>
+          <p>Professional AV &amp; live event software for engineers &mdash; 100% offline, no subscriptions.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Apps</h4>
+            <a href="pixelogic.html">Pixelogic</a>
+            <a href="eventflow.html">Eventflow Schematics</a>
+            <a href="stagecue.html">StageCue</a>
+            <a href="home.html">Overview</a>
+          </div>
+          <div class="footer-col">
+            <h4>Get Access</h4>
+            <a href="access.html#demos">Free Trials</a>
+            <a href="access.html#full-version">Full Version</a>
+            <a href="about.html">Meet the Creator</a>
+          </div>
+          <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:dhiraj.kalra@gmail.com">Email</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          <p>© 2025–2026 <strong>Dhiraj Kalra</strong>. All rights reserved.</p>
+          <p class="footer-copy-sub">Pixelogic, Eventflow Schematics &amp; StageCue are original works created and owned by Dhiraj Kalra.
+            Unauthorised reproduction or distribution is prohibited.
+          </p>
+        </div>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div class="visitor-counter" id="visitor-counter"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Full-version form handler (mirrors pixelogic.html's full-form logic) -->
+  <script>
+    (function () {
+      var form = document.getElementById('full-form');
+      var btn  = document.getElementById('full-submit');
+      var succ = document.getElementById('full-success');
+      if (!form) return;
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var valid = true;
+
+        // Name
+        var name = document.getElementById('full-name').value.trim();
+        var errName = document.getElementById('full-err-name');
+        if (!name) { errName.textContent = 'Please enter your name.'; valid = false; }
+        else errName.textContent = '';
+
+        // Email
+        var email = document.getElementById('full-email').value.trim();
+        var errEmail = document.getElementById('full-err-email');
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errEmail.textContent = 'Please enter a valid email.'; valid = false; }
+        else errEmail.textContent = '';
+
+        // Apps
+        var checked = form.querySelectorAll('input[name="apps"]:checked');
+        var errApps = document.getElementById('full-err-apps');
+        if (checked.length === 0) { errApps.textContent = 'Please select at least one application.'; valid = false; }
+        else errApps.textContent = '';
+
+        if (!valid) return;
+
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+
+        try {
+          // Build a plain object so multiple checkboxes are joined as a readable string
+          var formData = new FormData(form);
+          var obj = {};
+          var appsList = [];
+          formData.forEach(function (val, key) {
+            if (key === 'apps') { appsList.push(val); }
+            else { obj[key] = val; }
+          });
+          obj['apps'] = appsList.join(', ');
+
+          var resp = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(obj)
+          });
+          var json = await resp.json();
+          if (json.success) {
+            form.style.display = 'none';
+            succ.style.display = 'flex';
+          } else {
+            btn.disabled = false;
+            btn.textContent = 'Request Full Version';
+            alert('Something went wrong: ' + (json.message || 'Unknown error') + '\nPlease email dhiraj.kalra@gmail.com directly.');
+          }
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = 'Request Full Version';
+          alert('Network error. Please email dhiraj.kalra@gmail.com directly.');
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

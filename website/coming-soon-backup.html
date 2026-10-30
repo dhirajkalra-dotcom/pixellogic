@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixelogic — Coming Soon</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="description" content="Pixelogic — Professional AV & Event Production Software. Coming Soon.">
+  <meta property="og:title" content="Pixelogic — Coming Soon">
+  <meta property="og:description" content="Professional AV & Event Production Software. Launching Soon.">
+  <meta property="og:image" content="https://www.pixelogic.co.in/og-image.png">
+  <meta property="og:url" content="https://www.pixelogic.co.in/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #050510;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── Animated grid background ── */
+    .grid-bg {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: grid-scroll 20s linear infinite;
+    }
+    @keyframes grid-scroll {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(60px, 60px); }
+    }
+
+    /* ── Floating orbs ── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      animation: float 8s ease-in-out infinite;
+    }
+    .orb-1 { width: 500px; height: 500px; background: #6366f1; top: -150px; left: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: #06b6d4; bottom: -100px; right: -100px; animation-delay: -4s; }
+    .orb-3 { width: 350px; height: 350px; background: #f43f5e; top: 60%; left: 60%; animation-delay: -2s; opacity: 0.12; }
+    .orb-4 { width: 250px; height: 250px; background: #eab308; top: 20%; right: 15%; animation-delay: -6s; opacity: 0.08; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* ── Particle canvas ── */
+    #particles { position: fixed; inset: 0; z-index: 0; }
+
+    /* ── Main container ── */
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 24px;
+      max-width: 640px;
+      animation: fadeUp 1s ease-out;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Logo ── */
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 28px;
+      mix-blend-mode: screen;
+      filter: brightness(1.2);
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ── Title ── */
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #818cf8, #06b6d4, #818cf8);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .tagline {
+      font-size: 1.05rem;
+      color: #94a3b8;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Coming Soon badge ── */
+    .coming-soon-badge {
+      display: inline-block;
+      padding: 14px 42px;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #f1f5f9;
+      margin-bottom: 20px;
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.15), 0 0 60px rgba(6,182,212,0.08); }
+      50% { box-shadow: 0 0 40px rgba(99,102,241,0.3), 0 0 100px rgba(6,182,212,0.15); }
+    }
+
+    /* ── Divider line ── */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #6366f1, #06b6d4, transparent);
+      margin: 32px auto;
+      border-radius: 2px;
+    }
+
+    /* ── Countdown timer ── */
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .countdown-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 80px;
+      padding: 16px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+    }
+    .countdown-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1;
+      background: linear-gradient(135deg, #818cf8, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: transform 0.3s ease;
+    }
+    .countdown-number.flip {
+      transform: scale(1.15);
+    }
+    .countdown-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #64748b;
+      margin-top: 8px;
+    }
+    .launch-date {
+      font-size: 0.8rem;
+      color: #475569;
+      margin-bottom: 32px;
+      letter-spacing: 1px;
+    }
+    .launch-date span {
+      color: #818cf8;
+      font-weight: 600;
+    }
+
+    /* ── Description ── */
+    .description {
+      font-size: 0.9rem;
+      color: #64748b;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 480px) {
+      .countdown { gap: 10px; }
+      .countdown-item { min-width: 64px; padding: 12px 8px; }
+      .countdown-number { font-size: 1.6rem; }
+      .countdown-label { font-size: 0.55rem; letter-spacing: 1.5px; }
+    }
+
+    /* ── Social icons ── */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 0;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .social-link:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      color: #f1f5f9;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(99,102,241,0.2);
+    }
+    .social-link svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78rem;
+      color: #334155;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      h1 { font-size: 2.4rem; }
+      .coming-soon-badge { font-size: 0.95rem; letter-spacing: 4px; padding: 12px 28px; }
+      .tagline { font-size: 0.95rem; }
+      .social-link { width: 44px; height: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="orb orb-4"></div>
+  <canvas id="particles"></canvas>
+
+  <div class="container">
+    <img src="pixelogic-logo.png" alt="Pixelogic Logo" class="logo">
+    <h1>Pixelogic</h1>
+    <p class="tagline">Professional AV & Event Production Software.<br>Something amazing is on its way.</p>
+    <div class="coming-soon-badge">Coming Soon</div>
+
+    <div class="divider"></div>
+
+    <!-- Countdown Timer -->
+    <div class="countdown">
+      <div class="countdown-item">
+        <span class="countdown-number" id="cd-days">00</span>
+        <span class="countdown-label">Days</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="cd-hours">00</span>
+        <span class="countdown-label">Hours</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="cd-mins">00</span>
+        <span class="countdown-label">Minutes</span>
+      </div>
+      <div class="countdown-item">
+        <span class="countdown-number" id="cd-secs">00</span>
+        <span class="countdown-label">Seconds</span>
+      </div>
+    </div>
+    <p class="launch-date">Launching <span>April 24, 2026</span></p>
+
+    <p class="description">We're crafting powerful tools for AV engineers, video professionals, and event production teams. Stay connected for updates.</p>
+
+    <div class="social-links">
+      <!-- Email -->
+      <a href="mailto:dhiraj.kalra@gmail.com" class="social-link" title="Email" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+      </a>
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <footer class="footer">&copy; 2026 Pixelogic. All rights reserved.</footer>
+
+  <!-- Countdown Timer -->
+  <script>
+    (function() {
+      const launch = new Date('2026-04-24T00:00:00+05:30').getTime();
+      const els = { d: document.getElementById('cd-days'), h: document.getElementById('cd-hours'), m: document.getElementById('cd-mins'), s: document.getElementById('cd-secs') };
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function flip(el, val) {
+        const v = pad(val);
+        if (el.textContent !== v) {
+          el.textContent = v;
+          el.classList.add('flip');
+          setTimeout(() => el.classList.remove('flip'), 300);
+        }
+      }
+
+      function tick() {
+        const now = Date.now();
+        const diff = Math.max(0, launch - now);
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        flip(els.d, d); flip(els.h, h); flip(els.m, m); flip(els.s, s);
+        if (diff > 0) requestAnimationFrame(tick);
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+
+  <!-- Floating particles -->
+  <script>
+    (function() {
+      const c = document.getElementById('particles');
+      const ctx = c.getContext('2d');
+      let w, h, particles = [];
+
+      function resize() {
+        w = c.width = window.innerWidth;
+        h = c.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      for (let i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.5 + 0.5,
+          dx: (Math.random() - 0.5) * 0.4,
+          dy: (Math.random() - 0.5) * 0.4,
+          o: Math.random() * 0.3 + 0.1
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+        particles.forEach(p => {
+          p.x += p.dx;
+          p.y += p.dy;
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(148,163,184,' + p.o + ')';
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+</html>

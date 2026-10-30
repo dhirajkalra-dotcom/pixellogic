@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'">
+    <title>Pixelogic External Output</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="src/external-output-editor.css">
+    <style>
+        html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: black; cursor: none; }
+        canvas { display: block; width: 100vw; height: 100vh; }
+        canvas[hidden] { display: none; }
+    </style>
+    <script src="src/rendering-engine.js" defer></script>
+    <script src="src/map-renderer.js" defer></script>
+    <script src="src/external-output-renderer.js" defer></script>
+    <script src="src/external-output-editing.js" defer></script>
+    <script src="src/external-output-editor.js" defer></script>
+    <script src="src/external-output-viewer.js" defer></script>
+</head>
+<body>
+    <canvas id="output" aria-label="External display output"></canvas>
+    <div id="output-editor" hidden>
+        <div id="output-map-boxes"></div>
+        <div id="output-snap-guides" aria-hidden="true"></div>
+        <output id="output-size" aria-label="Working output size in pixels"></output>
+        <div id="output-scale-info" class="output-scale-info-panel" aria-label="Output and scale info badge"></div>
+        <section id="output-edit-toolbar" aria-label="External output editing controls">
+            <div class="output-toolbar-heading">
+                <strong>EDIT MODE</strong>
+                <button id="output-toggle-controls" type="button" aria-expanded="true" aria-controls="output-toolbar-controls">Hide controls</button>
+            </div>
+            <div id="output-toolbar-controls">
+            <label>Map <select id="output-selection" aria-label="Select placed map"></select></label>
+            <label>Add <select id="output-catalog" aria-label="Pixel map to add"></select></label>
+            <button id="output-add">Add map</button>
+            <label>X (px) <input id="output-x" type="number" min="-65536" max="65536" step="1"></label>
+            <label>Y (px) <input id="output-y" type="number" min="-65536" max="65536" step="1"></label>
+            <label>W (px) <input id="output-width" type="number" min="1" max="16384" step="1"></label>
+            <label>H (px) <input id="output-height" type="number" min="1" max="16384" step="1"></label>
+            <label title="100% equals the map's native pixel width">Scale X (%) <input id="output-scale-x" type="number" min="0" step="0.01"></label>
+            <label title="100% equals the map's native pixel height">Scale Y (%) <input id="output-scale-y" type="number" min="0" step="0.01"></label>
+            <label><input id="output-aspect" type="checkbox" checked> Keep aspect</label>
+            <label title="Align with output and map edges/centers. Hold Alt to bypass."><input id="output-snap" type="checkbox" checked> Snap</label>
+            <button id="output-remove">Remove map</button>
+            <button id="output-save-png" title="Save a full-size PNG with top-left aligned maps and exported coordinates. Live placement stays unchanged.">Save PNG</button>
+            <button id="output-finish">Finish editing</button>
+            <span id="output-edit-status" role="status">Sizes use whole canvas pixels; 100% is native map size. Snap aligns edges/centers; Alt bypasses snapping. E toggles editing.</span>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

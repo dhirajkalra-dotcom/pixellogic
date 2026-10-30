@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#070B14"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+
+    <!-- Pixel block gradient (indigo → cyan → emerald) -->
+    <linearGradient id="pxGrad" x1="132" y1="132" x2="380" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="50%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+
+    <!-- Trace/line gradient -->
+    <linearGradient id="trGrad" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+
+    <!-- PCB background dot pattern -->
+    <pattern id="gridDots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1" fill="#334155"/>
+    </pattern>
+
+    <!-- Glow behind pixel blocks -->
+    <filter id="pixelGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Glow for trace nodes -->
+    <filter id="nodeGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Large ambient glow -->
+    <filter id="ambientGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="35"/>
+    </filter>
+  </defs>
+
+  <!-- ===== BACKGROUND ===== -->
+  <rect width="512" height="512" rx="90" fill="url(#bgGrad)"/>
+
+  <!-- Subtle border -->
+  <rect x="1" y="1" width="510" height="510" rx="89" fill="none" stroke="#1E3A5F" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- PCB dot texture -->
+  <rect x="16" y="16" width="480" height="480" rx="80" fill="url(#gridDots)" opacity="0.35"/>
+
+  <!-- Ambient cyan glow behind grid -->
+  <circle cx="256" cy="256" r="130" fill="#22D3EE" filter="url(#ambientGlow)" opacity="0.10"/>
+
+  <!-- ===== EXTERNAL CIRCUIT TRACES (from corner pixels outward) ===== -->
+  <g stroke="url(#trGrad)" stroke-width="2" stroke-linecap="round" opacity="0.45">
+    <!-- Top -->
+    <line x1="168" y1="130" x2="168" y2="74"/>
+    <line x1="344" y1="130" x2="344" y2="74"/>
+    <!-- Bottom -->
+    <line x1="168" y1="382" x2="168" y2="438"/>
+    <line x1="344" y1="382" x2="344" y2="438"/>
+    <!-- Left -->
+    <line x1="130" y1="168" x2="74" y2="168"/>
+    <line x1="130" y1="344" x2="74" y2="344"/>
+    <!-- Right -->
+    <line x1="382" y1="168" x2="438" y2="168"/>
+    <line x1="382" y1="344" x2="438" y2="344"/>
+  </g>
+
+  <!-- Trace endpoint nodes -->
+  <g fill="url(#trGrad)" filter="url(#nodeGlow)" opacity="0.6">
+    <circle cx="168" cy="68" r="4"/>
+    <circle cx="344" cy="68" r="4"/>
+    <circle cx="168" cy="444" r="4"/>
+    <circle cx="344" cy="444" r="4"/>
+    <circle cx="68" cy="168" r="4"/>
+    <circle cx="68" cy="344" r="4"/>
+    <circle cx="444" cy="168" r="4"/>
+    <circle cx="444" cy="344" r="4"/>
+  </g>
+
+  <!-- ===== INTERNAL CONNECTIONS (small lines in gaps between pixels) ===== -->
+  <g stroke="url(#trGrad)" stroke-width="1.5" stroke-linecap="round" opacity="0.3">
+    <!-- Horizontal connections -->
+    <line x1="206" y1="168" x2="218" y2="168"/>
+    <line x1="294" y1="168" x2="306" y2="168"/>
+    <line x1="206" y1="256" x2="218" y2="256"/>
+    <line x1="294" y1="256" x2="306" y2="256"/>
+    <line x1="206" y1="344" x2="218" y2="344"/>
+    <line x1="294" y1="344" x2="306" y2="344"/>
+    <!-- Vertical connections -->
+    <line x1="168" y1="206" x2="168" y2="218"/>
+    <line x1="168" y1="294" x2="168" y2="306"/>
+    <line x1="256" y1="206" x2="256" y2="218"/>
+    <line x1="256" y1="294" x2="256" y2="306"/>
+    <line x1="344" y1="206" x2="344" y2="218"/>
+    <line x1="344" y1="294" x2="344" y2="306"/>
+  </g>
+
+  <!-- ===== 3×3 PIXEL GRID ===== -->
+  <!--
+    Each block: 72×72, gap: 16px
+    Grid origin: (132, 132), total 248×248, centered in 512
+    Block centers: 168, 256, 344
+  -->
+  <g filter="url(#pixelGlow)">
+    <!-- Row 0 -->
+    <rect x="132" y="132" width="72" height="72" rx="10" fill="url(#pxGrad)" opacity="0.60"/>
+    <rect x="220" y="132" width="72" height="72" rx="10" fill="url(#pxGrad)" opacity="0.75"/>
+    <rect x="308" y="132" width="72" height="72" rx="10" fill="url(#pxGrad)" opacity="0.60"/>
+    <!-- Row 1 -->
+    <rect x="132" y="220" width="72" height="72" rx="10" fill="url(#pxGrad)" opacity="0.75"/>
+    <rect x="220" y="220" width="72" height="72" rx="12" fill="url(#pxGrad)" opacity="1.0"/>
+    <rect x="308" y="220" width="72" height="72" rx="10" fill="url(#pxGrad)" opacity="0.75"/>
+    <!-- Row 2 -->
+    <rect x="132" y="308" width="72" height="72" rx="10" fill="url(#pxGrad)" opacity="0.60"/>
+    <rect x="220" y="308" width="72" height="72" rx="10" fill="url(#pxGrad)" opacity="0.75"/>
+    <rect x="308" y="308" width="72" height="72" rx="10" fill="url(#pxGrad)" opacity="0.60"/>
+  </g>
+
+  <!-- ===== CENTER PIXEL ACCENTS ===== -->
+  <!-- Pulse ring 1 -->
+  <rect x="212" y="212" width="88" height="88" rx="16" fill="none" stroke="url(#pxGrad)" stroke-width="1" opacity="0.20"/>
+  <!-- Pulse ring 2 -->
+  <rect x="202" y="202" width="108" height="108" rx="22" fill="none" stroke="url(#pxGrad)" stroke-width="0.75" opacity="0.10"/>
+  <!-- Center pixel inner border highlight -->
+  <rect x="224" y="224" width="64" height="64" rx="8" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <!-- Tiny shine glint -->
+  <rect x="230" y="230" width="16" height="3" rx="1.5" fill="white" opacity="0.28"/>
+</svg>

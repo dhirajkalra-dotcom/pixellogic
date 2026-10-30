@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Instagram Post — Pixelogic Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #111; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+
+    .card {
+      width: 1080px;
+      height: 1080px;
+      background: #050510;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Grid */
+    .card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+    }
+    .orb-1 { width: 500px; height: 500px; background: #6366f1; top: -120px; left: -80px; opacity: 0.3; }
+    .orb-2 { width: 400px; height: 400px; background: #06b6d4; bottom: -80px; right: -60px; opacity: 0.25; }
+    .orb-3 { width: 300px; height: 300px; background: #f43f5e; bottom: 200px; left: 50%; transform: translateX(-50%); opacity: 0.1; }
+
+    .content {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 60px;
+    }
+
+    .logo {
+      width: 120px;
+      margin-bottom: 40px;
+      mix-blend-mode: screen;
+      filter: brightness(1.2);
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 72px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #818cf8, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+    }
+
+    .tagline {
+      font-size: 24px;
+      color: #94a3b8;
+      margin-bottom: 56px;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 18px 56px;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: #f1f5f9;
+      margin-bottom: 48px;
+      box-shadow: 0 0 40px rgba(99,102,241,0.2), 0 0 80px rgba(6,182,212,0.1);
+    }
+
+    .divider {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #6366f1, #06b6d4, transparent);
+      margin: 0 auto 40px;
+    }
+
+    .launch-date {
+      font-size: 22px;
+      color: #64748b;
+      letter-spacing: 2px;
+    }
+    .launch-date span {
+      color: #818cf8;
+      font-weight: 600;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .cd-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 100px;
+      padding: 20px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .cd-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #818cf8, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .cd-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #64748b;
+      margin-top: 8px;
+    }
+
+    .domain {
+      position: absolute;
+      bottom: 40px;
+      font-size: 16px;
+      color: #334155;
+      letter-spacing: 3px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="content">
+      <img src="../pixelogic-logo.png" alt="Pixelogic" class="logo">
+      <h1>Pixelogic</h1>
+      <p class="tagline">Professional AV & Event<br>Production Software</p>
+      <div class="badge">Coming Soon</div>
+      <div class="divider"></div>
+      <div class="countdown">
+        <div class="cd-item"><span class="cd-num">11</span><span class="cd-label">Days</span></div>
+        <div class="cd-item"><span class="cd-num">00</span><span class="cd-label">Hours</span></div>
+        <div class="cd-item"><span class="cd-num">00</span><span class="cd-label">Mins</span></div>
+        <div class="cd-item"><span class="cd-num">00</span><span class="cd-label">Secs</span></div>
+      </div>
+      <p class="launch-date">Launching <span>April 27, 2026</span></p>
+    </div>
+    <p class="domain">www.pixelogic.co.in</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWXRY7WBQT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HWXRY7WBQT');
+  </script>
+  <meta name="description" content="Testimonials and feedback from Pixelogic and Eventflow users — AV professionals, integrators, and event engineers." />
+  <title>Testimonials — Pixelogic &amp; Eventflow</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta property="og:title" content="Testimonials — Pixelogic & Eventflow" />
+  <meta property="og:description" content="Testimonials and feedback from Pixelogic and Eventflow users — AV professionals, integrators, and event engineers." />
+  <meta property="og:image" content="https://www.pixelogic.co.in/og-image.png" />
+  <meta property="og:url" content="https://www.pixelogic.co.in/testimonials.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Pixelogic" />
+
+  <!-- Canonical & SEO -->
+  <link rel="canonical" href="https://www.pixelogic.co.in/testimonials.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Dhiraj Kalra" />
+  <meta name="keywords" content="Pixelogic reviews, Eventflow reviews, AV software testimonials, event production software feedback, AV professional reviews" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Testimonials — Pixelogic & Eventflow" />
+  <meta name="twitter:description" content="Testimonials and feedback from Pixelogic and Eventflow users — AV professionals, integrators, and event engineers." />
+  <meta name="twitter:image" content="https://www.pixelogic.co.in/og-image.png" />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── PAGE LOADER ───────────────────────────────────────────── -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-content">
+      <img src="pixelogic-logo.png" alt="Pixelogic" class="loader-logo">
+      <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ── AMBIENT STAGE LIGHTING ───────────────────────────── -->
+  <div class="world-bg" aria-hidden="true">
+    <div class="wb-blob wb-blob-a"></div>
+    <div class="wb-blob wb-blob-b"></div>
+    <div class="wb-blob wb-blob-c"></div>
+  </div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ── NAVBAR ──────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a class="nav-logo" href="index.html">
+        <div class="logo-icon">
+            <img src="pixelogic-logo.png" alt="Pixelogic" class="nav-logo-img">
+          </div>
+        <span>Pixelogic</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pixelogic.html">Pixelogic</a></li>
+        <li><a href="projection-logic.html">Projection Logic</a></li>
+        <li><a href="eventflow.html">Eventflow</a></li>
+        <li><a href="stagecue.html">StageCue</a></li>
+        <li><a href="access.html">Access</a></li>
+        <li><a href="about.html">Creator</a></li>
+        <li><a href="testimonials.html" class="active">Testimonials</a></li>
+        <li class="nav-cta-mobile"><a href="access.html#demos" class="btn btn-primary">Get Demo</a></li>
+      </ul>
+      <a href="access.html#demos" class="btn btn-primary nav-cta-desktop">Get Demo</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── PAGE HERO ──────────────────────────────────────────── -->
+  <section class="page-hero" id="page-hero">
+    <div class="container" style="position:relative;z-index:2;">
+      <div class="section-header reveal" style="padding-top:120px;">
+        <span class="section-label">Community</span>
+        <h2>What People Are Saying<br /><span class="gradient-text">Testimonials &amp; Feedback</span></h2>
+        <p style="color:var(--text-2);max-width:640px;margin:16px auto 0;font-size:15px;">
+          Hear from AV professionals, event engineers, and integrators who use Pixelogic and Eventflow in their productions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS GRID ──────────────────────────────────── -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="container">
+
+      <div class="testimonials-grid" id="testimonials-list">
+        <!-- Testimonials loaded automatically from Firebase -->
+      </div>
+      <div id="testimonials-loading" style="text-align:center;padding:40px 20px;">
+        <span class="spinner" style="display:inline-block;width:28px;height:28px;border:3px solid var(--glass-b);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;"></span>
+      </div>
+      <div class="testimonials-empty" id="testimonials-empty" style="display:none;text-align:center;padding:60px 20px;">
+        <p style="color:var(--text-3);font-size:16px;">No testimonials yet. Be the first to share your experience!</p>
+      </div>
+
+      <!-- ── SUBMIT TESTIMONIAL ───────────────────────────────── -->
+      <div class="testimonial-submit-section reveal" id="submit">
+        <div class="testimonial-submit-card">
+          <h3>Share Your Experience</h3>
+          <p>Used Pixelogic or Eventflow on a project? We&rsquo;d love to hear your feedback. Your testimonial may be featured on this page.</p>
+          <form class="testimonial-form" id="testimonial-form" novalidate>
+            <!-- Web3Forms -->
+            <input type="hidden" name="access_key" value="aafd069e-ff20-437c-aaa9-5725bad2d2e9" />
+            <input type="hidden" name="subject" value="New Testimonial Submission" />
+            <input type="hidden" name="from_name" value="Pixelogic Testimonials" />
+            <input type="hidden" name="redirect" value="https://www.pixelogic.co.in/testimonials.html#submit" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="tm-name">Your Name <span style="color:#f87171;">*</span></label>
+                <input type="text" id="tm-name" name="name" required placeholder="e.g. John Smith" autocomplete="name">
+                <span class="form-err" id="err-tm-name"></span>
+              </div>
+              <div class="form-group">
+                <label for="tm-role">Role &amp; Company <span style="color:#f87171;">*</span></label>
+                <input type="text" id="tm-role" name="role" required placeholder="e.g. Video Engineer, XYZ Events">
+                <span class="form-err" id="err-tm-role"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="tm-email">Email <span style="color:var(--text-3);font-weight:400;">(optional, not displayed)</span></label>
+              <input type="email" id="tm-email" name="email" placeholder="your@email.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="tm-rating">Rating</label>
+              <div class="star-rating" id="star-rating">
+                <button type="button" class="star-btn" data-value="1">&#9733;</button>
+                <button type="button" class="star-btn" data-value="2">&#9733;</button>
+                <button type="button" class="star-btn" data-value="3">&#9733;</button>
+                <button type="button" class="star-btn" data-value="4">&#9733;</button>
+                <button type="button" class="star-btn active" data-value="5">&#9733;</button>
+              </div>
+              <input type="hidden" id="tm-rating" name="rating" value="5">
+            </div>
+            <div class="form-group">
+              <label for="tm-message">Your Testimonial <span style="color:#f87171;">*</span></label>
+              <textarea id="tm-message" name="message" rows="5" required placeholder="Tell us about your experience using Pixelogic or Eventflow..."></textarea>
+              <span class="form-err" id="err-tm-message"></span>
+            </div>
+            <button type="submit" class="btn btn-primary" id="tm-submit" style="width:100%;justify-content:center;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Submit Testimonial
+            </button>
+            <div class="form-status" id="form-status"></div>
+          </form>
+          <!-- Success State -->
+          <div id="tm-success" style="display:none;text-align:center;padding:48px 24px;">
+            <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="var(--green-lt,#34d399)" stroke-width="1.8" style="margin-bottom:16px;"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>
+            <h3 style="margin-bottom:8px;color:var(--text-1);">Thank You!</h3>
+            <p style="color:var(--text-2);font-size:15px;max-width:400px;margin:0 auto;">Your testimonial has been submitted successfully. It will be reviewed and may be featured on this page.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="nav-logo" href="index.html">
+            <div class="logo-icon">
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+            </div>
+            <span>Pixelogic</span>
+          </a>
+          <p>Professional LED wall and AV engineering software for modern integrators and event professionals.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="pixelogic.html#features">Features</a>
+            <a href="pixelogic.html#screenshots">Screenshots</a>
+            <a href="access.html#demos">Get Demo</a>
+            <a href="access.html#full-version">Full Access</a>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <a href="about.html">Crafted by Dhiraj Kalra</a>
+            <a href="testimonials.html">Testimonials</a>
+            <a href="index.html#apps">All Products</a>
+            <a href="home.html">Overview</a>
+            <a href="pixelogic.html#docs">Documentation</a>
+          </div>
+          <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:dhiraj.kalra@gmail.com">Email</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          <p>&copy; 2025&ndash;2026 <strong>Dhiraj Kalra</strong>. All rights reserved.</p>
+          <p class="footer-copy-sub">Pixelogic, Eventflow Schematics &amp; StageCue are original works created and owned by Dhiraj Kalra.
+            Unauthorised reproduction or distribution is prohibited.
+            &mdash;
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </p>
+        </div>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div class="visitor-counter" id="visitor-counter"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  // ── Testimonial System — Firebase Realtime DB + Web3Forms ────
+  //
+  // SETUP (one-time, 2 minutes):
+  // 1. Go to https://console.firebase.google.com → Add Project → name it (e.g. pixelogic-site)
+  // 2. Disable Google Analytics → Create Project
+  // 3. In the sidebar, click "Build" → "Realtime Database" → "Create Database"
+  // 4. Choose a region → Start in LOCKED mode
+  // 5. Go to the "Rules" tab and paste these rules:
+  //    {
+  //      "rules": {
+  //        "testimonials": {
+  //          ".read": true,
+  //          "$id": {
+  //            ".write": "!data.exists()",
+  //            ".validate": "newData.hasChildren(['name','role','message','rating','date'])"
+  //          }
+  //        }
+  //      }
+  //    }
+  // 6. Copy your database URL from the top of the Data tab
+  //    (e.g. https://pixelogic-site-default-rtdb.firebaseio.com)
+  // 7. Paste it below as DB_URL:
+  //
+  (function() {
+    var DB_URL = 'https://pixelogic-site-default-rtdb.firebaseio.com';
+
+    // ── Helpers ───────────────────────────────────────────────
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+    }
+    function getInitials(name) {
+      return name.split(' ').map(function(w) { return w[0]; }).join('').toUpperCase().slice(0, 2);
+    }
+    function renderStars(rating) {
+      var html = '';
+      for (var i = 1; i <= 5; i++) html += i <= rating ? '&#9733;' : '&#9734;';
+      return html;
+    }
+
+    // ── Render testimonials ───────────────────────────────────
+    function renderTestimonials(list) {
+      var grid = document.getElementById('testimonials-list');
+      var empty = document.getElementById('testimonials-empty');
+      var loading = document.getElementById('testimonials-loading');
+      if (loading) loading.style.display = 'none';
+      if (!grid) return;
+
+      if (!list || list.length === 0) {
+        grid.innerHTML = '';
+        if (empty) empty.style.display = 'block';
+        return;
+      }
+      if (empty) empty.style.display = 'none';
+
+      grid.innerHTML = list.map(function(t) {
+        return '<div class="testimonial-card reveal visible">' +
+          '<div class="testimonial-stars">' + renderStars(t.rating) + '</div>' +
+          '<p class="testimonial-text">&ldquo;' + escapeHtml(t.message) + '&rdquo;</p>' +
+          '<div class="testimonial-author">' +
+            '<div class="testimonial-avatar">' + escapeHtml(getInitials(t.name)) + '</div>' +
+            '<div>' +
+              '<div class="testimonial-name">' + escapeHtml(t.name) + '</div>' +
+              '<div class="testimonial-role">' + escapeHtml(t.role) + '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    // ── Load testimonials from Firebase ───────────────────────
+    async function loadTestimonials() {
+      if (!DB_URL) {
+        var loading = document.getElementById('testimonials-loading');
+        if (loading) loading.style.display = 'none';
+        var empty = document.getElementById('testimonials-empty');
+        if (empty) empty.style.display = 'block';
+        return;
+      }
+      try {
+        var res = await fetch(DB_URL + '/testimonials.json');
+        var data = await res.json();
+        if (!data) { renderTestimonials([]); return; }
+        var list = Object.values(data).sort(function(a, b) {
+          return new Date(b.date) - new Date(a.date);
+        });
+        renderTestimonials(list);
+      } catch (e) {
+        renderTestimonials([]);
+      }
+    }
+
+    // ── Save testimonial to Firebase ─────────────────────────
+    async function saveToFirebase(testimonial) {
+      if (!DB_URL) return;
+      await fetch(DB_URL + '/testimonials.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testimonial)
+      });
+    }
+
+    // ── Star rating interaction ──────────────────────────────
+    var stars = document.querySelectorAll('.star-btn');
+    var ratingInput = document.getElementById('tm-rating');
+    stars.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var val = parseInt(btn.dataset.value);
+        ratingInput.value = val;
+        stars.forEach(function(s) {
+          s.classList.toggle('active', parseInt(s.dataset.value) <= val);
+        });
+      });
+    });
+
+    // ── Validation helpers ───────────────────────────────────
+    function setErr(id, msg) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = msg;
+    }
+    function clearErrors() {
+      ['err-tm-name','err-tm-role','err-tm-message'].forEach(function(id) { setErr(id, ''); });
+    }
+
+    // ── Form submit → Firebase + Web3Forms ───────────────────
+    var form = document.getElementById('testimonial-form');
+    var status = document.getElementById('form-status');
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        clearErrors();
+
+        var name = document.getElementById('tm-name').value.trim();
+        var role = document.getElementById('tm-role').value.trim();
+        var message = document.getElementById('tm-message').value.trim();
+        var rating = parseInt(ratingInput.value) || 5;
+        var valid = true;
+
+        if (!name) { setErr('err-tm-name', 'Please enter your name.'); valid = false; }
+        if (!role) { setErr('err-tm-role', 'Please enter your role.'); valid = false; }
+        if (!message) { setErr('err-tm-message', 'Please write your testimonial.'); valid = false; }
+        if (!valid) return;
+
+        var submitBtn = document.getElementById('tm-submit');
+        var origHTML = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner"></span> Sending\u2026';
+
+        var testimonial = { name: name, role: role, rating: rating, message: message, date: new Date().toISOString() };
+
+        try {
+          // Save to Firebase (auto-display) + Web3Forms (email notification) in parallel
+          var promises = [];
+          promises.push(saveToFirebase(testimonial));
+
+          var formData = new FormData(form);
+          promises.push(fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData }));
+
+          await Promise.all(promises);
+
+          // Show success + reload testimonials
+          form.style.display = 'none';
+          var success = document.getElementById('tm-success');
+          if (success) success.style.display = 'block';
+          loadTestimonials();
+        } catch (err) {
+          status.textContent = 'Network error \u2014 please check your connection and try again.';
+          status.style.color = '#f87171';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = origHTML;
+        }
+      });
+    }
+
+    // ── Load testimonials on page load ───────────────────────
+    loadTestimonials();
+  })();
+  </script>
+</body>
+</html>

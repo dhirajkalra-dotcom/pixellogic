@@ -1,0 +1,471 @@
+{
+  "result": [
+    {
+      "name": "advanced edition",
+      "ms": 11,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "designer",
+      "ms": 21,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "map tabs found",
+      "note": "1792657486499.8564,1792749501786,1792749512359"
+    },
+    {
+      "name": "designer select map 1792657486499.8564",
+      "ms": 11,
+      "note": "active=1792657486499.8564",
+      "errors": []
+    },
+    {
+      "name": "  visit sheets (map 1792657486499.8564)",
+      "ms": 387,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit designer (map 1792657486499.8564)",
+      "ms": 9,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit effects (map 1792657486499.8564)",
+      "ms": 313,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit visualizer (map 1792657486499.8564)",
+      "ms": 10,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit view3d (map 1792657486499.8564)",
+      "ms": 587,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit canvas (map 1792657486499.8564)",
+      "ms": 336,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit led-patching (map 1792657486499.8564)",
+      "ms": 257,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit pdf (map 1792657486499.8564)",
+      "ms": 302,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit power-calc (map 1792657486499.8564)",
+      "ms": 2,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "back to designer",
+      "ms": 10,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "designer select map 1792749501786",
+      "ms": 108,
+      "note": "active=1792749501786",
+      "errors": []
+    },
+    {
+      "name": "  visit sheets (map 1792749501786)",
+      "ms": 5,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit designer (map 1792749501786)",
+      "ms": 10,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit effects (map 1792749501786)",
+      "ms": 999,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit visualizer (map 1792749501786)",
+      "ms": 12,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit view3d (map 1792749501786)",
+      "ms": 595,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit canvas (map 1792749501786)",
+      "ms": 347,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit led-patching (map 1792749501786)",
+      "ms": 249,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit pdf (map 1792749501786)",
+      "ms": 303,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit power-calc (map 1792749501786)",
+      "ms": 2,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "back to designer",
+      "ms": 14,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "designer select map 1792749512359",
+      "ms": 98,
+      "note": "active=1792749512359",
+      "errors": []
+    },
+    {
+      "name": "  visit sheets (map 1792749512359)",
+      "ms": 6,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit designer (map 1792749512359)",
+      "ms": 10,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit effects (map 1792749512359)",
+      "ms": 997,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit visualizer (map 1792749512359)",
+      "ms": 11,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit view3d (map 1792749512359)",
+      "ms": 599,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit canvas (map 1792749512359)",
+      "ms": 329,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit led-patching (map 1792749512359)",
+      "ms": 269,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit pdf (map 1792749512359)",
+      "ms": 300,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit power-calc (map 1792749512359)",
+      "ms": 3,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "back to designer",
+      "ms": 10,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "designer edit width 5",
+      "ms": 99,
+      "note": "tilesWide now 10",
+      "errors": []
+    },
+    {
+      "name": "designer edit tilesHigh 6",
+      "ms": 408,
+      "note": "height now 3",
+      "errors": []
+    },
+    {
+      "name": "designer edit width empty",
+      "ms": 402,
+      "note": "tilesWide now 1",
+      "errors": []
+    },
+    {
+      "name": "designer edit width expr 4*2",
+      "ms": 407,
+      "note": "tilesWide now 16",
+      "errors": []
+    },
+    {
+      "name": "designer add map",
+      "ms": 11,
+      "note": "tabs=4",
+      "errors": []
+    },
+    {
+      "name": "designer: new map tabs count",
+      "ms": 1,
+      "note": "tabs=4 active=Pixel Map_04",
+      "errors": []
+    },
+    {
+      "name": "  visit sheets (new map)",
+      "ms": 16,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit designer (new map)",
+      "ms": 7,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit effects (new map)",
+      "ms": 21,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit visualizer (new map)",
+      "ms": 9,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit view3d (new map)",
+      "ms": 76,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit canvas (new map)",
+      "ms": 48,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit led-patching (new map)",
+      "ms": 23,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit pdf (new map)",
+      "ms": 24,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit power-calc (new map)",
+      "ms": 2,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "sheets",
+      "ms": 7,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "sheets rows",
+      "ms": 0,
+      "note": "delete-row buttons=4",
+      "errors": []
+    },
+    {
+      "name": "sheets duplicate first",
+      "ms": 13,
+      "note": "rows=5",
+      "errors": []
+    },
+    {
+      "name": "sheets rename last",
+      "ms": 10,
+      "note": "ok",
+      "errors": []
+    },
+    {
+      "name": "designer shows rename",
+      "ms": 13,
+      "note": "LEFT SCREEN | CENTER SCREEN | RIGHT SCREEN | Pixel Map_04 | RENAMED X",
+      "errors": []
+    },
+    {
+      "name": "sheets delete last",
+      "ms": 21,
+      "note": "rows=4",
+      "errors": []
+    },
+    {
+      "name": "sheets delete last again",
+      "ms": 8,
+      "note": "rows=3",
+      "errors": []
+    },
+    {
+      "name": "  visit sheets (after deletes)",
+      "ms": 4,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit designer (after deletes)",
+      "ms": 10,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit effects (after deletes)",
+      "ms": 21,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit visualizer (after deletes)",
+      "ms": 9,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit view3d (after deletes)",
+      "ms": 62,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit canvas (after deletes)",
+      "ms": 39,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit led-patching (after deletes)",
+      "ms": 307,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit pdf (after deletes)",
+      "ms": 301,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit power-calc (after deletes)",
+      "ms": 2,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "shows: create project",
+      "ms": 16,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "shows: new project",
+      "ms": 996,
+      "note": "ok",
+      "errors": []
+    },
+    {
+      "name": "  visit sheets (new project)",
+      "ms": 5,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit designer (new project)",
+      "ms": 14,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit effects (new project)",
+      "ms": 693,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit visualizer (new project)",
+      "ms": 7,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit view3d (new project)",
+      "ms": 611,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit canvas (new project)",
+      "ms": 322,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit led-patching (new project)",
+      "ms": 277,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit pdf (new project)",
+      "ms": 303,
+      "note": "",
+      "errors": []
+    },
+    {
+      "name": "  visit power-calc (new project)",
+      "ms": 2,
+      "note": "",
+      "errors": []
+    }
+  ],
+  "consoleErrs": []
+}

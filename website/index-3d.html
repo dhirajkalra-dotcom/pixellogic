@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixelogic Studio — Immersive</title>
+  <meta name="description" content="Pixelogic Studio — professional AV engineering, event production schematics and stage management software. 100% offline, no subscriptions." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --indigo: #6366f1;
+      --violet: #a78bfa;
+      --teal:   #2dd4bf;
+      --sky:    #38bdf8;
+      --orange: #fb923c;
+      --bg:     #05060f;
+      --text-1: #f8fafc;
+      --text-2: rgba(226,232,240,0.72);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 3D canvas fills the viewport */
+    #scene-canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; }
+
+    /* Vignette + gentle scanlines over the 3D scene for depth */
+    .overlay-fx {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 42%, transparent 40%, rgba(3,4,10,0.55) 100%),
+        linear-gradient(to bottom, rgba(3,4,10,0.35) 0%, transparent 22%, transparent 68%, rgba(3,4,10,0.75) 100%);
+      mix-blend-mode: multiply;
+    }
+    .grain {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── Foreground UI ─────────────────────────────────────────── */
+    .ui { position: fixed; inset: 0; z-index: 3; display: flex; flex-direction: column; pointer-events: none; }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px clamp(20px, 5vw, 60px);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; pointer-events: auto; text-decoration: none; }
+    .brand img { width: 34px; height: 34px; filter: drop-shadow(0 0 14px rgba(129,140,248,0.5)); }
+    .brand span { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: 0.01em; color: #fff; }
+    .top-links { display: flex; align-items: center; gap: 26px; pointer-events: auto; }
+    .top-links a { color: var(--text-2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .top-links a:hover { color: #fff; }
+    @media (max-width: 720px) { .top-links a:not(.top-cta) { display: none; } }
+
+    .top-cta {
+      padding: 9px 18px; border-radius: 9999px; font-weight: 600; font-size: 13.5px;
+      color: #fff !important; background: linear-gradient(135deg, var(--indigo), var(--violet));
+      box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+    }
+
+    .hero {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 0 20px 40px;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--violet);
+      opacity: 0; transform: translateY(14px); animation: rise 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+    }
+    .eyebrow i { width: 34px; height: 1px; background: linear-gradient(to right, transparent, rgba(167,139,250,0.8)); display: inline-block; }
+    .eyebrow i:last-child { background: linear-gradient(to left, transparent, rgba(167,139,250,0.8)); }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(2.6rem, 8vw, 6rem); line-height: 1.02; letter-spacing: -0.03em;
+      margin-bottom: 22px; text-shadow: 0 4px 60px rgba(0,0,0,0.5);
+      opacity: 0; transform: translateY(20px); animation: rise 1s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(120deg, var(--indigo), var(--violet) 30%, var(--sky) 62%, var(--teal));
+      background-size: 220% 220%;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      animation: shimmer 6s ease-in-out infinite;
+    }
+    .hero p {
+      max-width: 640px; color: var(--text-2); font-size: clamp(15px, 2.1vw, 19px); line-height: 1.7; margin-bottom: 42px;
+      opacity: 0; transform: translateY(20px); animation: rise 1s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+    }
+
+    .cta-row {
+      display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; pointer-events: auto;
+      opacity: 0; transform: translateY(20px); animation: rise 1s cubic-bezier(0.16,1,0.3,1) 0.65s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+      padding: 14px 26px; border-radius: 12px; font-weight: 600; font-size: 15px;
+      transition: transform 0.28s cubic-bezier(0.16,1,0.3,1), box-shadow 0.28s, background 0.28s; cursor: pointer;
+      border: 1px solid transparent; color: #fff;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn .dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 12px currentColor; }
+    .btn-primary { background: linear-gradient(135deg, var(--indigo), var(--violet)); box-shadow: 0 14px 40px rgba(99,102,241,0.42); }
+    .btn-primary:hover { box-shadow: 0 18px 52px rgba(99,102,241,0.55); }
+    .btn-ghost { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.14); backdrop-filter: blur(8px); }
+    .btn-ghost.teal { color: var(--teal); border-color: rgba(45,212,191,0.4); }
+    .btn-ghost.orange { color: var(--orange); border-color: rgba(251,146,60,0.4); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.09); }
+
+    .scroll-hint {
+      position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 3;
+      display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-2);
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; pointer-events: none;
+      opacity: 0; animation: rise 1s ease 1s forwards;
+    }
+    .scroll-hint .mouse { width: 22px; height: 34px; border: 1.5px solid rgba(226,232,240,0.4); border-radius: 12px; position: relative; }
+    .scroll-hint .mouse::after { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 3px; height: 6px; border-radius: 2px; background: var(--violet); animation: wheel 1.6s ease-in-out infinite; }
+
+    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+    @keyframes shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes wheel { 0% { opacity: 0; transform: translate(-50%, 0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, 12px); } }
+
+    /* Loading + WebGL fallback */
+    #loader {
+      position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+      background: var(--bg); transition: opacity 0.8s ease; flex-direction: column; gap: 18px;
+    }
+    #loader.hide { opacity: 0; pointer-events: none; }
+    #loader img { width: 62px; filter: drop-shadow(0 0 22px rgba(129,140,248,0.6)); animation: pulse 1.6s ease-in-out infinite; }
+    #loader .bar { width: 160px; height: 3px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    #loader .bar i { display: block; height: 100%; width: 40%; border-radius: 3px; background: linear-gradient(90deg, var(--indigo), var(--sky)); animation: load 1.2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.8; } }
+    @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(320%); } }
+    .fallback-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(99,102,241,0.25), transparent 45%),
+        radial-gradient(circle at 70% 60%, rgba(45,212,191,0.18), transparent 45%),
+        var(--bg);
+    }
+  </style>
+</head>
+<body>
+  <!-- Static fallback shown until (or if) WebGL fails -->
+  <div class="fallback-bg"></div>
+
+  <canvas id="scene-canvas"></canvas>
+  <div class="overlay-fx"></div>
+  <div class="grain"></div>
+
+  <!-- Foreground UI -->
+  <div class="ui">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <img src="pixelogic-logo.png" alt="Pixelogic" />
+        <span>Pixelogic&nbsp;Studio</span>
+      </a>
+      <nav class="top-links">
+        <a href="pixelogic.html">Pixelogic</a>
+        <a href="eventflow.html">Eventflow</a>
+        <a href="stagecue.html">StageCue</a>
+        <a href="about.html">Creator</a>
+        <a class="top-cta" href="access.html#demos">Get Demo</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow"><i></i> Professional AV Software <i></i></div>
+      <h1>Engineer the<br /><span class="grad">Impossible Show</span></h1>
+      <p>Three offline Windows applications for LED engineering, event production schematics and stage management — no subscriptions, no cloud, no compromise.</p>
+      <div class="cta-row">
+        <a href="pixelogic.html" class="btn btn-primary"><span class="dot" style="background:#c7d2fe;color:#c7d2fe"></span> Pixelogic</a>
+        <a href="eventflow.html" class="btn btn-ghost teal"><span class="dot" style="color:var(--teal)"></span> Eventflow</a>
+        <a href="stagecue.html" class="btn btn-ghost orange"><span class="dot" style="color:var(--orange)"></span> StageCue</a>
+      </div>
+    </section>
+  </div>
+
+  <div class="scroll-hint"><div class="mouse"></div><span>Move your mouse</span></div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <img src="pixelogic-logo.png" alt="Loading" />
+    <div class="bar"><i></i></div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+    const canvas = document.getElementById('scene-canvas');
+    const loader = document.getElementById('loader');
+
+    // Graceful WebGL check.
+    function webglOk() {
+      try {
+        const c = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
+      } catch (_) { return false; }
+    }
+    if (!webglOk()) {
+      // Keep the CSS fallback background; just hide the loader.
+      canvas.style.display = 'none';
+      setTimeout(() => loader.classList.add('hide'), 400);
+    } else {
+      init();
+    }
+
+    function init() {
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x05060f, 0.016);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x05060f, 1);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.15;
+
+      const camera = new THREE.PerspectiveCamera(62, window.innerWidth / window.innerHeight, 0.1, 200);
+      camera.position.set(0, 0, 16);
+
+      // ── Curved LED wall built from an InstancedMesh of emissive pixels ──────
+      const COLS = 84;
+      const ROWS = 42;
+      const COUNT = COLS * ROWS;
+      const ARC = 2.15;          // horizontal wrap angle (radians)
+      const RADIUS = 27;         // wall distance
+      const WALL_H = 23;         // vertical extent
+      const PIXEL = 0.46;        // pixel size
+
+      const geo = new THREE.BoxGeometry(PIXEL, PIXEL, PIXEL * 0.5);
+      const mat = new THREE.MeshBasicMaterial({ toneMapped: false });
+      const wall = new THREE.InstancedMesh(geo, mat, COUNT);
+      wall.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+
+      const dummy = new THREE.Object3D();
+      const gridU = new Float32Array(COUNT); // normalized col 0..1
+      const gridV = new Float32Array(COUNT); // normalized row 0..1
+      let idx = 0;
+      for (let i = 0; i < COLS; i++) {
+        for (let j = 0; j < ROWS; j++) {
+          const u = i / (COLS - 1);
+          const v = j / (ROWS - 1);
+          const a = (u - 0.5) * ARC;
+          const x = Math.sin(a) * RADIUS;
+          const z = -Math.cos(a) * RADIUS + RADIUS * 0.18;
+          const y = (v - 0.5) * WALL_H;
+          dummy.position.set(x, y, z);
+          dummy.rotation.set(0, -a, 0);
+          dummy.updateMatrix();
+          wall.setMatrixAt(idx, dummy.matrix);
+          gridU[idx] = u; gridV[idx] = v;
+          idx++;
+        }
+      }
+      wall.instanceMatrix.needsUpdate = true;
+      scene.add(wall);
+
+      // Brand palette the plasma flows through.
+      const palette = [
+        new THREE.Color('#4f46e5'), // indigo
+        new THREE.Color('#7c3aed'), // violet
+        new THREE.Color('#38bdf8'), // sky
+        new THREE.Color('#2dd4bf'), // teal
+      ];
+      const tmpColor = new THREE.Color();
+      function paletteAt(t, out) {
+        t = t - Math.floor(t);
+        const n = palette.length;
+        const s = t * n;
+        const i0 = Math.floor(s) % n;
+        const i1 = (i0 + 1) % n;
+        out.copy(palette[i0]).lerp(palette[i1], s - Math.floor(s));
+        return out;
+      }
+
+      // Faint starfield for depth.
+      const starGeo = new THREE.BufferGeometry();
+      const starN = 600;
+      const sp = new Float32Array(starN * 3);
+      for (let i = 0; i < starN; i++) {
+        sp[i * 3] = (Math.random() - 0.5) * 120;
+        sp[i * 3 + 1] = (Math.random() - 0.5) * 80;
+        sp[i * 3 + 2] = -20 - Math.random() * 80;
+      }
+      starGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+      const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0x7c86b8, size: 0.14, transparent: true, opacity: 0.6, toneMapped: false }));
+      scene.add(stars);
+
+      // ── Post-processing bloom for the neon glow ─────────────────────────────
+      const composer = new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene, camera));
+      const bloom = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        0.95,  // strength
+        0.55,  // radius
+        0.0    // threshold
+      );
+      composer.addPass(bloom);
+
+      // Pointer parallax.
+      const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+      window.addEventListener('pointermove', (e) => {
+        mouse.tx = (e.clientX / window.innerWidth - 0.5);
+        mouse.ty = (e.clientY / window.innerHeight - 0.5);
+      });
+      window.addEventListener('deviceorientation', (e) => {
+        if (e.gamma == null) return;
+        mouse.tx = Math.max(-0.5, Math.min(0.5, (e.gamma || 0) / 45));
+        mouse.ty = Math.max(-0.5, Math.min(0.5, ((e.beta || 0) - 45) / 45));
+      });
+
+      const clock = new THREE.Clock();
+      let frame = 0;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+        frame++;
+
+        // Update pixel colours (throttled to every other frame for perf).
+        if (frame % 2 === 0) {
+          for (let k = 0; k < COUNT; k++) {
+            const u = gridU[k], v = gridV[k];
+            // Flowing plasma field.
+            const field =
+              Math.sin(u * 7.0 + t * 0.9) +
+              Math.sin(v * 6.0 - t * 1.1) +
+              Math.sin((u + v) * 5.0 + t * 0.6) +
+              Math.sin(Math.hypot(u - 0.5, v - 0.5) * 12.0 - t * 1.8);
+            const nrm = (field + 4) / 8;            // 0..1
+            paletteAt(nrm + t * 0.03, tmpColor);
+            // Brightness pulse — pushes peaks above 1 so bloom lights them up.
+            const bright = 0.28 + nrm * nrm * 1.35;
+            tmpColor.multiplyScalar(bright);
+            wall.setColorAt(k, tmpColor);
+          }
+          wall.instanceColor.needsUpdate = true;
+        }
+
+        // Smooth parallax.
+        mouse.x += (mouse.tx - mouse.x) * 0.05;
+        mouse.y += (mouse.ty - mouse.y) * 0.05;
+        camera.position.x = mouse.x * 6;
+        camera.position.y = -mouse.y * 4;
+        wall.rotation.y = mouse.x * 0.12 + Math.sin(t * 0.1) * 0.03;
+        wall.rotation.x = -mouse.y * 0.06;
+        stars.rotation.y = t * 0.01;
+        camera.lookAt(0, 0, -18);
+
+        composer.render();
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // Reveal once the first frames are painted.
+      setTimeout(() => loader.classList.add('hide'), 700);
+    }
+  </script>
+</body>
+</html>

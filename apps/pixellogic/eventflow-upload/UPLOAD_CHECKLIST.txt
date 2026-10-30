@@ -1,0 +1,108 @@
+EVENTFLOW SCHEMATICS — WEB UPLOAD CHECKLIST
+============================================
+
+WHAT THIS IS
+------------
+A clean bundle of every file needed to add the EventFlow Schematics
+web app + its own login/admin/subscription system to your website.
+It is completely separate from PixelLogic (separate database, separate
+session cookie, separate admin page) so the two never clash.
+
+WHERE TO UPLOAD
+---------------
+Upload the CONTENTS of this folder to your website's web root
+(usually "public_html/" or "httpdocs/"), keeping the same folder
+structure. After uploading you should have, on the server:
+
+  <web root>/
+    eventflow.html
+    script.js                    <-- replaces the existing one (safe)
+    ef-login.php
+    ef-register.php
+    ef-admin.php
+    ef-account.php
+    ef-payment.php
+    ef-logout.php
+    ef-forgot.php
+    ef-reset.php
+    ef-thanks.php
+    eventflow-auth/              <-- auth engine (lib/, config, etc.)
+    eventflow-app/               <-- the built web app + login gate
+
+IMPORTANT — RE-UPLOAD (this update)
+-----------------------------------
+This bundle includes updates to:
+  - eventflow-app/            (smooth 20-min timer + a "Log out" button)
+  - eventflow-auth/logout.php (logout now returns to /eventflow.html)
+When re-uploading, OVERWRITE the existing eventflow-app/ folder. The
+app's asset filenames change on each build, so delete the old
+eventflow-app/assets/ contents (or just overwrite the whole folder).
+After uploading, do a HARD REFRESH (Ctrl+Shift+R) so browsers pick up
+the new script.js and app assets instead of a cached copy.
+
+STEP-BY-STEP
+------------
+[ ] 1. Connect to the server (FTP / SFTP / cPanel File Manager).
+[ ] 2. Upload all files/folders from this bundle to the web root,
+       preserving the folder structure.
+[ ] 3. "script.js" will overwrite the existing site script — this is
+       expected. It contains the fix that makes Sign in / Sign up route
+       to EventFlow on EventFlow pages; PixelLogic pages are unaffected.
+[ ] 4. Make sure the web server can WRITE inside "eventflow-auth/".
+       It auto-creates "eventflow-auth/data/" (the SQLite database) on
+       the first signup. On most shared hosts this works by default.
+       If signups fail, set the "eventflow-auth" folder writable (755/775).
+[ ] 5. Test the live flow:
+         - https://YOURDOMAIN/eventflow.html      (landing)
+         - https://YOURDOMAIN/ef-register.php      (create account)
+         - https://YOURDOMAIN/ef-login.php         (sign in)
+         - https://YOURDOMAIN/eventflow-app/       (the app, 20-min/day)
+         - https://YOURDOMAIN/ef-payment.php       (subscribe: monthly/yearly)
+         - https://YOURDOMAIN/ef-admin.php         (admin panel)
+
+ADMIN PANEL LOGIN
+-----------------
+URL:      https://YOURDOMAIN/ef-admin.php
+Username: admin
+Password: EventFlow@Admin2882
+  -> Change this in eventflow-auth/lib/config.php (PL_ADMIN_PASS)
+     BEFORE going live.
+
+WHERE SIGNUP DATA GOES
+----------------------
+- Stored in: eventflow-auth/data/users.sqlite  (created on the server;
+  NOT included in this bundle so production starts empty).
+- Passwords are stored HASHED (bcrypt), never in plain text in the DB.
+- On each signup an email is sent to the admin address
+  (dhiraj.kalra@gmail.com) and also appended to
+  eventflow-auth/data/mail.log as a fallback.
+
+FREE-TRIAL / SUBSCRIPTION / TIMER
+---------------------------------
+- Logged-in free users get 20 minutes of app use per day.
+- A countdown badge (bottom-right) ticks down smoothly every second and
+  is enforced server-side, so it stays correct even after a page refresh.
+- A "Log out" button sits next to the badge; logging out returns the
+  user to /eventflow.html.
+- When the 20 minutes run out a paywall overlay appears linking to
+  /ef-payment.php (Monthly $9/mo, Yearly $79/yr). Checkout is currently
+  mailto-based (placeholder) — wire up Razorpay / Stripe when ready.
+- The daily quota resets at midnight.
+
+SEPARATION FROM PIXELLOGIC (no clash)
+-------------------------------------
+                     PixelLogic            EventFlow
+  Database           auth/data/            eventflow-auth/data/
+  Session cookie     PIXELOGIC_SID         EVENTFLOW_SID
+  Admin page         /admin.php            /ef-admin.php
+  Login / Register   /login.php            /ef-login.php
+                     /register.php         /ef-register.php
+  Admin password     (unchanged)           EventFlow@Admin2882
+
+SECURITY REMINDERS BEFORE LAUNCH
+--------------------------------
+[ ] Change PL_ADMIN_PASS in eventflow-auth/lib/config.php.
+[ ] Consider removing the plaintext password from the admin signup
+    email (eventflow-auth/lib/mail.php -> pl_notify_admin_new_user).
+[ ] Confirm the host delivers PHP mail() (or wire in SMTP) so signup
+    notifications actually arrive.

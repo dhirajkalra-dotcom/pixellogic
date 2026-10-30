@@ -1,0 +1,51 @@
+{
+  "success": true,
+  "hudTitleText": "3D TRANSFORM GIZMO",
+  "gpuNameText": "NVIDIA GeForce RTX 4070 Laptop GPU",
+  "containsAutodesk": false,
+  "buttonClickTimes": [
+    {
+      "mode": "translate",
+      "durationMs": 0.6
+    },
+    {
+      "mode": "rotate",
+      "durationMs": 0.1
+    },
+    {
+      "mode": "scale",
+      "durationMs": 0
+    },
+    {
+      "mode": "select",
+      "durationMs": 0.1
+    },
+    {
+      "mode": "translate",
+      "durationMs": 0
+    }
+  ],
+  "keyShortcutTimes": [
+    {
+      "key": "w",
+      "activeMode": "translate",
+      "durationMs": 0.4
+    },
+    {
+      "key": "e",
+      "activeMode": "rotate",
+      "durationMs": 0
+    },
+    {
+      "key": "r",
+      "activeMode": "scale",
+      "durationMs": 0
+    },
+    {
+      "key": "q",
+      "activeMode": "select",
+      "durationMs": 0.1
+    }
+  ],
+  "finalToolMode": "select"
+}

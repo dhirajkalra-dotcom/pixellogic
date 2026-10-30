@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "initialCount": 1,
+  "initialComposeIds": [
+    "1792737324190"
+  ],
+  "afterAddIds": [
+    "1792737324190",
+    "map-test-left-wing"
+  ],
+  "leftWingTf": {
+    "x": -3.2,
+    "y": 0,
+    "z": 1,
+    "rotY": 25,
+    "rotX": 0,
+    "scale": 1,
+    "wallShape": "flat",
+    "curveDeg": 0,
+    "cornerCol": 5,
+    "cornerAngleDeg": 90,
+    "mountMode": "flown",
+    "trimHeightM": 1
+  },
+  "updatedMount": "ground",
+  "finalComposeIds": [
+    "map-test-left-wing"
+  ]
+}

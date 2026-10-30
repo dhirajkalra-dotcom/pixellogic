@@ -1,0 +1,42 @@
+﻿
+{
+ "activeProjectId": 1,
+ "projects": [
+  {
+   "id": 1,
+   "idType": "number",
+   "name": "Project - 01",
+   "status": "draft",
+   "activePixelMapId": 1792657486499.8564,
+   "maps": [
+    {
+     "id": 1792657486499.8564,
+     "idType": "number",
+     "name": "LEFT SCREEN",
+     "tiles": "20x10",
+     "panels": 200,
+     "missingDetails": [
+      "colorBars",
+      "logo"
+     ]
+    },
+    {
+     "id": 1792749501786,
+     "idType": "number",
+     "name": "CENTER SCREEN",
+     "tiles": "30x10",
+     "panels": 300,
+     "missingDetails": []
+    },
+    {
+     "id": 1792749512359,
+     "idType": "number",
+     "name": "RIGHT SCREEN",
+     "tiles": "20x10",
+     "panels": 200,
+     "missingDetails": []
+    }
+   ]
+  }
+ ]
+}

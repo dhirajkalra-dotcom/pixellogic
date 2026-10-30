@@ -1,0 +1,18 @@
+node_modules/
+**/node_modules/
+.venv/
+out/
+dist/
+release/
+release-new/
+pixellogic-builds/
+demo-app/
+website/downloads/
+*.exe
+*.asar
+*.mp4
+*.log
+.DS_Store
+
+# Licence signing keys — NEVER commit or ship these.
+scripts/.keys/

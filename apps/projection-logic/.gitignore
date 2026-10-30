@@ -1,0 +1,4 @@
+node_modules
+
+# Licence signing keys — NEVER commit or ship these.
+scripts/.keys/

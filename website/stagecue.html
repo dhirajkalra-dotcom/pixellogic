@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StageCue — professional countdown timer for event speakers. Big fullscreen display, operator controller, phone remote, OBS browser source, REST/WebSocket API and Bitfocus Companion module." />
+  <title>StageCue — Speaker Countdown Timer for Events</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta property="og:title" content="StageCue — Speaker Countdown Timer for Events" />
+  <meta property="og:description" content="Big fullscreen countdown timer for stage speakers, with operator controller, warning/critical thresholds, overtime mode, phone remote, OBS source and Bitfocus Companion integration." />
+  <meta property="og:image" content="https://www.pixelogic.co.in/og-image.png" />
+  <meta property="og:url" content="https://www.pixelogic.co.in/stagecue.html" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── PAGE LOADER ───────────────────────────────────────────── -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-content">
+      <img src="stagecue-logo.png" alt="StageCue" class="loader-logo" style="filter: drop-shadow(0 0 20px rgba(249,115,22,0.4))">
+      <div class="loader-bar"><div class="loader-bar-fill" style="background:linear-gradient(90deg,#fbbf24,#f97316,#f43f5e)"></div></div>
+    </div>
+  </div>
+
+  <!-- ── AMBIENT BACKGROUND ───────────────────────────── -->
+  <div class="world-bg" aria-hidden="true">
+    <div class="wb-blob wb-blob-a" style="background:radial-gradient(circle,rgba(249,115,22,0.18),transparent 70%)"></div>
+    <div class="wb-blob wb-blob-b" style="background:radial-gradient(circle,rgba(244,63,94,0.15),transparent 70%)"></div>
+    <div class="wb-blob wb-blob-c" style="background:radial-gradient(circle,rgba(251,191,36,0.12),transparent 70%)"></div>
+  </div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ── NAVBAR ──────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a class="nav-logo" href="index.html">
+        <div class="logo-icon">
+          <img src="stagecue-logo.png" alt="StageCue" class="nav-logo-img">
+        </div>
+        <span>StageCue</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pixelogic.html">Pixelogic</a></li>
+        <li><a href="projection-logic.html">Projection Logic</a></li>
+        <li><a href="eventflow.html">Eventflow</a></li>
+        <li><a href="stagecue.html">StageCue</a></li>
+        <li><a href="access.html">Access</a></li>
+        <li><a href="about.html">Creator</a></li>
+        <li class="nav-cta-mobile"><a href="#request" class="btn btn-orange">Get Demo</a></li>
+      </ul>
+      <a href="#request" class="btn btn-orange nav-cta-desktop">Get Demo</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── PAGE HERO ──────────────────────────────────────────── -->
+  <section class="page-hero" id="page-hero">
+    <canvas id="page-hero-canvas" aria-hidden="true"></canvas>
+    <div class="container" style="position:relative;z-index:2;">
+      <div class="hero-badge ph-entrance" style="--del:0;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.3);color:#fb923c;">
+        <span class="badge-dot" style="background:#fb923c"></span>
+        StageCue v1.5.0 &mdash; Available for Windows
+      </div>
+      <h1 class="hero-title ph-entrance" style="--del:1">
+        Keep your speakers<br />
+        <span class="gradient-text-orange">on time, on stage</span>
+      </h1>
+      <p class="hero-subtitle ph-entrance" style="--del:2">
+        Big fullscreen countdown timer for event stages, with a powerful operator controller, warning and overtime modes,
+        flashable speaker messages, full-screen STOP / WRAP UP layers, one-tap display blackout, phone remote, OBS browser source,
+        REST API and a native Bitfocus Companion module.
+      </p>
+      <div class="hero-actions ph-entrance" style="--del:3">
+        <a href="#request" class="btn btn-orange btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Get the Demo (Windows)
+        </a>
+        <a href="#features" class="btn btn-ghost btn-lg">
+          Explore Features
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+      <div class="hero-tags ph-entrance" style="--del:4">
+        <span class="tag tag-orange">Big Fullscreen Display</span>
+        <span class="tag tag-orange">Warning &amp; Overtime</span>
+        <span class="tag tag-orange">Speaker Messages</span>
+        <span class="tag tag-orange">Full-Screen Layers</span>
+        <span class="tag tag-orange">Display Blackout</span>
+        <span class="tag tag-orange">Multi-Monitor</span>
+        <span class="tag tag-orange">Phone Remote (QR)</span>
+        <span class="tag tag-orange">OBS Browser Source</span>
+        <span class="tag tag-orange">OBS WebSocket</span>
+        <span class="tag tag-orange">OSC / Art-Net / sACN</span>
+        <span class="tag tag-orange">MIDI Show Control</span>
+        <span class="tag tag-orange">Webhooks</span>
+        <span class="tag tag-orange">REST + WebSocket API</span>
+        <span class="tag tag-orange">Bitfocus Companion</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────────────────── -->
+  <section class="stats" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" data-target="2">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix"></span></div>
+          <p>Display Modes</p>
+        </div>
+        <div class="stat-item" data-target="10">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">+</span></div>
+          <p>Control Surfaces</p>
+        </div>
+        <div class="stat-item" data-target="20">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">+</span></div>
+          <p>Companion Actions</p>
+        </div>
+        <div class="stat-item" data-target="100">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">%</span></div>
+          <p>Offline Capable</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ───────────────────────────────────────────── -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">What's Inside</span>
+        <h2>Built for the<br /><span class="gradient-text-orange">show-caller's table</span></h2>
+        <p>StageCue gives operators surgical control over the timer the speaker sees &mdash; on a laptop, a phone, an X-keys panel, a Stream Deck, OBS or even a custom webhook.</p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Big Fullscreen Display</h3>
+          <p>Auto-detects external monitors (hot-plug supported). Pick which display the speaker sees and StageCue opens a borderless, fullscreen countdown there &mdash; large digits, optional clock, end-time and progress bar.</p>
+          <div class="feature-tags"><span>Auto Detect</span><span>Hot-plug</span><span>Per-display</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Warning, Critical &amp; Overtime</h3>
+          <p>Configurable yellow warning and red critical thresholds (in seconds). Past zero, the timer flips to <strong>overtime mode</strong> and counts up with flashing red &mdash; so a polite speaker gets the message.</p>
+          <div class="feature-tags"><span>Yellow / Red</span><span>Flash Modes</span><span>Count-up</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Speaker Messages</h3>
+          <p>Show typed messages above the timer with one click: <em>"5 min left"</em>, <em>"wrap up"</em>, <em>"time is up"</em> or your own. Optional flashing. Auto-messages can fire at warning, critical and end thresholds.</p>
+          <div class="feature-tags"><span>Quick Presets</span><span>Custom Text</span><span>Auto-fire</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h3>Full-Screen Layers <span class="tag tag-orange" style="margin-left:6px;font-size:10px;padding:2px 8px;">NEW</span></h3>
+          <p>Slam an urgent full-screen cue <strong>over</strong> the countdown &mdash; <strong>STOP</strong>, <strong>WRAP UP</strong>, <strong>STAND BY</strong> or custom text, in a neutral or hot-red tone. One key (1 / 2 / 3) shows it, <kbd>0</kbd> hides it. Layers appear on the speaker display and the OBS source, independent of the normal message line.</p>
+          <div class="feature-tags"><span>STOP / Wrap Up</span><span>Neutral / Hot</span><span>Hotkeys</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </div>
+          <h3>Instant Display Blackout <span class="tag tag-orange" style="margin-left:6px;font-size:10px;padding:2px 8px;">NEW</span></h3>
+          <p>One <strong>Blackout</strong> button (or the <kbd>B</kbd> key) instantly cuts the speaker display to black &mdash; perfect for scene changes, walk-ons or holding the room &mdash; while the timer keeps running in the background. Tap again to restore. Mirrored to the OBS source and exposed to Companion / the API.</p>
+          <div class="feature-tags"><span>1-tap / B key</span><span>Timer Keeps Running</span><span>Companion + API</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="14" rx="2"/><polyline points="2 8 12 14 22 8"/></svg>
+          </div>
+          <h3>Multi-Speaker Sessions</h3>
+          <p>Build a running order with names, durations and notes. Jump between speakers with one click, see the next speaker on stage, and keep timings consistent across multi-talk sessions.</p>
+          <div class="feature-tags"><span>Running Order</span><span>Next-up</span><span>Notes</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3>Phone Remote (QR)</h3>
+          <p>Start the built-in phone remote and scan the QR. Any phone on the same network gets a clean web UI to start, pause, send messages, ±time, jump speakers &mdash; protected with an auto-generated API key.</p>
+          <div class="feature-tags"><span>QR Pairing</span><span>API Key</span><span>Web UI</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          </div>
+          <h3>OBS Browser Source</h3>
+          <p>A transparent browser-source URL drops the timer straight into your OBS scene for live streams &mdash; same colours, same warning logic, no chroma key needed.</p>
+          <div class="feature-tags"><span>Transparent</span><span>OBS-ready</span><span>1 URL</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>REST + WebSocket API</h3>
+          <p>Drive StageCue from anything: a webhook, a show-control system, a Python script. Full REST endpoints for start/pause/stop/adjust/cue plus a WebSocket feed of live timer state.</p>
+          <div class="feature-tags"><span>REST</span><span>WebSocket</span><span>API Key</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><circle cx="8.5" cy="15.5" r="1.5"/><circle cx="15.5" cy="15.5" r="1.5"/></svg>
+          </div>
+          <h3>Bitfocus Companion Module</h3>
+          <p>A native Companion module ships with the installer &mdash; one-click button presets for Start / Pause / Stop, ±seconds, jump speaker, send cue, plus live <code>$(stagecue:remaining)</code> variables and feedback colours.</p>
+          <div class="feature-tags"><span>Stream Deck</span><span>X-keys</span><span>Live feedback</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          </div>
+          <h3>Sound Alarms</h3>
+          <p>Built-in audible alarms at warning, critical and end-of-time. Multiple alarm styles to match the room. Silence on demand from controller, phone or Companion button.</p>
+          <div class="feature-tags"><span>Multi-style</span><span>Per-threshold</span><span>One-tap silence</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Branded Display</h3>
+          <p>Customise the speaker-facing display: title, sponsor logo, optional wall clock, end-time and progress bar &mdash; all toggleable per show.</p>
+          <div class="feature-tags"><span>Logo</span><span>Wall Clock</span><span>Ends-at</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h18v4H3zM3 10h18v4H3zM3 17h18v4H3z"/></svg>
+          </div>
+          <h3>Keyboard Shortcuts</h3>
+          <p><kbd>Space</kbd> start / pause, <kbd>R</kbd> reset, <kbd>C</kbd> clear message, <kbd>Esc</kbd> closes the speaker display. Fast, ergonomic, made for an FOH operator.</p>
+          <div class="feature-tags"><span>Space</span><span>R</span><span>C / Esc</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>100% Offline</h3>
+          <p>No cloud, no accounts, no internet required after install. The remote, OBS source and API run on your local network only &mdash; safe on closed event LANs.</p>
+          <div class="feature-tags"><span>No Cloud</span><span>Local LAN</span><span>API Key</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          </div>
+          <h3>OSC over UDP &amp; TCP <span class="tag tag-orange" style="margin-left:6px;font-size:10px;padding:2px 8px;">NEW</span></h3>
+          <p>Broadcast every timer event over <strong>Open Sound Control</strong> &mdash; UDP <em>or</em> TCP for reliable show-control runs. Perfect for QLab, ETC Eos, MA3, Resolume, TouchDesigner, Isadora and any OSC-aware system.</p>
+          <div class="feature-tags"><span>UDP / TCP</span><span>QLab</span><span>Eos / MA3</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Art-Net &amp; sACN Lighting <span class="tag tag-orange" style="margin-left:6px;font-size:10px;padding:2px 8px;">NEW</span></h3>
+          <p>Drive DMX values from timer state &mdash; turn the room red on overtime, fade strobes at the warning threshold, or pulse a cue light when the speaker should wrap. Native <strong>Art-Net</strong> and <strong>sACN (E1.31)</strong> output.</p>
+          <div class="feature-tags"><span>Art-Net</span><span>sACN E1.31</span><span>DMX Cues</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+          <h3>MIDI Show Control <span class="tag tag-orange" style="margin-left:6px;font-size:10px;padding:2px 8px;">NEW</span></h3>
+          <p>Send MSC <code>GO</code>, <code>STOP</code>, <code>RESUME</code> messages on timer events to lighting consoles, sound playback systems and theatre automation &mdash; the same protocol used by every major show-control desk for decades.</p>
+          <div class="feature-tags"><span>MSC</span><span>Go / Stop</span><span>Universal</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+          </div>
+          <h3>Outgoing Webhooks <span class="tag tag-orange" style="margin-left:6px;font-size:10px;padding:2px 8px;">NEW</span></h3>
+          <p>Fire HTTP <code>POST</code> requests on every significant event &mdash; start, pause, warning, critical, overtime, speaker change. Hook into Slack, Microsoft Teams, Zapier, n8n or your own dashboards.</p>
+          <div class="feature-tags"><span>HTTP POST</span><span>JSON Payload</span><span>Per-event</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/><line x1="9" y1="12" x2="9.01" y2="12"/></svg>
+          </div>
+          <h3>OBS WebSocket Control <span class="tag tag-orange" style="margin-left:6px;font-size:10px;padding:2px 8px;">NEW</span></h3>
+          <p>Beyond the browser source &mdash; StageCue can now <strong>drive OBS directly</strong> via OBS WebSocket. Switch scenes on speaker change, start recording when the timer starts, mute mics on overtime. All from one operator surface.</p>
+          <div class="feature-tags"><span>OBS WS v5</span><span>Scene Switching</span><span>Direct Control</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3>Companion Setup Wizard <span class="tag tag-orange" style="margin-left:6px;font-size:10px;padding:2px 8px;">NEW</span></h3>
+          <p>A guided one-click wizard inside the app installs the Bitfocus Companion module, starts the StageCue server, and tests the connection &mdash; no manual file copying, no config files. From install to live Stream Deck in under a minute.</p>
+          <div class="feature-tags"><span>Guided</span><span>One-click</span><span>Self-test</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHAT'S NEW IN 1.4.1 ────────────────────────────────── -->
+  <section class="features" id="whats-new" style="padding-top:40px;">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label" style="background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.3);color:#fb923c;">Release 1.4.1</span>
+        <h2>Own the room with<br /><span class="gradient-text-orange">Layers &amp; Blackout</span></h2>
+        <p>StageCue 1.4.1 adds two instant, high-impact stage controls &mdash; full-screen message <strong>Layers</strong> that slam STOP / WRAP UP / STAND BY over the countdown, and a one-tap <strong>Blackout</strong> that cuts the speaker display to black while the timer keeps running &mdash; on top of the full pro-AV integration suite (OSC, MSC, Art-Net, sACN, OBS WebSocket, webhooks and Companion).</p>
+      </div>
+
+      <!-- Real screenshots showcase -->
+      <div class="reveal" style="display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin:8px 0 40px;">
+        <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(249,115,22,0.26);box-shadow:0 30px 90px rgba(249,115,22,0.14);">
+          <div class="window-bar" style="background:rgba(249,115,22,0.05);">
+            <div class="window-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+            <span class="window-title-text" style="color:#fb923c;">StageCue &mdash; Operator Controller</span>
+          </div>
+          <img src="screenshots-stagecue-v2/stagecue-controller.png" alt="StageCue operator controller showing the new Blackout button and full-screen Layers panel with STOP, WRAP UP and STAND BY presets" loading="lazy" style="width:100%;display:block;">
+        </div>
+        <div style="display:grid;grid-template-rows:1fr 1fr;gap:18px;">
+          <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(249,115,22,0.26);box-shadow:0 30px 90px rgba(249,115,22,0.14);background:#1a0606;">
+            <img src="screenshots-stagecue-v2/stagecue-display-layer.png" alt="StageCue speaker display showing a full-screen hot-red STOP layer over the countdown" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(249,115,22,0.26);box-shadow:0 30px 90px rgba(249,115,22,0.14);background:#000;display:flex;align-items:center;justify-content:center;min-height:120px;">
+            <img src="screenshots-stagecue-v2/stagecue-display-blackout.png" alt="StageCue speaker display blacked out with one tap while the timer keeps running" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+        </div>
+      </div>
+
+      <div class="workflow-grid">
+        <div class="workflow-step reveal" data-delay="0">
+          <div class="wf-num">+</div>
+          <div class="wf-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h3>Full-Screen Layers</h3>
+          <p>STOP / WRAP UP / STAND BY or custom text slammed over the timer in neutral or hot-red tone &mdash; one keypress, mirrored to the OBS source.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="120">
+          <div class="wf-num">+</div>
+          <div class="wf-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </div>
+          <h3>Instant Blackout</h3>
+          <p>One tap (or the <kbd>B</kbd> key) cuts the speaker display to black for scene changes and walk-ons &mdash; the timer keeps running underneath.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="240">
+          <div class="wf-num">+</div>
+          <div class="wf-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          </div>
+          <h3>Pro-AV Integrations</h3>
+          <p>OSC (UDP/TCP), MIDI Show Control, Art-Net, sACN E1.31, OBS WebSocket and outgoing webhooks &mdash; all configurable from one integrations modal.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="360">
+          <div class="wf-num">+</div>
+          <div class="wf-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><circle cx="15.5" cy="8.5" r="1.5"/><circle cx="8.5" cy="15.5" r="1.5"/><circle cx="15.5" cy="15.5" r="1.5"/></svg>
+          </div>
+          <h3>Companion Wizard</h3>
+          <p>One-click setup for the Bitfocus Companion module &mdash; install, start, self-test, connect. Stream Deck operators live in under a minute, now with Layer &amp; Blackout buttons.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WORKFLOW ───────────────────────────────────────────── -->
+  <section class="workflow" id="workflow">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">How It Works</span>
+        <h2>From speaker brief to<br /><span class="gradient-text-orange">live show in 4 steps</span></h2>
+      </div>
+      <div class="workflow-grid">
+        <div class="workflow-step reveal" data-delay="0">
+          <div class="wf-num">01</div>
+          <div class="wf-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+          </div>
+          <h3>Plug In</h3>
+          <p>Connect the second monitor (HDMI / SDI converter / NDI). StageCue auto-detects it and offers it as the speaker display.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="120">
+          <div class="wf-num">02</div>
+          <div class="wf-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Set Times</h3>
+          <p>Pick duration, warning and critical thresholds, choose alarm style, and brand the display with a title or logo.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="240">
+          <div class="wf-num">03</div>
+          <div class="wf-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </div>
+          <h3>Run the Show</h3>
+          <p>Start with <kbd>Space</kbd>, send a message with one click, jump speakers, ±time on the fly &mdash; from controller, phone or Stream Deck.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="360">
+          <div class="wf-num">04</div>
+          <div class="wf-icon icon-orange-sc">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Stay In Control</h3>
+          <p>Past zero, overtime mode flashes red. Your speaker sees the cue, the alarm fires, and the show stays on schedule.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ACCESS / PRICING ───────────────────────────────────── -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Access</span>
+        <h2>Get started with<br /><span class="gradient-text-orange">StageCue</span></h2>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card reveal" data-delay="0">
+          <div class="pricing-tier">Demo Version</div>
+          <div class="pricing-price"><span class="price-main">15-Day Trial</span></div>
+          <p class="pricing-sub">Try the full controller and display free for 15 days &mdash; no account, fully offline.</p>
+          <ul class="pricing-list">
+            <li><span class="chk">✓</span> Big fullscreen speaker display</li>
+            <li><span class="chk">✓</span> Operator controller with all shortcuts</li>
+            <li><span class="chk">✓</span> Warning / Critical / Overtime modes</li>
+            <li><span class="chk">✓</span> Speaker messages (presets + custom)</li>
+            <li><span class="chk">✓</span> Multi-monitor auto-detect</li>
+            <li><span class="chk">✓</span> Phone remote (QR code)</li>
+            <li><span class="chk">✓</span> OBS browser source</li>
+            <li><span class="chk">✓</span> REST + WebSocket API</li>
+            <li><span class="chk">✓</span> 100% offline</li>
+          </ul>
+          <a href="#request" class="btn btn-ghost btn-full">Request Demo Access</a>
+        </div>
+        <div class="pricing-card pricing-featured reveal" data-delay="150" style="border-color:rgba(249,115,22,0.4);">
+          <div class="pricing-badge" style="background:linear-gradient(135deg,#f97316,#f43f5e)">Full Access</div>
+          <div class="pricing-tier">Professional</div>
+          <div class="pricing-price">
+            <span class="price-main">Get in Touch</span>
+            <span class="price-note">for full application access</span>
+          </div>
+          <p class="pricing-sub">For event producers, AV companies and broadcast studios.</p>
+          <ul class="pricing-list">
+            <li><span class="chk">✓</span> Everything in Demo</li>
+            <li><span class="chk">✓</span> Bitfocus Companion module + setup wizard</li>
+            <li><span class="chk">✓</span> OSC over UDP / TCP (QLab, Eos, MA3…)</li>
+            <li><span class="chk">✓</span> MIDI Show Control (MSC) output</li>
+            <li><span class="chk">✓</span> Art-Net &amp; sACN (E1.31) DMX output</li>
+            <li><span class="chk">✓</span> Outgoing webhooks (HTTP POST on events)</li>
+            <li><span class="chk">✓</span> OBS WebSocket direct control</li>
+            <li><span class="chk">✓</span> Multi-speaker sessions &amp; running order</li>
+            <li><span class="chk">✓</span> Auto-messages at warning / critical / end</li>
+            <li><span class="chk">✓</span> Branded display (logo, sponsor title)</li>
+            <li><span class="chk">✓</span> Multiple alarm styles</li>
+            <li><span class="chk">✓</span> Per-machine licensed install</li>
+            <li><span class="chk">✓</span> Priority support &amp; commercial use license</li>
+          </ul>
+          <a href="mailto:dhiraj.kalra@gmail.com?subject=StageCue%20-%20Full%20Access%20Request&body=Hi%20Dhiraj%2C%0A%0AI%20am%20interested%20in%20getting%20full%20access%20to%20StageCue.%0A%0AName%3A%20%0ACompany%3A%20%0AUse%20case%3A%20%0A%0AThank%20you." class="btn btn-orange btn-full">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REQUEST ACCESS ─────────────────────────────────────── -->
+  <section class="req-section" id="request">
+    <span id="full-version"></span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Get StageCue</span>
+        <h2>Ready to <span class="gradient-text-orange">try StageCue</span>?</h2>
+        <p>Start your 15-day free trial or request the full version &mdash; downloads and licensing are handled on our secure access page.</p>
+      </div>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:8px;">
+        <a href="access.html#request" class="btn btn-orange btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Start 15-Day Free Trial
+        </a>
+        <a href="access.html#full-version" class="btn btn-ghost btn-lg">
+          Get the Full Version
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+      <p class="reveal" style="text-align:center;color:var(--text-3);font-size:0.9rem;margin-top:18px;">Runs 100% offline on Windows 10/11 &mdash; free to try for 15 days.</p>
+    </div>
+  </section>
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="nav-logo" href="index.html">
+            <div class="logo-icon">
+              <img src="stagecue-logo.png" alt="StageCue" class="nav-logo-img">
+            </div>
+            <span>StageCue</span>
+          </a>
+          <p>Professional countdown timer for stage speakers, conferences and live events. Built by a working video engineer.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="stagecue.html#features">Features</a>
+            <a href="stagecue.html#workflow">How It Works</a>
+            <a href="stagecue.html#request">Get Demo</a>
+            <a href="access.html#full-version">Full Access</a>
+          </div>
+          <div class="footer-col">
+            <h4>Other Apps</h4>
+            <a href="pixelogic.html">Pixelogic</a>
+            <a href="eventflow.html">Eventflow Schematics</a>
+            <a href="index.html#apps">All Products</a>
+            <a href="home.html">Overview</a>
+            <a href="about.html">Crafted by Dhiraj Kalra</a>
+          </div>
+          <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:dhiraj.kalra@gmail.com">Email</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          <p>© 2025–2026 <strong>Dhiraj Kalra</strong>. All rights reserved.</p>
+          <p class="footer-copy-sub">StageCue is an original work created and owned by Dhiraj Kalra.
+            Unauthorised reproduction or distribution is prohibited.
+          </p>
+        </div>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div class="visitor-counter" id="visitor-counter"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

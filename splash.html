@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Pixelogic</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: #07090f;
+    overflow: hidden;
+    font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif;
+    user-select: none;
+    -webkit-app-region: drag;
+  }
+
+  .scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+  }
+
+  /* Animated gradient background */
+  .bg-glow {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 55% at 50% 45%, rgba(99,102,241,0.13) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 30% 60%, rgba(34,211,238,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 70% 30%, rgba(168,85,247,0.07) 0%, transparent 60%);
+    animation: bgPulse 3s ease-in-out infinite alternate;
+  }
+  @keyframes bgPulse {
+    from { opacity: 0.6; }
+    to   { opacity: 1; }
+  }
+
+  /* Logo container */
+  .logo-wrap {
+    position: relative;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+    animation: logoIn 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+  }
+  @keyframes logoIn {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .logo-wrap img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 28px rgba(99,102,241,0.55)) drop-shadow(0 0 8px rgba(34,211,238,0.3));
+    animation: logoFloat 3s ease-in-out 0.85s infinite alternate;
+  }
+  @keyframes logoFloat {
+    from { filter: drop-shadow(0 0 28px rgba(99,102,241,0.55)) drop-shadow(0 0 8px rgba(34,211,238,0.3)); }
+    to   { filter: drop-shadow(0 0 40px rgba(99,102,241,0.75)) drop-shadow(0 0 14px rgba(34,211,238,0.45)); }
+  }
+
+  /* Text block */
+  .text-block {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: textIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+  }
+  @keyframes textIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .app-name {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #e2e8f0 0%, #a5b4fc 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .tagline {
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748b;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    position: relative;
+    z-index: 10;
+    width: 180px;
+    opacity: 0;
+    animation: fadeIn 0.4s ease 0.9s forwards;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 2px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #6366f1, #22d3ee);
+    animation: progressFill 1.6s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+    box-shadow: 0 0 8px rgba(99,102,241,0.6);
+  }
+  @keyframes progressFill {
+    0%   { width: 0%; }
+    60%  { width: 75%; }
+    85%  { width: 90%; }
+    100% { width: 100%; }
+  }
+
+  /* Version + author footer */
+  .footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0; right: 0;
+    text-align: center;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeIn 0.4s ease 1s forwards;
+  }
+
+  .footer span {
+    font-size: 10px;
+    color: #334155;
+    letter-spacing: 0.06em;
+  }
+
+  /* Subtle particle dots */
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(99,102,241,0.35);
+    animation: particleDrift linear infinite;
+  }
+  @keyframes particleDrift {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-120px) translateX(30px); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<div class="particles" id="particles"></div>
+
+<div class="scene">
+  <div class="logo-wrap">
+    <img id="logo-img" src="" alt="Pixelogic"/>
+  </div>
+
+  <div class="text-block">
+    <div class="app-name">Pixelogic</div>
+    <div class="tagline">LED &amp; Projector Pattern Generator</div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-track">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span id="version-label">v1.0 &nbsp;·&nbsp; by Dhiraj Kalra</span>
+</div>
+
+<script>
+  // Receive version from main process
+  window.addEventListener('message', (e) => {
+    if (e.data && e.data.version) {
+      document.getElementById('version-label').textContent =
+        'v' + e.data.version + '  ·  by Dhiraj Kalra';
+    }
+    if (e.data && e.data.logoPath) {
+      document.getElementById('logo-img').src = e.data.logoPath;
+    }
+  });
+
+  // Generate subtle floating particles
+  const container = document.getElementById('particles');
+  const count = 18;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 3 + 1.5;
+    const left = Math.random() * 100;
+    const bottom = Math.random() * 40;
+    const dur = Math.random() * 4 + 3;
+    const delay = Math.random() * 4;
+    const colors = ['rgba(99,102,241,0.4)', 'rgba(34,211,238,0.35)', 'rgba(168,85,247,0.35)', 'rgba(244,114,182,0.3)'];
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${left}%;
+      bottom:${bottom}%;
+      background:${colors[Math.floor(Math.random() * colors.length)]};
+      animation-duration:${dur}s;
+      animation-delay:-${delay}s;
+    `;
+    container.appendChild(p);
+  }
+</script>
+</body>
+</html>

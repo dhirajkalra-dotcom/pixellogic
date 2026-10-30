@@ -1,0 +1,4 @@
+# Library files are included by other PHP scripts; never serve directly.
+<FilesMatch "\.(php|sqlite|log)$">
+    Require all denied
+</FilesMatch>

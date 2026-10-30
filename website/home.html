@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWXRY7WBQT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HWXRY7WBQT');
+  </script>
+  <meta name="description" content="Pixelogic and Eventflow Schematics — professional AV engineering and event production software built for integrators, engineers and live event professionals." />
+  <title>Pixelogic &amp; Eventflow — Professional AV &amp; Event Production Software</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta property="og:title" content="Pixelogic & Eventflow — Professional AV & Event Production Software" />
+  <meta property="og:description" content="Professional AV engineering and event production software built for integrators, engineers and live event professionals." />
+  <meta property="og:image" content="https://www.pixelogic.co.in/og-image.png" />
+  <meta property="og:url" content="https://www.pixelogic.co.in/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Pixelogic" />
+
+  <!-- Canonical & SEO -->
+  <link rel="canonical" href="https://www.pixelogic.co.in/" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Dhiraj Kalra" />
+  <meta name="keywords" content="AV engineering software, event production software, LED wall design, signal flow diagram, AV schematic software, LED pixel map, LED processor patching, video wall calculator, live event software, Pixelogic, Eventflow" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pixelogic & Eventflow — Professional AV & Event Production Software" />
+  <meta name="twitter:description" content="Professional AV engineering and event production software built for integrators, engineers and live event professionals." />
+  <meta name="twitter:image" content="https://www.pixelogic.co.in/og-image.png" />
+
+  <!-- Structured Data: Organization + Website -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.pixelogic.co.in/#organization",
+        "name": "Pixelogic",
+        "url": "https://www.pixelogic.co.in/",
+        "logo": "https://www.pixelogic.co.in/pixelogic-logo.png",
+        "founder": { "@type": "Person", "name": "Dhiraj Kalra" },
+        "description": "Professional AV engineering and event production software for integrators, engineers and live event professionals."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.pixelogic.co.in/#website",
+        "url": "https://www.pixelogic.co.in/",
+        "name": "Pixelogic & Eventflow",
+        "publisher": { "@id": "https://www.pixelogic.co.in/#organization" },
+        "inLanguage": "en"
+      }
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── LAUNCH INTRO (particle burst → logo → reveal) ──────────── -->
+  <div class="launch-intro" id="launch-intro" aria-hidden="true">
+    <canvas id="launch-intro-canvas"></canvas>
+    <img src="pixelogic-logo.png" alt="" class="launch-intro-logo" id="launch-intro-logo">
+  </div>
+  <style>
+    .launch-intro {
+      position: fixed; inset: 0; z-index: 100000;
+      background: radial-gradient(ellipse at center, #0b1224 0%, #050810 75%);
+      display: none; overflow: hidden; pointer-events: none;
+    }
+    .launch-intro.active { display: block; pointer-events: auto; }
+    .launch-intro canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .launch-intro-logo {
+      position: absolute; top: 50%; left: 50%;
+      width: clamp(180px, 28vw, 320px);
+      transform: translate(-50%, -50%) scale(0.6);
+      opacity: 0; filter: drop-shadow(0 0 30px rgba(129,140,248,0.45));
+      mix-blend-mode: screen;
+      transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .launch-intro.logo-in .launch-intro-logo { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    .launch-intro.fade-out { opacity: 0; transition: opacity 0.9s ease 0.1s; }
+  </style>
+
+  <!-- ── PAGE LOADER ───────────────────────────────────────────── -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-content">
+      <img src="pixelogic-logo.png" alt="Pixelogic" class="loader-logo">
+      <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ── AMBIENT STAGE LIGHTING ───────────────────────────── -->
+  <div class="world-bg" aria-hidden="true">
+    <div class="wb-blob wb-blob-a"></div>
+    <div class="wb-blob wb-blob-b"></div>
+    <div class="wb-blob wb-blob-c"></div>
+  </div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ── NAVBAR ──────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a class="nav-logo" href="#hero">
+        <div class="logo-icon">
+            <img src="pixelogic-logo.png" alt="Pixelogic" class="nav-logo-img">
+          </div>
+        <span>Pixelogic</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="pixelogic.html">Pixelogic</a></li>
+        <li><a href="projection-logic.html">Projection Logic</a></li>
+        <li><a href="eventflow.html">Eventflow</a></li>
+        <li><a href="stagecue.html">StageCue</a></li>
+        <!-- <li><a href="screencontrol.html">ScreenControl</a></li> -->
+        <li><a href="access.html">Access</a></li>
+        <li><a href="about.html">Creator</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li class="nav-cta-mobile"><a href="access.html#demos" class="btn btn-primary">Get Demo</a></li>
+      </ul>
+      <a href="access.html#demos" class="btn btn-primary nav-cta-desktop">Get Demo</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────────── -->
+  <style>
+    @keyframes heroFloatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+    @keyframes heroFloatB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-22px)} }
+    @keyframes heroFloatC { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+    @keyframes gradShimmer { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    @keyframes scrollBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(7px)} }
+    .hw-a { animation:heroFloatA 6s ease-in-out infinite; }
+    .hw-b { animation:heroFloatB 5s ease-in-out infinite 0.4s; }
+    .hw-c { animation:heroFloatC 6.5s ease-in-out infinite 1s; }
+    .hw-link > .hw-frame { transition:transform 0.35s ease, box-shadow 0.35s ease; }
+    .hw-link:hover > .hw-frame { transform:scale(1.025) translateY(-5px); }
+    .shimmer-text { background:linear-gradient(135deg,#818cf8 0%,#a78bfa 30%,#38bdf8 60%,#818cf8 100%); background-size:200% 200%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:gradShimmer 5s ease infinite; }
+    @media(max-width:900px){ .hero-3win{grid-template-columns:1fr!important;} .hw-a,.hw-b,.hw-c{animation:none!important;} }
+    @media(max-width:860px){ .spotlight-grid{grid-template-columns:1fr!important;} }
+  </style>
+  <section class="page-hero" id="hero" style="min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-bottom:60px;">
+    <div class="container" style="position:relative;z-index:2;text-align:center;padding-top:110px;width:100%;">
+
+      <!-- Eyebrow -->
+      <div class="reveal" style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px;">
+        <span style="width:36px;height:1px;background:linear-gradient(to right,transparent,rgba(129,140,248,0.7));display:inline-block;"></span>
+        <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#818cf8;font-weight:700;">Pixelogic Studio &nbsp;&middot;&nbsp; Professional AV Software</span>
+        <span style="width:36px;height:1px;background:linear-gradient(to left,transparent,rgba(129,140,248,0.7));display:inline-block;"></span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="hero-title reveal" style="font-size:clamp(3rem,7.5vw,5.8rem);line-height:1.02;font-weight:900;letter-spacing:-0.045em;margin-bottom:24px;">
+        Built by an Engineer<br />
+        <span class="shimmer-text">For Engineers</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="hero-subtitle reveal" style="max-width:720px;margin:0 auto 48px;font-size:clamp(15px,2.2vw,19px);color:var(--text-2);line-height:1.75;">
+        Three professional Windows applications for LED engineering, event production schematics
+        and stage management &mdash; all 100% offline, no subscriptions.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="hero-actions reveal" style="justify-content:center;flex-wrap:wrap;gap:14px;margin-bottom:72px;">
+        <a href="pixelogic.html" class="btn btn-primary btn-lg" style="gap:9px;">
+          <div class="logo-icon sm" style="width:20px;height:20px;"><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div></div>
+          Pixelogic
+        </a>
+        <a href="eventflow.html" class="btn btn-ghost btn-lg" style="border-color:rgba(20,184,166,0.5);color:#2dd4bf;gap:9px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Eventflow
+        </a>
+        <a href="stagecue.html" class="btn btn-ghost btn-lg" style="border-color:rgba(249,115,22,0.5);color:#fb923c;gap:9px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          StageCue
+        </a>
+      </div>
+
+      <!-- Three Floating App Windows -->
+      <div class="hero-3win reveal" style="display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:18px;align-items:end;max-width:1280px;margin:0 auto;">
+
+        <!-- Pixelogic -->
+        <a href="pixelogic.html" class="hw-link" style="text-decoration:none;">
+          <div class="hw-a" style="margin-bottom:22px;">
+            <div class="hw-frame" style="border-radius:12px;overflow:hidden;border:1px solid rgba(99,102,241,0.32);box-shadow:0 20px 70px rgba(99,102,241,0.18),0 0 0 1px rgba(99,102,241,0.06);">
+              <div class="window-bar">
+                <div class="window-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <span class="window-title-text" style="color:#a5b4fc;">Pixelogic</span>
+              </div>
+              <div style="height:210px;overflow:hidden;background:#08091a;">
+                <img src="screenshots-v2/02-Pixel-Designer.png" alt="Pixelogic" loading="eager" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;">
+              </div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:#818cf8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-align:left;padding-left:4px;">LED &amp; AV Engineering</p>
+        </a>
+
+        <!-- Eventflow (centre — taller, elevated) -->
+        <a href="eventflow.html" class="hw-link" style="text-decoration:none;">
+          <div class="hw-b">
+            <div class="hw-frame" style="border-radius:14px;overflow:hidden;border:1px solid rgba(20,184,166,0.42);box-shadow:0 32px 110px rgba(20,184,166,0.22),0 0 0 1px rgba(20,184,166,0.08),0 0 50px rgba(20,184,166,0.06);">
+              <div class="window-bar" style="background:rgba(20,184,166,0.07);">
+                <div class="window-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <span class="window-title-text" style="color:#2dd4bf;">Eventflow Schematics</span>
+              </div>
+              <div style="height:270px;overflow:hidden;background:#020d0b;">
+                <img src="screenshots/ef-01-main-canvas.png" alt="Eventflow" loading="eager" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;">
+              </div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:#2dd4bf;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-align:center;padding-top:14px;">Event Production Schematics</p>
+        </a>
+
+        <!-- StageCue -->
+        <a href="stagecue.html" class="hw-link" style="text-decoration:none;">
+          <div class="hw-c" style="margin-bottom:22px;">
+            <div class="hw-frame" style="border-radius:12px;overflow:hidden;border:1px solid rgba(249,115,22,0.32);box-shadow:0 20px 70px rgba(249,115,22,0.16),0 0 0 1px rgba(249,115,22,0.06);">
+              <div class="window-bar" style="background:rgba(249,115,22,0.05);">
+                <div class="window-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                <span class="window-title-text" style="color:#fb923c;">StageCue</span>
+              </div>
+              <div style="height:210px;overflow:hidden;background:#0d0800;">
+                <img src="screenshots-stagecue-v2/stagecue-controller.png" alt="StageCue" loading="eager" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;">
+              </div>
+            </div>
+          </div>
+          <p style="font-size:12px;color:#fb923c;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;text-align:right;padding-right:4px;">Speaker Stage Timer</p>
+        </a>
+
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="reveal" style="margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.32;">
+        <span style="font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-3);">Scroll to explore</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:scrollBounce 2s ease-in-out infinite;"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────────────────── -->
+  <section class="stats" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" data-target="3">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix"></span></div>
+          <p>Professional Apps</p>
+        </div>
+        <div class="stat-item" data-target="490">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">+</span></div>
+          <p>Equipment Symbols</p>
+        </div>
+        <div class="stat-item" data-target="16">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">+</span></div>
+          <p>Years on the Floor</p>
+        </div>
+        <div class="stat-item" data-target="100">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">%</span></div>
+          <p>Offline Capable</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── APP SPOTLIGHTS ────────────────────────────────────── -->
+  <!-- 01 — PIXELOGIC -->
+  <section id="pixelogic-spotlight" style="padding:100px 0;position:relative;overflow:hidden;">
+<div class="container" style="position:relative;z-index:1;">
+    <div style="position:absolute;left:-180px;top:50%;transform:translateY(-50%);width:560px;height:560px;background:radial-gradient(circle,rgba(99,102,241,0.07) 0%,transparent 70%);pointer-events:none;" aria-hidden="true"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;" class="spotlight-grid">
+        <!-- Info (left) -->
+        <div class="reveal">
+          <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#818cf8;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+            <span style="width:28px;height:1px;background:#818cf8;display:inline-block;"></span>01
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+            <div class="prod-logo prod-logo-purple" style="width:54px;height:54px;flex-shrink:0;">
+              <div class="logo-icon"><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div></div>
+            </div>
+            <div>
+              <h2 style="font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:900;line-height:1;letter-spacing:-0.03em;margin:0;">Pixelogic</h2>
+              <p style="font-size:14px;color:var(--text-3);margin:4px 0 0;">LED Wall &amp; AV Engineering Suite &nbsp;&middot;&nbsp; v1.0.2</p>
+            </div>
+          </div>
+          <p style="color:var(--text-2);font-size:16px;line-height:1.75;margin-bottom:28px;">The complete desktop toolkit for LED &amp; projector pixel map design, LED processor patching, AV schematics and show documentation. From array config to client-ready PDFs &mdash; all offline on Windows.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px;">
+            <div style="padding:14px 16px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#a5b4fc;margin-bottom:3px;">Pixel Map Designer</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">Shape walls &middot; 65+ tile presets &middot; 2D &amp; 3D viz</div></div>
+            <div style="padding:14px 16px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#a5b4fc;margin-bottom:3px;">LED Patching</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">22+ processors &middot; Data routing &middot; Power calc</div></div>
+            <div style="padding:14px 16px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#a5b4fc;margin-bottom:3px;">AV Schematics</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">50+ devices &middot; 14 signal types &middot; PDF export</div></div>
+            <div style="padding:14px 16px;background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#a5b4fc;margin-bottom:3px;">Power Calculator</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">65+ tile models &middot; 3-Phase &middot; PDF report</div></div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="pixelogic.html#request" class="btn btn-primary">Get Demo</a>
+            <a href="pixelogic.html#full-version" class="btn btn-ghost">Get Full Access</a>
+          </div>
+        </div>
+        <!-- Screenshot (right) -->
+        <div class="reveal">
+          <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(99,102,241,0.26);box-shadow:0 40px 120px rgba(99,102,241,0.16),0 0 0 1px rgba(99,102,241,0.08);">
+            <div class="window-bar">
+              <div class="window-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+              <span class="window-title-text" style="color:#a5b4fc;">Pixelogic &mdash; Pixel Map Designer</span>
+            </div>
+            <img src="screenshots-v2/02-Pixel-Designer.png" alt="Pixelogic" loading="lazy" style="width:100%;display:block;">
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+            <span class="tag" style="background:rgba(99,102,241,0.08);border-color:rgba(99,102,241,0.22);color:#a5b4fc;">v1.0.2</span>
+            <span class="tag" style="background:rgba(99,102,241,0.08);border-color:rgba(99,102,241,0.22);color:#a5b4fc;">12 Modules</span>
+            <span class="tag" style="background:rgba(99,102,241,0.08);border-color:rgba(99,102,241,0.22);color:#a5b4fc;">100% Offline</span>
+            <span class="tag" style="background:rgba(99,102,241,0.08);border-color:rgba(99,102,241,0.22);color:#a5b4fc;">Windows 10/11</span>
+          </div>
+        </div>
+      </div>
+
+        <!-- REMOVED (now rendered above as spotlight layout) -->
+        <div class="prod-card reveal" data-delay="0" style="display:none;">
+          <div class="prod-glow prod-glow-purple"></div>
+          <div class="prod-top">
+            <div class="prod-logo-wrap">
+              <div class="prod-logo prod-logo-purple">
+                <div class="logo-icon"><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div><div class="logo-pixel"></div></div>
+              </div>
+              <div>
+                <h3 class="prod-name">Pixelogic</h3>
+                <p class="prod-tagline">LED Wall &amp; AV Engineering Suite</p>
+              </div>
+            </div>
+            <span class="prod-ver">v1.0.0</span>
+          </div>
+          <p class="prod-desc">The professional desktop suite for LED &amp; projector pixel map design. Build rectangular or shape-based LED walls — circle, triangle, hexagon, cross or custom — then move from array configuration and LED processor patching to AV schematic diagrams, power calculations and projection tools — all offline, all in one app.</p>
+          <div class="prod-actions">
+            <a href="pixelogic.html#request" class="btn btn-primary">Download Demo</a>
+            <a href="pixelogic.html" class="btn btn-ghost">See All Features</a>
+          </div>
+        </div>
+
+        <!-- REMOVED -->
+        <div class="prod-card prod-card-teal reveal" data-delay="150" style="display:none;">
+          <div class="prod-glow prod-glow-teal"></div>
+          <div class="prod-top">
+            <div class="prod-logo-wrap">
+              <div class="prod-logo prod-logo-teal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div>
+                <h3 class="prod-name prod-name-teal">Eventflow Schematics</h3>
+                <p class="prod-tagline">Event Production Diagram Tool</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <span class="prod-new">NEW</span>
+              <span class="prod-ver">v0.2.4</span>
+            </div>
+          </div>
+          <p class="prod-desc">490+ real-world equipment symbols across 9 colour-coded departments, 40+ protocols, signal path tracing and protocol conflict detection. Native desktop app for Windows — 100% offline.</p>
+          <div class="prod-actions">
+            <a href="eventflow.html#request" class="btn btn-teal">Download Demo</a>
+            <a href="eventflow.html" class="btn btn-ghost">See All Features</a>
+          </div>
+        </div>
+
+        <!-- REMOVED -->
+        <div class="prod-card prod-card-orange reveal" data-delay="300" style="display:none;">
+          <div class="prod-glow prod-glow-orange"></div>
+          <div class="prod-top">
+            <div class="prod-logo-wrap">
+              <div class="prod-logo prod-logo-orange" style="padding:0;overflow:hidden">
+                <img src="stagecue-logo.png" alt="StageCue" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+              </div>
+              <div>
+                <h3 class="prod-name prod-name-orange">StageCue</h3>
+                <p class="prod-tagline">Speaker Countdown Timer</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <span class="prod-new" style="background:rgba(249,115,22,0.12); border-color:rgba(249,115,22,0.3); color:#fb923c;">NEW</span>
+              <span class="prod-ver">v1.0.0</span>
+            </div>
+          </div>
+          <p class="prod-desc">Big fullscreen countdown timer for stage speakers, with operator controller, warning &amp; overtime modes, flashable speaker messages, phone remote, OBS browser source, REST API and a native Bitfocus Companion module.</p>
+          <div class="prod-actions">
+            <a href="stagecue.html#request" class="btn btn-orange">Download Demo</a>
+            <a href="stagecue.html" class="btn btn-ghost">See All Features</a>
+          </div>
+        </div>
+
+        <!-- ScreenControl (hidden)
+        <div class="prod-card reveal" data-delay="300" style="border-color:rgba(249,115,22,0.15);">
+          <div class="prod-glow" style="background:radial-gradient(circle, rgba(249,115,22,0.12), transparent 70%);"></div>
+          <div class="prod-top">
+            <div class="prod-logo-wrap">
+              <div class="prod-logo" style="background:rgba(249,115,22,0.15); color:#fb923c;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <h3 class="prod-name" style="color:#fb923c;">ScreenControl</h3>
+                <p class="prod-tagline">Screen Time Manager</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <span class="prod-new" style="background:rgba(249,115,22,0.12); border-color:rgba(249,115,22,0.3); color:#fb923c;">FREE</span>
+            </div>
+          </div>
+          <p class="prod-desc">Monitor and limit PC screen time with smart alerts and break reminders. Control remotely from your phone via Android app or web dashboard. 100% free.</p>
+          <ul class="prod-feat-list">
+            <li><span class="pfl-dot" style="background:#fb923c;"></span>Smart active screen time tracking with idle detection</li>
+            <li><span class="pfl-dot" style="background:#fb923c;"></span>Progressive alerts at 80%, 90%, 95% + full-screen lock</li>
+            <li><span class="pfl-dot" style="background:#fb923c;"></span>Remote control from Android or any browser</li>
+            <li><span class="pfl-dot" style="background:#fb923c;"></span>PIN protection, schedules &amp; blocked hours</li>
+            <li><span class="pfl-dot" style="background:#fb923c;"></span>Windows, Android APK &amp; Web PWA — all free</li>
+          </ul>
+          <div class="prod-actions">
+            <a href="screencontrol.html#downloads" class="btn" style="background:linear-gradient(135deg, #f97316, #f43f5e); color:#fff; border:none;">Download Free</a>
+            <a href="screencontrol.html" class="btn btn-ghost">See All Features</a>
+          </div>
+        </div>
+        -->
+
+    </div>
+  </section>
+
+  <!-- 02 — EVENTFLOW -->
+  <section id="eventflow-spotlight" style="padding:100px 0;position:relative;overflow:hidden;background:rgba(20,184,166,0.018);border-top:1px solid var(--glass-b);border-bottom:1px solid var(--glass-b);">
+    <div style="position:absolute;right:-180px;top:50%;transform:translateY(-50%);width:560px;height:560px;background:radial-gradient(circle,rgba(20,184,166,0.07) 0%,transparent 70%);pointer-events:none;" aria-hidden="true"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;" class="spotlight-grid">
+        <!-- Screenshot (left) -->
+        <div class="reveal">
+          <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(20,184,166,0.26);box-shadow:0 40px 120px rgba(20,184,166,0.13),0 0 0 1px rgba(20,184,166,0.07);">
+            <div class="window-bar" style="background:rgba(20,184,166,0.06);">
+              <div class="window-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+              <span class="window-title-text" style="color:#2dd4bf;">Eventflow &mdash; Signal Flow Canvas</span>
+            </div>
+            <img src="screenshots/ef-01-main-canvas.png" alt="Eventflow Schematics" loading="lazy" style="width:100%;display:block;">
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+            <span class="tag" style="background:rgba(20,184,166,0.07);border-color:rgba(20,184,166,0.22);color:#2dd4bf;">v0.3.1</span>
+            <span class="tag" style="background:rgba(20,184,166,0.07);border-color:rgba(20,184,166,0.22);color:#2dd4bf;">490+ Symbols</span>
+            <span class="tag" style="background:rgba(20,184,166,0.07);border-color:rgba(20,184,166,0.22);color:#2dd4bf;">9 Departments</span>
+            <span class="tag" style="background:rgba(20,184,166,0.07);border-color:rgba(20,184,166,0.22);color:#2dd4bf;">40+ Protocols</span>
+          </div>
+        </div>
+        <!-- Info (right) -->
+        <div class="reveal">
+          <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#2dd4bf;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+            <span style="width:28px;height:1px;background:#2dd4bf;display:inline-block;"></span>02
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+            <div class="prod-logo prod-logo-teal" style="width:54px;height:54px;flex-shrink:0;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div>
+              <h2 style="font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:900;line-height:1;letter-spacing:-0.03em;margin:0;">Eventflow</h2>
+              <p style="font-size:14px;color:var(--text-3);margin:4px 0 0;">Event Production Schematics &nbsp;&middot;&nbsp; v0.3.1</p>
+            </div>
+          </div>
+          <p style="color:var(--text-2);font-size:16px;line-height:1.75;margin-bottom:28px;">490+ real-world equipment symbols across 9 colour-coded departments, 40+ protocols, signal path tracing and protocol conflict detection. Every cable, every route, documented before show day.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px;">
+            <div style="padding:14px 16px;background:rgba(20,184,166,0.05);border:1px solid rgba(20,184,166,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#5eead4;margin-bottom:3px;">Signal Path Tracing</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">Full chain highlight &middot; Visual debug</div></div>
+            <div style="padding:14px 16px;background:rgba(20,184,166,0.05);border:1px solid rgba(20,184,166,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#5eead4;margin-bottom:3px;">Conflict Detection</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">Auto-flag mismatched protocols in real time</div></div>
+            <div style="padding:14px 16px;background:rgba(20,184,166,0.05);border:1px solid rgba(20,184,166,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#5eead4;margin-bottom:3px;">Cable Schedules</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">Auto BOM &middot; CSV export &middot; Per department</div></div>
+            <div style="padding:14px 16px;background:rgba(20,184,166,0.05);border:1px solid rgba(20,184,166,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#5eead4;margin-bottom:3px;">PDF Export</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">A2&ndash;Letter &middot; 216 DPI &middot; Dark/Light</div></div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="eventflow.html#request" class="btn btn-teal">Get Demo</a>
+            <a href="eventflow.html#full-version" class="btn btn-ghost">Get Full Access</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 — STAGECUE -->
+  <section id="stagecue-spotlight" style="padding:100px 0;position:relative;overflow:hidden;">
+    <div style="position:absolute;right:-180px;top:50%;transform:translateY(-50%);width:560px;height:560px;background:radial-gradient(circle,rgba(249,115,22,0.06) 0%,transparent 70%);pointer-events:none;" aria-hidden="true"></div>
+    <div class="container" style="position:relative;z-index:1;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;" class="spotlight-grid">
+        <!-- Info (left) -->
+        <div class="reveal">
+          <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#fb923c;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+            <span style="width:28px;height:1px;background:#fb923c;display:inline-block;"></span>03
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+            <div class="prod-logo prod-logo-orange" style="width:54px;height:54px;flex-shrink:0;padding:0;overflow:hidden;">
+              <img src="stagecue-logo.png" alt="StageCue" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+            </div>
+            <div>
+              <h2 style="font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:900;line-height:1;letter-spacing:-0.03em;margin:0;">StageCue</h2>
+              <p style="font-size:14px;color:var(--text-3);margin:4px 0 0;">Speaker Countdown Timer &nbsp;&middot;&nbsp; v1.5.0</p>
+            </div>
+          </div>
+          <p style="color:var(--text-2);font-size:16px;line-height:1.75;margin-bottom:28px;">Big fullscreen countdown timer for event stages &mdash; operator controller, warning &amp; overtime modes, speaker messages, phone remote via QR, OBS browser source, REST/WebSocket API and native Bitfocus Companion module.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px;">
+            <div style="padding:14px 16px;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#fb923c;margin-bottom:3px;">Fullscreen Display</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">Auto-detects monitors &middot; Hot-plug &middot; Branded</div></div>
+            <div style="padding:14px 16px;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#fb923c;margin-bottom:3px;">Phone Remote</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">QR pairing &middot; API key &middot; Web UI</div></div>
+            <div style="padding:14px 16px;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#fb923c;margin-bottom:3px;">OBS Browser Source</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">Transparent overlay URL &middot; Instant setup</div></div>
+            <div style="padding:14px 16px;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.15);border-radius:10px;"><div style="font-size:12px;font-weight:700;color:#fb923c;margin-bottom:3px;">Companion Module</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;">Stream Deck &middot; X-keys &middot; Live feedback</div></div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="stagecue.html#request" class="btn btn-orange">Get Demo</a>
+            <a href="stagecue.html#full-version" class="btn btn-ghost">Get Full Access</a>
+          </div>
+        </div>
+        <!-- Screenshots (right) -->
+        <div class="reveal">
+          <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(249,115,22,0.26);box-shadow:0 40px 120px rgba(249,115,22,0.13),0 0 0 1px rgba(249,115,22,0.07);margin-bottom:14px;">
+            <div class="window-bar" style="background:rgba(249,115,22,0.05);">
+              <div class="window-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+              <span class="window-title-text" style="color:#fb923c;">StageCue &mdash; Operator Controller</span>
+            </div>
+            <img src="screenshots-stagecue-v2/stagecue-controller.png" alt="StageCue Controller with Blackout button and full-screen Layers panel" loading="lazy" style="width:100%;display:block;">
+          </div>
+          <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(249,115,22,0.18);box-shadow:0 16px 50px rgba(249,115,22,0.10);">
+            <div class="window-bar" style="background:rgba(0,0,0,0.4);">
+              <div class="window-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+              <span class="window-title-text" style="color:#fb923c;">StageCue &mdash; Speaker Display</span>
+            </div>
+            <img src="screenshots-stagecue-v2/stagecue-display-layer.png" alt="StageCue Speaker Display showing a full-screen STOP layer" loading="lazy" style="width:100%;display:block;">
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+            <span class="tag" style="background:rgba(249,115,22,0.07);border-color:rgba(249,115,22,0.22);color:#fb923c;">v1.5.0</span>
+            <span class="tag" style="background:rgba(249,115,22,0.07);border-color:rgba(249,115,22,0.22);color:#fb923c;">REST API</span>
+            <span class="tag" style="background:rgba(249,115,22,0.07);border-color:rgba(249,115,22,0.22);color:#fb923c;">100% Offline</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CREATOR INTRO ─────────────────────────────────────── -->
+  <section id="creator" style="padding:80px 0;">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:40px;">
+        <span class="section-label">The Creator</span>
+        <h2>Crafted by<br /><span class="gradient-text">Dhiraj Kalra</span></h2>
+      </div>
+      <div class="builder-card reveal" style="max-width:960px;margin:0 auto;">
+        <div class="builder-glow"></div>
+        <div class="builder-avatar-wrap">
+          <div class="builder-avatar">
+            <img src="dhiraj.jpg" alt="Dhiraj Kalra" class="avatar-photo" loading="lazy">
+            <div class="avatar-photo-overlay"></div>
+          </div>
+          <div class="builder-avatar-ring"></div>
+          <div class="builder-socials">
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer" class="builder-social-btn" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <span>@im_dhiraj.kalra</span>
+            </a>
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer" class="builder-social-btn" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              <span>dhirajkalra82</span>
+            </a>
+          </div>
+        </div>
+        <div class="builder-info">
+          <div class="builder-name-row">
+            <h2 class="builder-name">Dhiraj Kalra</h2>
+            <span class="builder-badge">Technical Manager</span>
+          </div>
+          <p class="builder-title">Video Technical Manager &amp; Media Server Specialist</p>
+          <p class="builder-bio">
+            With <strong>16 years</strong> of turning pixels into experiences across live events, immersive shows and corporate productions, Dhiraj specialises in the technology backbone that makes visual storytelling come alive. His expertise spans <strong>Dataton Watchout 6 &amp; 7, Disguise D3, Resolume Arena</strong>, Barco E2, Pixel Hue, and Analogway Aquilion &mdash; with major productions including <em>Sharjah Light Festival 2022&ndash;2026</em>, Expo 2020 French Pavilion, Gitex 2021&ndash;2025, Anemenia 2026, SoleDXB and Tanweer Festival.
+          </p>
+          <div class="builder-certs">
+            <div class="cert-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+              Certified Dataton Watchout 7 Programmer
+            </div>
+            <div class="cert-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+              Certified Analogway Aquilion Engineer
+            </div>
+          </div>
+          <div class="builder-skills">
+            <div class="skill-chip">Media Server Programming</div>
+            <div class="skill-chip">LED Processing</div>
+            <div class="skill-chip">Projection Mapping</div>
+            <div class="skill-chip">Dataton Watchout</div>
+            <div class="skill-chip">Disguise D3</div>
+            <div class="skill-chip">Resolume Arena</div>
+            <div class="skill-chip">Seamless Switching</div>
+            <div class="skill-chip">LED Walls</div>
+            <div class="skill-chip">Motion Graphics</div>
+            <div class="skill-chip">Creative Coding</div>
+          </div>
+          <a href="about.html" class="btn btn-ghost" style="margin-top:24px;display:inline-flex;align-items:center;gap:8px;">
+            Full Profile &amp; Timeline
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ─────────────────────────────────────────────────── -->
+  <section class="home-cta" id="home-cta">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Get Started</span>
+        <h2>Ready to elevate<br /><span class="gradient-text">your production?</span></h2>
+        <p>All three apps come with a 15-day free trial &mdash; no subscriptions, no internet required. Download and run on Windows.</p>
+      </div>
+      <div class="home-cta-actions reveal" style="justify-content:center;flex-wrap:wrap;gap:12px;">
+        <a href="pixelogic.html#request" class="btn btn-primary btn-lg">Get Pixelogic</a>
+        <a href="eventflow.html#request" class="btn btn-teal btn-lg">Get Eventflow</a>
+        <a href="stagecue.html#request" class="btn btn-orange btn-lg">Get StageCue</a>
+        <a href="about.html" class="btn btn-ghost btn-lg">Meet the Creator</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="nav-logo" href="index.html">
+            <div class="logo-icon">
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+            </div>
+            <span>Pixelogic Studio</span>
+          </a>
+          <p>Professional AV &amp; live event software for engineers &mdash; 100% offline, no subscriptions.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Apps</h4>
+            <a href="pixelogic.html">Pixelogic</a>
+            <a href="eventflow.html">Eventflow Schematics</a>
+            <a href="stagecue.html">StageCue</a>
+          </div>
+          <div class="footer-col">
+            <h4>Get Access</h4>
+            <a href="access.html#demos">Get Demo</a>
+            <a href="eventflow.html#request">Eventflow Demo</a>
+            <a href="stagecue.html#request">StageCue Demo</a>
+            <a href="about.html">Meet the Creator</a>
+          </div>
+          <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:dhiraj.kalra@gmail.com">Email</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          <p>© 2025–2026 <strong>Dhiraj Kalra</strong>. All rights reserved.</p>
+          <p class="footer-copy-sub">Pixelogic &amp; Eventflow Schematics are original works created and owned by Dhiraj Kalra.
+            Unauthorised reproduction or distribution is prohibited.
+            &mdash;
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </p>
+        </div>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div class="visitor-counter" id="visitor-counter"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  // ── Launch Intro: particle burst → logo → reveal page ───────────
+  (function () {
+    try {
+      var LAUNCH_DATE = new Date('2026-04-27T00:00:00+05:30').getTime();
+      var params = new URLSearchParams(window.location.search);
+      var forced = params.has('launched') || params.has('intro');
+      var afterLaunch = Date.now() >= LAUNCH_DATE;
+      var alreadySeen = false;
+      try { alreadySeen = sessionStorage.getItem('pl_intro_seen') === '1'; } catch (_) {}
+      // Play intro when redirected from coming-soon, OR when we're past launch date and haven't shown it this session.
+      if (!forced && (!afterLaunch || alreadySeen)) return;
+      try { sessionStorage.setItem('pl_intro_seen', '1'); } catch (_) {}
+      // Clean ?launched=1 out of the URL without reloading
+      if (params.has('launched') || params.has('intro')) {
+        try {
+          params.delete('launched'); params.delete('intro');
+          var clean = window.location.pathname + (params.toString() ? ('?' + params.toString()) : '') + window.location.hash;
+          history.replaceState(null, '', clean);
+        } catch (_) {}
+      }
+
+      var intro = document.getElementById('launch-intro');
+      var canvas = document.getElementById('launch-intro-canvas');
+      var logo   = document.getElementById('launch-intro-logo');
+      if (!intro || !canvas) return;
+
+      // Hide main page scroll and any visible page-loader during the intro
+      var pl = document.getElementById('page-loader');
+      if (pl) pl.style.display = 'none';
+      var prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      intro.classList.add('active');
+
+      var ctx = canvas.getContext('2d');
+      var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+      function resize() {
+        W = canvas.clientWidth; H = canvas.clientHeight;
+        canvas.width = Math.floor(W * DPR);
+        canvas.height = Math.floor(H * DPR);
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Build particles that fly inward from random edges and converge at center
+      var COUNT = 180;
+      var particles = [];
+      var cx = function () { return W / 2; };
+      var cy = function () { return H / 2; };
+      for (var i = 0; i < COUNT; i++) {
+        var ang = Math.random() * Math.PI * 2;
+        var rad = Math.max(W, H) * (0.55 + Math.random() * 0.35);
+        particles.push({
+          sx: cx() + Math.cos(ang) * rad,
+          sy: cy() + Math.sin(ang) * rad,
+          ox: (Math.random() - 0.5) * 12,
+          oy: (Math.random() - 0.5) * 12,
+          size: 1 + Math.random() * 2.4,
+          hue: 210 + Math.random() * 80, // indigo → cyan range
+          delay: Math.random() * 380,
+          burstAng: Math.random() * Math.PI * 2,
+          burstSpeed: 6 + Math.random() * 10
+        });
+      }
+
+      var START = performance.now();
+      var CONVERGE = 1100; // ms
+      var HOLD     = 650;  // logo in place
+      var BURST    = 800;  // particles explode outward
+
+      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+      function easeInCubic(t)  { return t * t * t; }
+
+      function frame(now) {
+        var t = now - START;
+        ctx.clearRect(0, 0, W, H);
+
+        // Soft central glow that grows during converge
+        var glowT = Math.min(1, t / (CONVERGE + HOLD));
+        var glowR = Math.max(1, Math.max(W, H) * 0.18 * glowT);
+        var grad = ctx.createRadialGradient(cx(), cy(), 0, cx(), cy(), glowR);
+        grad.addColorStop(0, 'rgba(129,140,248,' + (0.55 * glowT) + ')');
+        grad.addColorStop(0.5, 'rgba(56,189,248,' + (0.25 * glowT) + ')');
+        grad.addColorStop(1, 'rgba(129,140,248,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.arc(cx(), cy(), glowR, 0, Math.PI * 2); ctx.fill();
+
+        // Particles
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          var localT = t - p.delay;
+          var x, y, a = 1;
+
+          if (localT < 0) continue;
+
+          if (localT < CONVERGE) {
+            var k = easeOutCubic(Math.min(1, localT / CONVERGE));
+            x = p.sx + (cx() + p.ox - p.sx) * k;
+            y = p.sy + (cy() + p.oy - p.sy) * k;
+            a = 0.15 + 0.85 * k;
+          } else if (localT < CONVERGE + HOLD) {
+            // Breathe slightly around center
+            var bt = (localT - CONVERGE) / HOLD;
+            x = cx() + p.ox + Math.cos(bt * Math.PI * 2 + p.burstAng) * 2;
+            y = cy() + p.oy + Math.sin(bt * Math.PI * 2 + p.burstAng) * 2;
+            a = 1;
+          } else {
+            var bk = (localT - CONVERGE - HOLD) / BURST;
+            if (bk > 1) { continue; }
+            var e = easeInCubic(bk);
+            var dist = e * p.burstSpeed * Math.max(W, H) * 0.08;
+            x = cx() + p.ox + Math.cos(p.burstAng) * dist;
+            y = cy() + p.oy + Math.sin(p.burstAng) * dist;
+            a = 1 - bk;
+          }
+
+          ctx.beginPath();
+          ctx.fillStyle = 'hsla(' + p.hue + ', 90%, 70%, ' + a + ')';
+          ctx.shadowColor = 'hsla(' + p.hue + ', 90%, 70%, ' + (a * 0.9) + ')';
+          ctx.shadowBlur = 10;
+          ctx.arc(x, y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+
+        // Reveal the logo once particles have converged
+        if (t >= CONVERGE * 0.85 && !intro.classList.contains('logo-in')) {
+          intro.classList.add('logo-in');
+        }
+
+        // Finish: after burst, fade the whole overlay out and clean up
+        if (t >= CONVERGE + HOLD + BURST - 50) {
+          intro.classList.add('fade-out');
+          setTimeout(function () {
+            intro.classList.remove('active');
+            intro.remove();
+            document.body.style.overflow = prevOverflow;
+            window.removeEventListener('resize', resize);
+          }, 950);
+          return;
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    } catch (err) {
+      // Any failure must not break the page
+      var intro = document.getElementById('launch-intro');
+      if (intro) intro.remove();
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+ErrorDocument 404 /404.html
+
+# ── Coming Soon redirect — DISABLED (site is live) ──
+# Re-enable by uncommenting the lines below if you ever need to take the site offline again.
+# RewriteEngine On
+# RewriteCond %{HTTP_COOKIE} !pixelogic_bypass=1
+# RewriteCond %{REQUEST_URI} !^/coming-soon\.html$
+# RewriteCond %{REQUEST_URI} !^/favicon\.png$
+# RewriteCond %{REQUEST_URI} !^/pixelogic-logo\.png$
+# RewriteCond %{REQUEST_URI} !^/og-image\.png$
+# RewriteCond %{REQUEST_URI} !^/google135b0b139adb93cb\.html$
+# RewriteRule ^(.*)$ /coming-soon.html [R=302,L]

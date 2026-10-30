@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HWXRY7WBQT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HWXRY7WBQT');
+  </script>
+  <meta name="description" content="Pixelogic — the professional desktop suite for LED pixel map design, 2D &amp; 3D visualizers, LED processor patching, power calculator, AV schematics and PDF/PPTX export." />
+  <title>Pixelogic — LED Wall &amp; AV Engineering Suite</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <meta property="og:title" content="Pixelogic — LED Wall & AV Engineering Suite" />
+  <meta property="og:description" content="Professional desktop suite for LED pixel map design, 2D & 3D visualizers, LED processor patching, power calculator, AV schematics, and export tools." />
+  <meta property="og:image" content="https://www.pixelogic.co.in/og-image.png" />
+  <meta property="og:url" content="https://www.pixelogic.co.in/pixelogic.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Pixelogic" />
+
+  <!-- Canonical & SEO -->
+  <link rel="canonical" href="https://www.pixelogic.co.in/pixelogic.html" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Dhiraj Kalra" />
+  <meta name="keywords" content="LED wall design software, LED pixel map, LED processor patching, MCTRL4K, NovaStar, video wall calculator, AV schematic software, 3D LED visualizer, power consumption calculator, Pixelogic" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pixelogic — LED Wall & AV Engineering Suite" />
+  <meta name="twitter:description" content="Professional desktop suite for LED pixel map design, 2D & 3D visualizers, LED processor patching, power calculator, AV schematics, and export tools." />
+  <meta name="twitter:image" content="https://www.pixelogic.co.in/og-image.png" />
+
+  <!-- Structured Data: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Pixelogic",
+    "applicationCategory": "DesignApplication",
+    "operatingSystem": "Windows, macOS",
+    "url": "https://www.pixelogic.co.in/pixelogic.html",
+    "image": "https://www.pixelogic.co.in/og-image.png",
+    "description": "Professional desktop suite for LED pixel map design, 2D & 3D visualizers, LED processor patching, power calculator, AV schematics and PDF/PPTX export.",
+    "author": { "@type": "Person", "name": "Dhiraj Kalra" },
+    "offers": { "@type": "Offer", "priceCurrency": "USD", "availability": "https://schema.org/InStock" }
+  }
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── PAGE LOADER ───────────────────────────────────────────── -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-content">
+      <img src="pixelogic-logo.png" alt="Pixelogic" class="loader-logo">
+      <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ── AMBIENT STAGE LIGHTING ───────────────────────────── -->
+  <div class="world-bg" aria-hidden="true">
+    <div class="wb-blob wb-blob-a"></div>
+    <div class="wb-blob wb-blob-b"></div>
+    <div class="wb-blob wb-blob-c"></div>
+  </div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ── NAVBAR ──────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a class="nav-logo" href="index.html">
+        <div class="logo-icon">
+            <img src="pixelogic-logo.png" alt="Pixelogic" class="nav-logo-img">
+          </div>
+        <span>Pixelogic</span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pixelogic.html">Pixelogic</a></li>
+        <li><a href="projection-logic.html">Projection Logic</a></li>
+        <li><a href="eventflow.html">Eventflow</a></li>
+        <li><a href="stagecue.html">StageCue</a></li>
+        <!-- <li><a href="screencontrol.html">ScreenControl</a></li> -->
+        <li><a href="access.html">Access</a></li>
+        <li><a href="about.html">Creator</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li class="nav-cta-mobile"><a href="#request" class="btn btn-primary">Get Demo</a></li>
+      </ul>
+      <a href="#request" class="btn btn-primary nav-cta-desktop">Get Demo</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── PAGE HERO ──────────────────────────────────────────── -->
+  <section class="page-hero" id="page-hero">
+    <canvas id="page-hero-canvas" aria-hidden="true"></canvas>
+    <div class="container" style="position:relative;z-index:2;">
+      <div class="hero-badge ph-entrance" style="--del:0">
+        <span class="badge-dot"></span>
+        Pixelogic v1.0.2 &mdash; Available for Windows
+      </div>
+      <h1 class="hero-title ph-entrance" style="--del:1">
+        The Professional<br />
+        <span class="gradient-text">AV Engineering Suite</span>
+      </h1>
+      <p class="hero-subtitle ph-entrance" style="--del:2">
+        The complete toolkit for LED pixel map design, LED processor patching,
+        AV schematics and show documentation. Built by a working video engineer &mdash; available both as a Windows desktop app <strong>and</strong> online in your browser.
+      </p>
+      <div class="hero-actions ph-entrance" style="--del:3">
+        <a href="#request" class="btn btn-primary btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Demo (Windows)
+        </a>
+        <a href="app/" class="btn btn-ghost btn-lg" style="border-color:rgba(45,212,191,0.55);color:#5eead4;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          Launch Online
+        </a>
+        <a href="#features" class="btn btn-ghost btn-lg">
+          Explore Features
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+      <p class="ph-entrance" style="--del:3;font-size:0.85rem;color:var(--text-muted,#94a3b8);margin-top:10px;">Online access requires an account &mdash; <a href="register.php" style="color:#818cf8;">sign up</a> or <a href="login.php" style="color:#818cf8;">sign in</a>.</p>
+      <div class="hero-tags ph-entrance" style="--del:4">
+        <span class="tag">Pixel Map Designer</span>
+        <span class="tag">Shape-Based LED Walls</span>
+        <span class="tag">2D &amp; 3D Visualizer</span>
+        <span class="tag">LED Patching</span>
+        <span class="tag">AV Schematics</span>
+        <span class="tag">Special Effects</span>
+        <span class="tag">Power Calculator</span>
+        <span class="tag">PDF &amp; PPTX Export</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────────────────── -->
+  <section class="stats" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" data-target="12">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix"></span></div>
+          <p>App Modules</p>
+        </div>
+        <div class="stat-item" data-target="22">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">+</span></div>
+          <p>LED Processors</p>
+        </div>
+        <div class="stat-item" data-target="65">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">+</span></div>
+          <p>LED Tile Models</p>
+        </div>
+        <div class="stat-item" data-target="100">
+          <div class="stat-num-wrap"><span class="stat-number">0</span><span class="stat-suffix">%</span></div>
+          <p>Offline Capable</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURES ───────────────────────────────────────────── -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">What's Inside</span>
+        <h2>Everything you need for<br /><span class="gradient-text">AV engineering</span></h2>
+        <p>Pixelogic bundles every tool a modern AV engineer needs into one cohesive, offline-capable desktop application.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <h3>Pixel Map Designer</h3>
+          <p>Define your LED wall dimensions in metres or feet, set panel pixel resolution and physical size, then watch the pixel map update in real time. Build non-rectangular walls &mdash; circle, ellipse, triangle, diamond, hexagon, cross or fully custom &mdash; size a circle by radius, diameter or circumference, and click-to-paint individual panels. Multiple maps per project, panel presets, gradient or checker fill, and one-click PNG export.</p>
+          <div class="feature-tags"><span>Shape Walls</span><span>Click-to-Paint</span><span>Panel Presets</span><span>Multi-map</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/></svg>
+          </div>
+          <h3>Special Effects Overlays</h3>
+          <p>Superimpose visual overlays directly onto your pixel maps: numbered centre badges, coordinate readouts, custom logo watermarks, centre target circles and per-corner alignment markers &mdash; each independently configurable.</p>
+          <div class="feature-tags"><span>Centre Badge</span><span>Logo Overlay</span><span>Coordinates</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3>2D &amp; 3D Visualizer</h3>
+          <p>2D Visualizer gives a full-resolution preview of your pixel maps with export to PNG/JPG. 3D Visualizer renders an interactive perspective view with orbit, pan, zoom, UV overlay, grid, axes and camera view presets.</p>
+          <div class="feature-tags"><span>2D Preview</span><span>3D Perspective</span><span>Camera Views</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/><line x1="8" y1="8" x2="8" y2="21"/></svg>
+          </div>
+          <h3>Output Canvas (4K UHD)</h3>
+          <p>Place pixel maps on a 4K UHD canvas (3840&times;2160) with grid, rulers and snapping. Draw Mode lets you annotate workflow lines and arrows for LED installers &mdash; export as PNG, JPG or transparent PNG.</p>
+          <div class="feature-tags"><span>4K UHD</span><span>Draw Mode</span><span>PNG / JPG</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>LED Patching</h3>
+          <p>Configure your display array, assign from 22+ LED processors, set data snake patterns and auto-calculate power patching with circuit breaker sizing per zone.</p>
+          <div class="feature-tags"><span>22+ Processors</span><span>Data Routing</span><span>Power &amp; CBR</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="200">
+          <div class="feature-icon icon-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01"/><path d="M6 14h12"/></svg>
+          </div>
+          <h3>AV Schematics</h3>
+          <p>50+ device catalog including media servers, LED processors, switchers and more. 14 signal types with compatibility checking, 20 built-in templates, rack elevation view and dark/light PDF export.</p>
+          <div class="feature-tags"><span>50+ Devices</span><span>14 Signal Types</span><span>20 Templates</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>PDF &amp; PPTX Export</h3>
+          <p>Generate branded, presentation-ready documentation. Export pixel maps, signal patches and power reports as multi-page PDF or PPTX with cover page, title blocks, file delivery specs and reference images.</p>
+          <div class="feature-tags"><span>Multi-page PDF</span><span>PPTX</span><span>Title Blocks</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="100">
+          <div class="feature-icon icon-yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M6.34 6.34l2.83 2.83M2 12h4M20 12h-2M17.66 6.34l-2.83 2.83"/><circle cx="12" cy="14" r="4"/><path d="M12 18v4"/></svg>
+          </div>
+          <h3>Power Calculator</h3>
+          <p>65+ real bench-measured LED tile models across leading manufacturers. Calculate per-tile, total and per-phase amperage with 1-Phase or 3-Phase mode, breaker sizing and professional PDF power report export.</p>
+          <div class="feature-tags"><span>65+ Tile Models</span><span>10 Brands</span><span>3-Phase</span></div>
+        </div>
+
+        <div class="feature-card reveal" data-delay="0">
+          <div class="feature-icon icon-pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+          </div>
+          <h3>Misc Tools</h3>
+          <p>Built-in Aspect Ratio Calculator with preset and custom ratios across any unit (pixels, mm, cm, m, inches, feet) and SMPTE LTC WAV generator for generating timecode audio files at broadcast-standard frame rates.</p>
+          <div class="feature-tags"><span>Aspect Ratio</span><span>SMPTE LTC</span><span>WAV Export</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WORKFLOW — HOW IT WORKS ────────────────────────────── -->
+  <section class="workflow" id="workflow">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">How It Works</span>
+        <h2>From concept to<br /><span class="gradient-text">deployment in 4 steps</span></h2>
+      </div>
+      <div class="workflow-grid">
+        <div class="workflow-step reveal" data-delay="0">
+          <div class="wf-num">01</div>
+          <div class="wf-icon icon-purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <h3>Design</h3>
+          <p>Set wall dimensions, panel resolution and pixel pitch. Build your pixel maps with live preview and panel presets.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="120">
+          <div class="wf-num">02</div>
+          <div class="wf-icon icon-cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>Configure</h3>
+          <p>Assign LED processors, configure data and power patching, add special effects overlays, and build AV schematics.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="240">
+          <div class="wf-num">03</div>
+          <div class="wf-icon icon-green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="8" x2="22" y2="8"/><line x1="8" y1="8" x2="8" y2="21"/></svg>
+          </div>
+          <h3>Export</h3>
+          <p>Export pixel maps as PNG, signal patches as PDF, schematics as CSV, and presentations as PPTX &mdash; all in one click.</p>
+        </div>
+        <div class="workflow-step reveal" data-delay="360">
+          <div class="wf-num">04</div>
+          <div class="wf-icon icon-orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3>Deploy</h3>
+          <p>Load your files into your LED processor software, send show content to media servers, and hand off technical riders to your crew.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCREENSHOTS ────────────────────────────────────────── -->
+  <section class="screenshots" id="screenshots">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">See It In Action</span>
+        <h2>Built for the way<br /><span class="gradient-text">professionals work</span></h2>
+      </div>
+
+      <div class="tab-row reveal">
+        <button class="tab-btn active" data-tab="designer">Pixel Designer</button>
+        <button class="tab-btn" data-tab="effects">Special Effects</button>
+        <button class="tab-btn" data-tab="vis2d">2D Visualizer</button>
+        <button class="tab-btn" data-tab="vis3d">3D Visualizer</button>
+        <button class="tab-btn" data-tab="output">Output Maps</button>
+        <button class="tab-btn" data-tab="patching">Signal Patching</button>
+        <button class="tab-btn" data-tab="schematics">AV Schematics</button>
+        <button class="tab-btn" data-tab="pdfexport">PDF Export</button>
+        <button class="tab-btn" data-tab="powercalc">Power Calculator</button>
+        <button class="tab-btn" data-tab="tools">Tools</button>
+      </div>
+
+      <div class="tab-panels">
+
+        <!-- Pixel Designer -->
+        <div class="tab-panel active" id="tab-designer">
+          <div class="real-screenshot">
+            <img src="screenshots-v2/02-Pixel-Designer.png" alt="Pixelogic — Pixel Designer screen showing the new LED Wall Shape control set to Circle, circle sizing by radius / diameter / circumference, and a live shaped preview" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>Pixel Map Designer with shape-based walls</h3>
+            <p>Set your LED wall physical dimensions in metres, define the panel pixel resolution (e.g. 128&times;128 px at 500&times;500 mm) and watch the pixel map update in real time. Build non-rectangular walls &mdash; circle, ellipse/oval, triangle, diamond, hexagon, cross/plus or fully custom &mdash; while the project still calculates as a grid so export, 3D, patching and power all keep working.</p>
+            <ul class="caption-list">
+              <li>✓ Shape walls — circle, ellipse, triangle, diamond, hexagon, cross or custom</li>
+              <li>✓ Size a circle by radius, diameter or circumference</li>
+              <li>✓ Click-to-paint panels for logos, letters &amp; irregular walls</li>
+              <li>✓ 65+ LED tile presets — gradient or checker fill</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Special Effects -->
+        <div class="tab-panel" id="tab-effects">
+          <div class="real-screenshot">
+            <img src="screenshots/03-Special-Effects.png" alt="Pixelogic — Special Effects Overlays screen with centre badges, coordinates and watermarks" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>Special effects &amp; overlay system</h3>
+            <p>Superimpose visual overlays directly onto your pixel maps for testing and documentation. Add numbered centre badges, pixel coordinate readouts, custom logo watermarks, centre target circles and per-corner alignment markers &mdash; each independently configurable.</p>
+            <ul class="caption-list">
+              <li>✓ Numbered centre badges for multi-screen ID</li>
+              <li>✓ Pixel coordinate grid overlay</li>
+              <li>✓ Custom logo watermark import</li>
+              <li>✓ Centre &amp; corner alignment circles</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2D Visualizer -->
+        <div class="tab-panel" id="tab-vis2d">
+          <div class="real-screenshot">
+            <img src="screenshots/04-Visualizer.png" alt="Pixelogic — 2D Visualizer showing full-resolution flat preview with numbered panel grid" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>2D full-resolution visualizer</h3>
+            <p>Preview your LED wall as a flat, full-resolution 2D representation. Combine multiple pixel maps into a single composite view with alignment handles, zoom controls and pixel-accurate readouts. Ideal for checking content alignment before going on-site.</p>
+            <ul class="caption-list">
+              <li>✓ Full-resolution flat preview</li>
+              <li>✓ Combine multiple pixel maps</li>
+              <li>✓ Zoom &amp; pan with pixel readouts</li>
+              <li>✓ Content alignment verification</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3D Visualizer -->
+        <div class="tab-panel" id="tab-vis3d">
+          <div class="real-screenshot">
+            <img src="screenshots/06-3D-Visualizer.png" alt="Pixelogic — Interactive 3D LED Wall Visualizer with perspective view, UV overlay and camera controls" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>Interactive 3D LED wall visualizer</h3>
+            <p>Preview your LED wall in an interactive 3D perspective view with UV texture overlay, grid display and axis indicators. Rotate, zoom and orbit freely using camera presets (Front, Top, Side, Isometric) for client presentations and pre-visualisation.</p>
+            <ul class="caption-list">
+              <li>✓ Interactive 3D perspective with orbit controls</li>
+              <li>✓ UV texture overlay &amp; grid display</li>
+              <li>✓ Camera presets — Front, Top, Side, Isometric</li>
+              <li>✓ Status bar with resolution &amp; panel info</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Output Maps -->
+        <div class="tab-panel" id="tab-output">
+          <div class="real-screenshot">
+            <img src="screenshots/05-Output-Maps.png" alt="Pixelogic — Output Maps screen showing 4K UHD canvas with pixel map placement and draw mode" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>4K UHD output canvas with draw mode</h3>
+            <p>Place your pixel maps on a 4K UHD canvas (3840&times;2160 default) with pixel-accurate grid, rulers and snapping. Switch on Draw Mode to sketch workflow lines and arrows for LED installers &mdash; multicolour, adjustable line widths with straight-line or freehand modes.</p>
+            <ul class="caption-list">
+              <li>✓ 4K UHD canvas — custom resolution support</li>
+              <li>✓ Grid, rulers and snapping for precision placement</li>
+              <li>✓ Draw Mode for installer workflow annotation</li>
+              <li>✓ Save PNG / JPG / Transparent PNG</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- LED Patching -->
+        <div class="tab-panel" id="tab-patching">
+          <div class="real-screenshot">
+            <img src="screenshots/06-Signal-Patching.png" alt="Pixelogic — Signal Patching screen showing LED processor configuration, data routing and port allocation" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>LED processor patching &amp; data routing</h3>
+            <p>Select from 22+ LED processors, define your display array and output card. The app calculates port allocation automatically, assigns data cable snake patterns and configures power patching per zone &mdash; including circuit breaker sizing.</p>
+            <ul class="caption-list">
+              <li>✓ 22+ LED processors supported</li>
+              <li>✓ Data snake pattern — auto port allocation</li>
+              <li>✓ Power patching &amp; circuit breaker calculator</li>
+              <li>✓ Export DATA &amp; POWER views as PNG or PDF</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- AV Schematics -->
+        <div class="tab-panel" id="tab-schematics">
+          <div class="real-screenshot">
+            <img src="screenshots/07-AV-Schematics.png" alt="Pixelogic — AV Schematics screen showing 50+ device catalog with schematic and rack views" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>AV schematics with 50+ device catalog</h3>
+            <p>Build professional signal-flow diagrams using a built-in catalog of 50+ AV devices covering media servers, LED processors, switchers, audio consoles and more. Supports 14 signal types with colour-coded connections, 20 schematic templates, and both schematic and rack-elevation views.</p>
+            <ul class="caption-list">
+              <li>✓ 50+ devices — media servers, switchers, LED processors &amp; more</li>
+              <li>✓ 14 signal types with colour-coded wiring</li>
+              <li>✓ Schematic view + Rack view</li>
+              <li>✓ PNG / PDF / CSV export</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- PDF Export -->
+        <div class="tab-panel" id="tab-pdfexport">
+          <div class="real-screenshot">
+            <img src="screenshots/08-PDF-Export.png" alt="Pixelogic — PDF Export Control Room with preview, PDF and PPTX export" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>Professional PDF &amp; PPTX export</h3>
+            <p>Generate branded, presentation-ready documentation with one click. The PDF Export Control Room lets you preview each page, customise headers and project metadata, then export pixel maps, LED patches, power reports and AV schematics as multi-page PDF or PowerPoint PPTX.</p>
+            <ul class="caption-list">
+              <li>✓ Multi-page PDF with cover &amp; sections</li>
+              <li>✓ PPTX for client presentations</li>
+              <li>✓ Technical rider &amp; cable schedule CSV</li>
+              <li>✓ Branded headers &amp; project metadata</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Power Calculator -->
+        <div class="tab-panel" id="tab-powercalc">
+          <div class="real-screenshot">
+            <img src="screenshots/11-Power-Calc.png" alt="Pixelogic — LED Power Calculator with brand and model selection, 3-phase power distribution" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>LED power calculator</h3>
+            <p>Calculate complete power requirements for your LED installation. Select from 65+ LED tile models from leading manufacturers, enter your panel count, and the app generates a full power report with per-panel wattage, total amperage, 3-phase distribution and circuit breaker recommendations.</p>
+            <ul class="caption-list">
+              <li>✓ 65+ LED tile models from leading manufacturers</li>
+              <li>✓ Per-panel wattage &amp; total amperage</li>
+              <li>✓ 3-phase power distribution calculator</li>
+              <li>✓ Circuit breaker sizing recommendations</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Misc Tools -->
+        <div class="tab-panel" id="tab-tools">
+          <div class="real-screenshot">
+            <img src="screenshots/09-Tools.png" alt="Pixelogic — Tools screen showing Aspect Ratio Calculator and SMPTE LTC WAV Generator" loading="lazy" />
+          </div>
+          <div class="tab-caption">
+            <h3>Misc tools &amp; utilities</h3>
+            <p>Access handy utility tools built into Pixelogic. The Aspect Ratio Calculator helps you determine optimal resolution and scaling for any display format. The SMPTE LTC WAV Generator creates timecode audio files for synchronised playback across media servers.</p>
+            <ul class="caption-list">
+              <li>✓ Aspect Ratio Calculator</li>
+              <li>✓ SMPTE LTC WAV Generator</li>
+              <li>✓ Resolution &amp; scaling reference</li>
+              <li>✓ Timecode sync for media servers</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ACCESS ────────────────────────────────────────────── -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Access</span>
+        <h2>Get started with<br /><span class="gradient-text">Pixelogic</span></h2>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card reveal" data-delay="0">
+          <div class="pricing-tier">Demo Version</div>
+          <div class="pricing-price"><span class="price-main">15-Day Trial</span></div>
+          <p class="pricing-sub">Full-featured 15-day free trial &mdash; no account needed, fully offline.</p>
+          <ul class="pricing-list">
+            <li><span class="chk">✓</span> Pixel Map Designer</li>
+            <li><span class="chk">✓</span> Special Effects Overlays</li>
+            <li><span class="chk">✓</span> 2D &amp; 3D LED Wall Visualizer</li>
+            <li><span class="chk">✓</span> Signal Patching (22+ processors)</li>
+            <li><span class="chk">✓</span> Output Canvas (4K UHD)</li>
+            <li><span class="chk">✓</span> Power Calculator</li>
+            <li><span class="chk">✓</span> PDF Export</li>
+            <li><span class="chk">✓</span> 100% offline — no internet required</li>
+          </ul>
+          <a href="#request" class="btn btn-ghost btn-full">Request Demo Access</a>
+        </div>
+        <div class="pricing-card pricing-featured reveal" data-delay="150">
+          <div class="pricing-badge">Full Access</div>
+          <div class="pricing-tier">Professional</div>
+          <div class="pricing-price">
+            <span class="price-main">Get in Touch</span>
+            <span class="price-note">for full application access</span>
+          </div>
+          <p class="pricing-sub">For integration firms, production companies and teams.</p>
+          <ul class="pricing-list">
+            <li><span class="chk">✓</span> Pixel Map Designer + Special Effects</li>
+            <li><span class="chk">✓</span> 2D &amp; 3D LED Wall Visualizer</li>
+            <li><span class="chk">✓</span> Output Canvas (4K UHD)</li>
+            <li><span class="chk">✓</span> Signal Patching — 22+ LED Processors</li>
+            <li><span class="chk">✓</span> AV Engineering Schematics</li>
+            <li><span class="chk">✓</span> Advanced Rack Diagrams</li>
+            <li><span class="chk">✓</span> Power Calculator (65+ tile models)</li>
+            <li><span class="chk">✓</span> Full PDF &amp; PPTX Export</li>
+            <li><span class="chk">✓</span> CSV Technical Riders</li>
+            <li><span class="chk">✓</span> Priority Support</li>
+            <li><span class="chk">✓</span> Commercial use license</li>
+          </ul>
+          <a href="mailto:dhiraj.kalra@gmail.com?subject=Pixelogic%20-%20Full%20Access%20Request&body=Hi%20Dhiraj%2C%0A%0AI%20am%20interested%20in%20getting%20full%20access%20to%20Pixelogic.%0A%0AName%3A%20%0ACompany%3A%20%0AUse%20case%3A%20%0A%0AThank%20you." class="btn btn-primary btn-full">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DOCS ───────────────────────────────────────────────── -->
+  <section class="docs" id="docs">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Documentation</span>
+        <h2>Get up and running<br /><span class="gradient-text">in minutes</span></h2>
+      </div>
+      <div class="docs-grid">
+        <a class="doc-card reveal" href="#" data-delay="0">
+          <div class="doc-emoji">🚀</div>
+          <h3>Quick Start</h3>
+          <p>Install Pixelogic and build your first LED project in under 5 minutes.</p>
+          <span class="doc-arrow">Read guide →</span>
+        </a>
+        <a class="doc-card reveal" href="#" data-delay="100">
+          <div class="doc-emoji">🏗️</div>
+          <h3>3D Visualizer</h3>
+          <p>Configure LED walls, cabinets and pixel pitch for photorealistic previews.</p>
+          <span class="doc-arrow">Read guide →</span>
+        </a>
+        <a class="doc-card reveal" href="#" data-delay="200">
+          <div class="doc-emoji">🔌</div>
+          <h3>LED Patching</h3>
+          <p>Configure LED processors, assign data ports, set up power zones and generate cable schedules.</p>
+          <span class="doc-arrow">Read guide →</span>
+        </a>
+        <a class="doc-card reveal" href="#" data-delay="300">
+          <div class="doc-emoji">⚡</div>
+          <h3>Power Calculator</h3>
+          <p>Import fixture data and export a complete, professional power report.</p>
+          <span class="doc-arrow">Read guide →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── REQUEST ACCESS ─────────────────────────────────────── -->
+  <section class="req-section" id="request">
+    <span id="full-version"></span>
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Get Pixelogic</span>
+        <h2>Ready to <span class="gradient-text">try Pixelogic</span>?</h2>
+        <p>Start your 15-day free trial or request the full version &mdash; downloads and licensing are handled on our secure access page.</p>
+      </div>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:8px;">
+        <a href="access.html#request" class="btn btn-primary btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Start 15-Day Free Trial
+        </a>
+        <a href="access.html#full-version" class="btn btn-ghost btn-lg">
+          Get the Full Version
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+      <p class="reveal" style="text-align:center;color:var(--text-3);font-size:0.9rem;margin-top:18px;">Prefer the browser? <a href="app/" style="color:#5eead4;">Launch Pixelogic online</a> &mdash; no install required.</p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="nav-logo" href="index.html">
+            <div class="logo-icon">
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+              <div class="logo-pixel"></div>
+            </div>
+            <span>Pixelogic</span>
+          </a>
+          <p>Professional LED wall and AV engineering software for modern integrators and event professionals.</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Product</h4>
+            <a href="pixelogic.html#features">Features</a>
+            <a href="pixelogic.html#screenshots">Screenshots</a>
+            <a href="projection-logic.html">Projection Logic</a>
+            <a href="access.html#demos">Get Demo</a>
+            <a href="access.html#full-version">Full Access</a>
+          </div>
+          <div class="footer-col">
+            <h4>Resources</h4>
+            <a href="about.html">Crafted by Dhiraj Kalra</a>
+            <a href="index.html#apps">All Products</a>
+            <a href="home.html">Overview</a>
+            <a href="pixelogic.html#docs">Documentation</a>
+            <a href="pixelogic.html#docs">Quick Start</a>
+            <a href="#">Release Notes</a>
+          </div>
+          <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:dhiraj.kalra@gmail.com">Email</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          <p>© 2025–2026 <strong>Dhiraj Kalra</strong>. All rights reserved.</p>
+          <p class="footer-copy-sub">Pixelogic, Eventflow Schematics &amp; StageCue are original works created and owned by Dhiraj Kalra.
+            Unauthorised reproduction or distribution is prohibited.
+            &mdash;
+            <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </p>
+        </div>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+        <div class="visitor-counter" id="visitor-counter"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

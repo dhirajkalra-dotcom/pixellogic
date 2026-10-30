@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "activeTab": "view3d",
+  "toolMode": "rotate",
+  "canvasFound": true,
+  "selectedMapId": "map-test-left-wing",
+  "curveDeg": -75,
+  "toolAfterE": "rotate"
+}

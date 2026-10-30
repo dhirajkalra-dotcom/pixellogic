@@ -1,0 +1,22 @@
+{
+  "initialMapCount": 2,
+  "afterAddCount": 3,
+  "addScreenSuccess": true,
+  "newMapName": "GLOSHINE VANISH MINI-3.9-7.8 TRANSPARENT",
+  "newMapBrand": "GLOSHINE",
+  "newMapModel": "VANISH MINI-3.9-7.8 TRANSPARENT",
+  "newMapTilesWide": 4,
+  "newMapTilesHigh": 4,
+  "newMapWidthVal": 2,
+  "newMapHeightVal": 2,
+  "widthModifiedTo6Meters": true,
+  "updatedTilesWide": 12,
+  "tilesHModifiedTo8": true,
+  "updatedHeightValue": 4,
+  "designerHasDelToolbarBtn": false,
+  "designerTabDelBtnsCount": 0,
+  "mapStillExistsAfterDesignerDelete": true,
+  "finalMapCount": 2,
+  "deleteInSheetsSuccess": true,
+  "success": true
+}

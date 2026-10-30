@@ -1,0 +1,13 @@
+const fs = require('fs');
+const h = fs.readFileSync(require('path').join(__dirname, '..', 'index.html'), 'utf8');
+const tabs = new Set();
+for (const m of h.matchAll(/data-tab="([^"]+)"/g)) tabs.add(m[1]);
+console.log('TABS:', [...tabs].join(', '));
+const main = fs.readFileSync(require('path').join(__dirname, '..', 'main.js'), 'utf8');
+const handlers = new Set();
+for (const m of main.matchAll(/ipcMain\.(handle|on)\(\s*['"]([^'"]+)['"]/g)) handlers.add(m[1] + ':' + m[2]);
+console.log('IPC:', [...handlers].join(', '));
+const pre = fs.readFileSync(require('path').join(__dirname, '..', 'preload.js'), 'utf8');
+const used = new Set();
+for (const m of pre.matchAll(/ipcRenderer\.(invoke|send|on)\(\s*['"]([^'"]+)['"]/g)) used.add(m[1] + ':' + m[2]);
+console.log('PRELOAD:', [...used].join(', '));

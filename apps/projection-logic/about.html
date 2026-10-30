@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Pixelogic</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+            font-size: 14px;
+        }
+        h3 {
+            margin-top: 0;
+            color: #111;
+        }
+        p {
+            margin: 5px 0;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .link-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: #111827;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .link-btn:hover {
+            background: #1f2937;
+            text-decoration: none;
+        }
+        .container {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+                <h3>Pixelogic <span id="about-app-version">v—</span></h3>
+        <p>Developed by: <strong>Dhiraj Kalra</strong></p>
+        <div id="license-status" style="margin:10px 0;padding:10px 12px;border-radius:6px;background:#f1f5f9;border:1px solid #e2e8f0;">
+            <span id="license-badge" style="display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:9999px;background:#e5e7eb;color:#374151;">Checking…</span>
+            <div id="license-detail" style="font-size:12px;color:#475569;margin-top:6px;"></div>
+            <div id="license-machine-wrap" style="display:none;font-size:12px;color:#475569;margin-top:6px;">
+                Machine ID: <code id="license-machine" style="background:#0b1220;color:#93c5fd;padding:2px 6px;border-radius:4px;font-size:12px;">—</code>
+            </div>
+        </div>
+        <hr>
+        <p><strong>Contact Information:</strong></p>
+        <p>
+            <strong>Website:</strong> 
+                        <a href="https://www.pixelogic.co.in" target="_blank" rel="noopener">www.pixelogic.co.in</a>
+        </p>
+        <p>
+            <strong>LinkedIn:</strong> 
+                        <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank">linkedin.com/in/dhirajkalra82</a>
+        </p>
+        <p>
+            <strong>Instagram:</strong> 
+                        <a href="https://www.instagram.com/dhirajkalra82" target="_blank">@dhirajkalra82</a>
+        </p>
+        <div class="link-buttons" aria-label="Social links">
+            <a class="link-btn" href="https://www.pixelogic.co.in" target="_blank" rel="noopener">Website</a>
+            <a class="link-btn" href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="link-btn" href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener">Instagram</a>
+            <a class="link-btn" href="https://wa.link/er3fxs" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+    </div>
+        <script>
+            (function() {
+                try {
+                    var params = new URLSearchParams(window.location.search);
+                    var v = params.get('v');
+                    var el = document.getElementById('about-app-version');
+                    if (el) {
+                        el.textContent = v ? ('v' + v) : 'v—';
+                        if (v) el.title = 'Version ' + v;
+                    }
+
+                    // ── Licence / activation status ──────────────────────────
+                    function fmtDate(sec) {
+                        sec = parseInt(sec, 10);
+                        if (!sec) return '';
+                        try {
+                            return new Date(sec * 1000).toLocaleDateString(undefined,
+                                { year: 'numeric', month: 'long', day: 'numeric' });
+                        } catch (_) { return ''; }
+                    }
+                    var badge = document.getElementById('license-badge');
+                    var detail = document.getElementById('license-detail');
+                    var machineWrap = document.getElementById('license-machine-wrap');
+                    var machineEl = document.getElementById('license-machine');
+                    var licensed = params.get('licensed') === '1';
+                    var enforced = params.get('enforced') === '1';
+
+                    if (badge) {
+                        badge.textContent = licensed ? 'Activated' : 'Demo Version';
+                        badge.style.background = licensed ? '#dcfce7' : '#ffedd5';
+                        badge.style.color = licensed ? '#166534' : '#9a3412';
+                    }
+                    if (detail) {
+                        if (licensed) {
+                            var lexp = params.get('lexp');
+                            detail.textContent = (parseInt(lexp, 10) > 0)
+                                ? ('Licensed to this machine · valid until ' + fmtDate(lexp))
+                                : 'Licensed to this machine · perpetual';
+                        } else {
+                            var texpired = params.get('texpired') === '1';
+                            var tdays = params.get('tdays') || '0';
+                            detail.textContent = texpired
+                                ? 'Trial expired — activation required'
+                                : (tdays + ' day' + (tdays === '1' ? '' : 's') + ' left · expires ' + fmtDate(params.get('texp')));
+                        }
+                    }
+                    if (!licensed && enforced && machineWrap && machineEl) {
+                        machineEl.textContent = params.get('machine') || '—';
+                        machineWrap.style.display = 'block';
+                    }
+                } catch (_) { /* ignore */ }
+            })();
+        </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "topLeftButtonsCount": 0,
+  "hasAddOnTopLeft": false,
+  "activeScreenDropdownFound": true,
+  "removeScreenBtnFound": true,
+  "initialComposeIds": [
+    "map-test-left-wing"
+  ],
+  "composeIdsAfterAdd": [
+    "map-test-left-wing",
+    "1792737324190"
+  ],
+  "gapValText": "1.20 m (Gap)",
+  "hasSnapButtons": true,
+  "snappedGapText": "0.00 m (Flush Seam)",
+  "composeIdsAfterRemove": [
+    "map-test-left-wing"
+  ]
+}

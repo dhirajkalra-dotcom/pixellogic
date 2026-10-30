@@ -1,0 +1,39 @@
+{
+  "success": true,
+  "topAddStageBtnFound": true,
+  "tab1AddStageBtnFound": true,
+  "stageObjectsCountBefore": 0,
+  "stageObjectsCountAfter": 1,
+  "presetsTested": {
+    "front": {
+      "rotX": 0,
+      "rotY": 0,
+      "distance": 6
+    },
+    "left": {
+      "rotX": 0,
+      "rotY": -90,
+      "distance": 6
+    },
+    "right": {
+      "rotX": 0,
+      "rotY": 90,
+      "distance": 6
+    },
+    "top": {
+      "rotX": 89.5,
+      "rotY": 0,
+      "distance": 7.5
+    },
+    "back": {
+      "rotX": 0,
+      "rotY": 180,
+      "distance": 6
+    },
+    "persp": {
+      "rotX": 14,
+      "rotY": 25,
+      "distance": 6.8999999999999995
+    }
+  }
+}

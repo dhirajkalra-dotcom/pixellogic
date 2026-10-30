@@ -1,0 +1,117 @@
+{
+  "perTab": {
+    "shows": {
+      "found": true,
+      "ms": 2021,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "sheets": {
+      "found": true,
+      "ms": 1506,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "designer": {
+      "found": true,
+      "ms": 1511,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "effects": {
+      "found": true,
+      "ms": 2016,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "visualizer": {
+      "found": true,
+      "ms": 1511,
+      "visible": false,
+      "hasContent": true,
+      "errors": []
+    },
+    "view3d": {
+      "found": true,
+      "ms": 2487,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "canvas": {
+      "found": true,
+      "ms": 2237,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "led-patching": {
+      "found": true,
+      "ms": 1506,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "pdf": {
+      "found": true,
+      "ms": 1535,
+      "visible": null,
+      "hasContent": false,
+      "errors": []
+    },
+    "power-calc": {
+      "found": true,
+      "ms": 1502,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "projector-test-pattern": {
+      "found": true,
+      "ms": 1513,
+      "visible": false,
+      "hasContent": true,
+      "errors": []
+    },
+    "devices": {
+      "found": true,
+      "ms": 1510,
+      "visible": false,
+      "hasContent": true,
+      "errors": []
+    },
+    "utility-tools": {
+      "found": true,
+      "ms": 1743,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "video-converter": {
+      "found": true,
+      "ms": 1503,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    },
+    "help": {
+      "found": true,
+      "ms": 1502,
+      "visible": true,
+      "hasContent": true,
+      "errors": []
+    }
+  },
+  "console": [
+    {
+      "tab": "load",
+      "lvl": "warning",
+      "msg": "%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security\n  Policy set or a policy with \"unsafe-eval\" enabled. This exposes users of\n  this app to unnecessary security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged.",
+      "src": "node:electron/js2c/sandbox_bundle:2"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "activeTab": "view3d",
+  "hasThree": true,
+  "hasView3DPro": true,
+  "canvasFound": true,
+  "canvasWidth": 0,
+  "canvasHeight": 1012,
+  "composeMapIds": [
+    "1792737324190"
+  ],
+  "totalProjectMaps": 3,
+  "selectedMapId": "1792737324190",
+  "hasTransforms": true,
+  "mountMode": "flown"
+}

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pixelogic Studio — Live Stage Engine</title>
+  <meta name="description" content="Pixelogic Studio — professional AV engineering, event production schematics and stage management software. A live, audio-reactive 3D stage." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --indigo: #6366f1;
+      --violet: #a78bfa;
+      --teal:   #2dd4bf;
+      --sky:    #38bdf8;
+      --orange: #fb923c;
+      --pink:   #f472b6;
+      --bg:     #04040a;
+      --text-1: #f8fafc;
+      --text-2: rgba(226,232,240,0.72);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #scene-canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; }
+
+    .overlay-fx {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 46%, transparent 30%, rgba(1,1,5,0.78) 100%),
+        linear-gradient(to bottom, rgba(1,1,5,0.55) 0%, transparent 22%, transparent 60%, rgba(1,1,5,0.9) 100%);
+      mix-blend-mode: multiply;
+    }
+    .grain {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    /* strobe flash plane */
+    #strobe { position: fixed; inset: 0; z-index: 2; pointer-events: none; background: #fff; opacity: 0; }
+
+    /* ── Foreground UI ─────────────────────────────────────────── */
+    .ui { position: fixed; inset: 0; z-index: 3; display: flex; flex-direction: column; pointer-events: none; }
+
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px clamp(20px, 5vw, 60px);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; pointer-events: auto; text-decoration: none; }
+    .brand img { width: 34px; height: 34px; filter: drop-shadow(0 0 14px rgba(129,140,248,0.55)); }
+    .brand span { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: 0.01em; color: #fff; }
+    .top-links { display: flex; align-items: center; gap: 24px; pointer-events: auto; }
+    .top-links a { color: var(--text-2); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .top-links a:hover { color: #fff; }
+    @media (max-width: 820px) { .top-links a:not(.top-cta) { display: none; } }
+
+    .top-cta {
+      padding: 9px 18px; border-radius: 9999px; font-weight: 600; font-size: 13.5px;
+      color: #fff !important; background: linear-gradient(135deg, var(--indigo), var(--violet));
+      box-shadow: 0 8px 30px rgba(99,102,241,0.4);
+    }
+
+    .hero {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 0 20px 60px;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px;
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; color: var(--violet);
+      opacity: 0; transform: translateY(14px); animation: rise 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+    }
+    .eyebrow i { width: 34px; height: 1px; background: linear-gradient(to right, transparent, rgba(167,139,250,0.8)); display: inline-block; }
+    .eyebrow i:last-child { background: linear-gradient(to left, transparent, rgba(167,139,250,0.8)); }
+    .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #f87171; box-shadow: 0 0 12px #f87171; animation: blink 1.2s ease-in-out infinite; }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(2.6rem, 8vw, 6.2rem); line-height: 1.0; letter-spacing: -0.03em;
+      margin-bottom: 22px; text-shadow: 0 6px 70px rgba(0,0,0,0.55);
+      opacity: 0; transform: translateY(20px); animation: rise 1s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(120deg, var(--indigo), var(--violet) 28%, var(--pink) 50%, var(--sky) 74%, var(--teal));
+      background-size: 240% 240%;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      animation: shimmer 7s ease-in-out infinite;
+    }
+    .hero p {
+      max-width: 640px; color: var(--text-2); font-size: clamp(15px, 2.1vw, 19px); line-height: 1.7; margin-bottom: 42px;
+      opacity: 0; transform: translateY(20px); animation: rise 1s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+    }
+
+    .cta-row {
+      display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; pointer-events: auto;
+      opacity: 0; transform: translateY(20px); animation: rise 1s cubic-bezier(0.16,1,0.3,1) 0.65s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+      padding: 14px 26px; border-radius: 12px; font-weight: 600; font-size: 15px;
+      transition: transform 0.28s cubic-bezier(0.16,1,0.3,1), box-shadow 0.28s, background 0.28s; cursor: pointer;
+      border: 1px solid transparent; color: #fff;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn .dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 12px currentColor; }
+    .btn-primary { background: linear-gradient(135deg, var(--indigo), var(--violet)); box-shadow: 0 14px 40px rgba(99,102,241,0.42); }
+    .btn-primary:hover { box-shadow: 0 18px 52px rgba(99,102,241,0.55); }
+    .btn-ghost { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.14); backdrop-filter: blur(8px); }
+    .btn-ghost.teal { color: var(--teal); border-color: rgba(45,212,191,0.4); }
+    .btn-ghost.orange { color: var(--orange); border-color: rgba(251,146,60,0.4); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.09); }
+
+    /* ── Live control dock ─────────────────────────────────────── */
+    .dock {
+      position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 4;
+      display: flex; align-items: center; gap: 10px; pointer-events: auto;
+      padding: 8px 10px; border-radius: 14px;
+      background: rgba(10,12,24,0.5); border: 1px solid rgba(255,255,255,0.09);
+      backdrop-filter: blur(14px); box-shadow: 0 18px 50px rgba(0,0,0,0.5);
+      opacity: 0; animation: rise 1s ease 1s forwards;
+    }
+    .dock button {
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+      padding: 9px 15px; border-radius: 9px; font: inherit; font-size: 13px; font-weight: 600;
+      color: var(--text-1); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    }
+    .dock button:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+    .dock button.active { background: linear-gradient(135deg, var(--indigo), var(--violet)); border-color: transparent; box-shadow: 0 0 22px rgba(124,58,237,0.5); }
+    .dock .sep { width: 1px; height: 22px; background: rgba(255,255,255,0.12); }
+    .dock .meter { display: flex; align-items: flex-end; gap: 2px; height: 22px; width: 46px; }
+    .dock .meter i { flex: 1; background: linear-gradient(to top, var(--indigo), var(--sky)); border-radius: 1px; height: 10%; transition: height 0.05s linear; }
+    .dock .bpm { font-family: 'Space Grotesk', sans-serif; font-size: 12px; color: var(--text-2); letter-spacing: 0.04em; }
+    .dock .bpm b { color: #fff; font-size: 14px; }
+    .dock .modes { display: flex; gap: 5px; }
+    .dock .mode-btn { padding: 7px 11px; font-size: 12px; }
+    @media (max-width: 560px) { .dock .modes, .dock .bpm { display: none; } }
+
+    @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+    @keyframes shimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+    /* Loader + WebGL fallback */
+    #loader {
+      position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+      background: var(--bg); transition: opacity 0.8s ease; flex-direction: column; gap: 18px;
+    }
+    #loader.hide { opacity: 0; pointer-events: none; }
+    #loader img { width: 62px; filter: drop-shadow(0 0 22px rgba(129,140,248,0.6)); animation: pulse 1.6s ease-in-out infinite; }
+    #loader .bar { width: 160px; height: 3px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    #loader .bar i { display: block; height: 100%; width: 40%; border-radius: 3px; background: linear-gradient(90deg, var(--indigo), var(--sky)); animation: load 1.2s ease-in-out infinite; }
+    #loader small { color: var(--text-2); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.8; } }
+    @keyframes load { 0% { transform: translateX(-100%); } 100% { transform: translateX(320%); } }
+    .fallback-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(99,102,241,0.28), transparent 45%),
+        radial-gradient(circle at 72% 62%, rgba(45,212,191,0.2), transparent 45%),
+        radial-gradient(circle at 50% 95%, rgba(244,114,182,0.18), transparent 55%),
+        var(--bg);
+    }
+  </style>
+</head>
+<body>
+  <div class="fallback-bg"></div>
+
+  <canvas id="scene-canvas"></canvas>
+  <div class="overlay-fx"></div>
+  <div class="grain"></div>
+  <div id="strobe"></div>
+
+  <!-- Foreground UI -->
+  <div class="ui">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <img src="pixelogic-logo.png" alt="Pixelogic" />
+        <span>Pixelogic&nbsp;Studio</span>
+      </a>
+      <nav class="top-links">
+        <a href="pixelogic.html">Pixelogic</a>
+        <a href="eventflow.html">Eventflow</a>
+        <a href="stagecue.html">StageCue</a>
+        <a href="about.html">Creator</a>
+        <a class="top-cta" href="access.html#demos">Get Demo</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow"><span class="live-dot"></span> Live Stage Engine <i></i></div>
+      <h1>Design the<br /><span class="grad">Show Before It&nbsp;Happens</span></h1>
+      <p>Pre-visualize moving lights, LED walls and cue timelines in real time. Three offline Windows apps for LED engineering, production schematics and stage management — no subscriptions, no cloud.</p>
+      <div class="cta-row">
+        <a href="pixelogic.html" class="btn btn-primary"><span class="dot" style="background:#c7d2fe;color:#c7d2fe"></span> Pixelogic</a>
+        <a href="eventflow.html" class="btn btn-ghost teal"><span class="dot" style="color:var(--teal)"></span> Eventflow</a>
+        <a href="stagecue.html" class="btn btn-ghost orange"><span class="dot" style="color:var(--orange)"></span> StageCue</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Live control dock -->
+  <div class="dock">
+    <button id="btn-sound" title="Play an audio-reactive set">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+      Go Live
+    </button>
+    <button id="btn-cue" title="Trigger a lighting cue">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+      Cue
+    </button>
+    <div class="sep"></div>
+    <div class="modes">
+      <button class="mode-btn active" data-mode="concert">Concert</button>
+      <button class="mode-btn" data-mode="corporate">Corporate</button>
+      <button class="mode-btn" data-mode="chill">Chill</button>
+    </div>
+    <div class="sep"></div>
+    <div class="meter" id="meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="bpm"><b id="bpm">124</b> BPM</div>
+  </div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <img src="pixelogic-logo.png" alt="Loading" />
+    <div class="bar"><i></i></div>
+    <small>Booting stage engine…</small>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+    import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+    import { Reflector } from 'three/addons/objects/Reflector.js';
+
+    const canvas = document.getElementById('scene-canvas');
+    const loader = document.getElementById('loader');
+    const strobeEl = document.getElementById('strobe');
+
+    function webglOk() {
+      try {
+        const c = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')));
+      } catch (_) { return false; }
+    }
+    if (!webglOk()) {
+      canvas.style.display = 'none';
+      document.querySelector('.dock').style.display = 'none';
+      setTimeout(() => loader.classList.add('hide'), 400);
+    } else {
+      init();
+    }
+
+    // ── Beat / palette engine ────────────────────────────────────
+    const BPM = 124;
+    const beatDur = 60 / BPM;
+    const MODES = {
+      concert:   { palettes: [[0x6366f1,0xa78bfa],[0x38bdf8,0x2dd4bf],[0xf472b6,0x7c3aed],[0xfb923c,0xf43f5e],[0x22d3ee,0x6366f1]], cueEvery: beatDur * 4, sweep: 0.7,  energy: 1.0, bloom: 0.55, confetti: true },
+      corporate: { palettes: [[0x2563eb,0x38bdf8],[0x6366f1,0x22d3ee],[0x0ea5e9,0x14b8a6],[0x3b82f6,0x8b5cf6]],               cueEvery: 6.0,        sweep: 0.28, energy: 0.5, bloom: 0.42, confetti: false },
+      chill:     { palettes: [[0xa78bfa,0xf472b6],[0x7c3aed,0x22d3ee],[0xf472b6,0xfb923c],[0x8b5cf6,0x2dd4bf]],                cueEvery: 9.0,        sweep: 0.16, energy: 0.35, bloom: 0.5, confetti: false },
+    };
+    let modeCfg = MODES.concert;
+    let PALETTES = modeCfg.palettes;
+    const audio = { on: false, analyser: null, data: null, level: 0 };
+
+    function init() {
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x04040a, 0.0125);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x04040a, 1);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 0.82;
+
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 400);
+      camera.position.set(0, 3, 34);
+
+      // director-style camera shots (position + look target)
+      const CAM_SHOTS = [
+        { pos: [0, 3, 34],    look: [0, 3, -12] },
+        { pos: [-17, 6, 22],  look: [7, 2, -22] },
+        { pos: [15, 2.5, 21], look: [-7, 4, -20] },
+        { pos: [0, 13, 22],   look: [0, -1, -26] },
+        { pos: [-9, -1, 15],  look: [3, 9, -26] },
+        { pos: [11, 8, 18],   look: [-4, 1, -24] },
+      ];
+      let camShot = 0;
+      const camPos = new THREE.Vector3(0, 3, 34);
+      const camLook = new THREE.Vector3(0, 3, -12);
+      const camPosT = camPos.clone();
+      const camLookT = camLook.clone();
+
+      // ══ Stage floor ══════════════════════════════════════════════
+      const floorMat = new THREE.ShaderMaterial({
+        transparent: true,
+        uniforms: { uCol: { value: new THREE.Color(0x3b3f7a) } },
+        vertexShader: `
+          varying vec3 vW;
+          void main(){
+            vec4 wp = modelMatrix * vec4(position, 1.0);
+            vW = wp.xyz;
+            gl_Position = projectionMatrix * viewMatrix * wp;
+          }`,
+        fragmentShader: `
+          varying vec3 vW;
+          uniform vec3 uCol;
+          void main(){
+            vec2 f = fract(vW.xz * 0.1);
+            float lx = smoothstep(0.0, 0.025, f.x) * smoothstep(0.0, 0.025, 1.0 - f.x);
+            float ly = smoothstep(0.0, 0.025, f.y) * smoothstep(0.0, 0.025, 1.0 - f.y);
+            float line = (1.0 - lx) + (1.0 - ly);
+            float dist = length(vW.xz);
+            float fade = smoothstep(120.0, 6.0, dist);
+            vec3 c = uCol * line * fade;
+            float glow = smoothstep(70.0, 0.0, dist) * 0.05;
+            gl_FragColor = vec4(c + uCol * glow, clamp(line * fade + glow, 0.0, 1.0));
+          }`
+      });
+      const floor = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), floorMat);
+      floor.rotation.x = -Math.PI / 2;
+      floor.position.y = -9;
+      scene.add(floor);
+
+      // reflective mirror plane just under the grid → wet-stage reflections
+      const mirror = new Reflector(new THREE.PlaneGeometry(400, 400), {
+        textureWidth: Math.floor(window.innerWidth * Math.min(window.devicePixelRatio, 2) * 0.5),
+        textureHeight: Math.floor(window.innerHeight * Math.min(window.devicePixelRatio, 2) * 0.5),
+        color: 0x0a0b14,
+      });
+      mirror.rotation.x = -Math.PI / 2;
+      mirror.position.y = -9.05;
+      scene.add(mirror);
+
+      // ══ Reactive LED backdrop wall ═══════════════════════════════
+      const SPEC = 64;
+      const specData = new Uint8Array(SPEC * 4);
+      const specTex = new THREE.DataTexture(specData, SPEC, 1, THREE.RGBAFormat);
+      specTex.needsUpdate = true;
+
+      const ledMat = new THREE.ShaderMaterial({
+        uniforms: {
+          uSpec: { value: specTex },
+          uColA: { value: new THREE.Color(0x6366f1) },
+          uColB: { value: new THREE.Color(0x2dd4bf) },
+          uTime: { value: 0 },
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+        fragmentShader: `
+          precision highp float;
+          varying vec2 vUv;
+          uniform sampler2D uSpec; uniform vec3 uColA; uniform vec3 uColB; uniform float uTime;
+          void main(){
+            float bars = 64.0;
+            float col = floor(vUv.x * bars);
+            float level = texture2D(uSpec, vec2((col + 0.5) / bars, 0.5)).r;
+            level = pow(level, 0.8) * 0.95 + 0.04;
+            float lit = step(vUv.y, level);
+            vec2 g = fract(vec2(vUv.x * bars, vUv.y * 34.0));
+            float cell = smoothstep(0.06,0.2,g.x) * smoothstep(0.06,0.2,g.y)
+                       * smoothstep(0.06,0.2,1.0-g.x) * smoothstep(0.06,0.2,1.0-g.y);
+            vec3 c = mix(uColA, uColB, vUv.y);
+            float on = lit * cell;
+            vec3 outc = c * on * 1.15 + c * 0.01;
+            gl_FragColor = vec4(outc, 1.0);
+          }`,
+      });
+      ledMat.toneMapped = false;
+      const led = new THREE.Mesh(new THREE.PlaneGeometry(78, 30), ledMat);
+      led.position.set(0, 4, -40);
+      scene.add(led);
+
+      // frame around the LED wall
+      const frameMat = new THREE.MeshBasicMaterial({ color: 0x0a0a12 });
+      const frameGeoH = new THREE.BoxGeometry(80, 1.4, 1.4);
+      const frameGeoV = new THREE.BoxGeometry(1.4, 32, 1.4);
+      [[0, 19.4, -40], [0, -11.4, -40]].forEach(p => { const m = new THREE.Mesh(frameGeoH, frameMat); m.position.set(...p); scene.add(m); });
+      [[-39.4, 4, -40], [39.4, 4, -40]].forEach(p => { const m = new THREE.Mesh(frameGeoV, frameMat); m.position.set(...p); scene.add(m); });
+
+      // ══ Floating product content screen ══════════════════════════
+      const shotUrls = [
+        'screenshots-v2/02-Pixel-Designer.png',
+        'screenshots-v2/Designer-Shape-Hexagon.png',
+        'screenshots-v2/Designer-Shape-Diamond.png',
+        'screenshots-v2/Designer-Shape-Triangle.png',
+      ];
+      const texLoader = new THREE.TextureLoader();
+      const shotTextures = shotUrls.map(u => {
+        const t = texLoader.load(u, undefined, undefined, () => {});
+        t.colorSpace = THREE.SRGBColorSpace;
+        return t;
+      });
+      let shotIndex = 0;
+      const bezel = new THREE.Mesh(new THREE.PlaneGeometry(31.4, 18.4), new THREE.MeshBasicMaterial({ color: 0x14162a }));
+      bezel.position.set(0, 5, -22.15);
+      scene.add(bezel);
+      const screenMat = new THREE.MeshBasicMaterial({ map: shotTextures[0], transparent: true, opacity: 0.97 });
+      const screen = new THREE.Mesh(new THREE.PlaneGeometry(30, 17), screenMat);
+      screen.position.set(0, 5, -22);
+      scene.add(screen);
+
+      // ══ Crowd silhouette (scale + live-show atmosphere) ══════════
+      const crowdMat = new THREE.MeshBasicMaterial({ color: 0x02020a });
+      const bodyGeo = new THREE.CapsuleGeometry(0.5, 1.4, 4, 8);
+      const headGeoC = new THREE.SphereGeometry(0.42, 10, 10);
+      const crowd = [];
+      const NCROWD = 66;
+      for (let i = 0; i < NCROWD; i++) {
+        const g = new THREE.Group();
+        g.add(new THREE.Mesh(bodyGeo, crowdMat));
+        const h = new THREE.Mesh(headGeoC, crowdMat); h.position.y = 1.35; g.add(h);
+        const row = Math.floor(i / 22);
+        g.position.set((Math.random() - 0.5) * 66, -8.2 + row * 0.12, 13 + row * 3.4 + Math.random() * 2);
+        g.scale.setScalar(1.05 + Math.random() * 0.5);
+        scene.add(g);
+        crowd.push({ g, base: g.position.y, phase: Math.random() * Math.PI * 2, sway: Math.random() * 0.4 + 0.2 });
+      }
+
+      // ══ Truss rig ════════════════════════════════════════════════
+      const trussMat = new THREE.MeshBasicMaterial({ color: 0x1a1c26 });
+      function truss(len, x, y, z, vertical=false) {
+        const g = new THREE.Group();
+        const chord = new THREE.BoxGeometry(vertical ? 0.5 : len, 0.5, 0.5);
+        const offs = [-0.7, 0.7];
+        offs.forEach(oy => offs.forEach(oz => {
+          const c = new THREE.Mesh(vertical ? new THREE.BoxGeometry(0.5, len, 0.5) : chord, trussMat);
+          if (vertical) c.position.set(0, 0, 0); else c.position.set(0, oy, oz);
+          if (vertical) c.position.set(oy, 0, oz);
+          g.add(c);
+        }));
+        g.position.set(x, y, z);
+        scene.add(g);
+        return g;
+      }
+      truss(70, 0, 15.5, -8);
+      truss(70, 0, 15.5, 8);
+
+      // ══ Volumetric moving-head beams ═════════════════════════════
+      const beamVert = `
+        varying float vY; varying vec3 vN; varying vec3 vV;
+        void main(){
+          vY = uv.y;
+          vec4 wp = modelMatrix * vec4(position, 1.0);
+          vN = normalize(mat3(modelMatrix) * normal);
+          vV = normalize(cameraPosition - wp.xyz);
+          gl_Position = projectionMatrix * viewMatrix * wp;
+        }`;
+      const beamFrag = `
+        precision highp float;
+        varying float vY; varying vec3 vN; varying vec3 vV;
+        uniform vec3 uColor; uniform float uIntensity;
+        void main(){
+          float edge = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 2.6);
+          float lenFade = mix(0.7, 0.04, 1.0 - vY);   // vY=1 at source (top)
+          float a = edge * lenFade * uIntensity;
+          vec3 col = uColor * (0.4 + edge * 0.7);
+          gl_FragColor = vec4(col, a);
+        }`;
+
+      const fixtures = [];
+      const NFIX = 10;
+      const beamGeo = new THREE.CylinderGeometry(0.06, 1.7, 30, 40, 1, true);
+      beamGeo.translate(0, -15, 0); // source (small radius, top) at group origin, beam hangs down
+
+      const headGeo = new THREE.CylinderGeometry(0.55, 0.75, 1.1, 20);
+      const headMat = new THREE.MeshBasicMaterial({ color: 0x111319 });
+      const bulbGeo = new THREE.SphereGeometry(0.28, 16, 16);
+
+      for (let i = 0; i < NFIX; i++) {
+        const t = i / (NFIX - 1);
+        const x = (t - 0.5) * 62;
+        const front = i % 2 === 0;
+        const z = front ? -8 : 8;
+
+        const group = new THREE.Group();
+        group.position.set(x, 15, z);
+
+        const head = new THREE.Mesh(headGeo, headMat);
+        group.add(head);
+
+        const beamMat = new THREE.ShaderMaterial({
+          uniforms: { uColor: { value: new THREE.Color(0xffffff) }, uIntensity: { value: 1 } },
+          vertexShader: beamVert, fragmentShader: beamFrag,
+          transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
+        });
+        beamMat.toneMapped = false;
+        const beam = new THREE.Mesh(beamGeo, beamMat);
+        group.add(beam);
+
+        const bulbMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        bulbMat.toneMapped = false;
+        const bulb = new THREE.Mesh(bulbGeo, bulbMat);
+        group.add(bulb);
+
+        scene.add(group);
+        fixtures.push({
+          group, beam, beamMat, bulb, bulbMat, front,
+          phase: Math.random() * Math.PI * 2,
+          panBase: (t - 0.5) * 0.5,
+          color: new THREE.Color(0xffffff),
+          target: new THREE.Color(0xffffff),
+          pan: 0, tilt: 0, tPan: 0, tTilt: 0,
+        });
+      }
+
+      // ══ Laser fan ════════════════════════════════════════════════
+      const laserGroup = new THREE.Group();
+      laserGroup.position.set(0, 13, -6);
+      const lasers = [];
+      const NLAS = 18;
+      const laserGeo = new THREE.CylinderGeometry(0.02, 0.02, 90, 6, 1, true);
+      laserGeo.translate(0, -45, 0);
+      for (let i = 0; i < NLAS; i++) {
+        const m = new THREE.ShaderMaterial({
+          uniforms: { uColor: { value: new THREE.Color(0x38bdf8) }, uIntensity: { value: 0 } },
+          vertexShader: beamVert, fragmentShader: beamFrag,
+          transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
+        });
+        m.toneMapped = false;
+        const beam = new THREE.Mesh(laserGeo, m);
+        beam.rotation.z = (i / (NLAS - 1) - 0.5) * 1.9;
+        laserGroup.add(beam);
+        lasers.push(m);
+      }
+      scene.add(laserGroup);
+
+      // ══ Atmosphere / haze particles ══════════════════════════════
+      const spriteTex = (() => {
+        const c = document.createElement('canvas'); c.width = c.height = 64;
+        const g = c.getContext('2d');
+        const grd = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+        grd.addColorStop(0, 'rgba(255,255,255,1)');
+        grd.addColorStop(0.4, 'rgba(255,255,255,0.4)');
+        grd.addColorStop(1, 'rgba(255,255,255,0)');
+        g.fillStyle = grd; g.fillRect(0, 0, 64, 64);
+        const tex = new THREE.CanvasTexture(c); return tex;
+      })();
+      const PCOUNT = 1400;
+      const pPos = new Float32Array(PCOUNT * 3);
+      const pSpeed = new Float32Array(PCOUNT);
+      for (let i = 0; i < PCOUNT; i++) {
+        pPos[i*3] = (Math.random() - 0.5) * 90;
+        pPos[i*3+1] = Math.random() * 34 - 9;
+        pPos[i*3+2] = (Math.random() - 0.5) * 60 - 6;
+        pSpeed[i] = 0.4 + Math.random() * 1.2;
+      }
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+      const pMat = new THREE.PointsMaterial({
+        size: 0.42, map: spriteTex, transparent: true, depthWrite: false,
+        blending: THREE.AdditiveBlending, color: 0x8b93ff, opacity: 0.28, sizeAttenuation: true,
+      });
+      pMat.toneMapped = false;
+      const particles = new THREE.Points(pGeo, pMat);
+      scene.add(particles);
+
+      // distant starfield
+      const sPos = new Float32Array(900 * 3);
+      for (let i = 0; i < 900; i++) {
+        sPos[i*3] = (Math.random() - 0.5) * 400;
+        sPos[i*3+1] = Math.random() * 160 - 10;
+        sPos[i*3+2] = -80 - Math.random() * 220;
+      }
+      const sGeo = new THREE.BufferGeometry();
+      sGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+      const stars = new THREE.Points(sGeo, new THREE.PointsMaterial({ size: 0.6, color: 0x9fb4ff, transparent: true, opacity: 0.32 }));
+      scene.add(stars);
+
+      // ══ Confetti / spark bursts ══════════════════════════════════
+      const CMAX = 500;
+      const cPos = new Float32Array(CMAX * 3);
+      const cVel = new Float32Array(CMAX * 3);
+      const cBase = new Float32Array(CMAX * 3);
+      const cCol = new Float32Array(CMAX * 3);
+      const cLife = new Float32Array(CMAX);
+      for (let i = 0; i < CMAX; i++) cPos[i*3+1] = -9999;
+      const cGeo = new THREE.BufferGeometry();
+      cGeo.setAttribute('position', new THREE.BufferAttribute(cPos, 3));
+      cGeo.setAttribute('color', new THREE.BufferAttribute(cCol, 3));
+      const cMat = new THREE.PointsMaterial({ size: 0.55, map: spriteTex, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true });
+      cMat.toneMapped = false;
+      const confetti = new THREE.Points(cGeo, cMat);
+      scene.add(confetti);
+      let cHead = 0;
+      const _cCol = new THREE.Color();
+      function spawnBurst(hex, count = 90) {
+        _cCol.setHex(hex);
+        for (let k = 0; k < count; k++) {
+          const i = cHead; cHead = (cHead + 1) % CMAX;
+          const side = Math.random() < 0.5 ? -1 : 1;
+          cPos[i*3] = side * (16 + Math.random() * 8);
+          cPos[i*3+1] = -7;
+          cPos[i*3+2] = -8 + Math.random() * 10;
+          cVel[i*3] = -side * (2 + Math.random() * 4);
+          cVel[i*3+1] = 9 + Math.random() * 8;
+          cVel[i*3+2] = (Math.random() - 0.5) * 4;
+          cLife[i] = 1.0;
+          const mix = 0.6 + Math.random() * 0.4;
+          cBase[i*3] = _cCol.r * mix + (1 - mix); cBase[i*3+1] = _cCol.g * mix + (1 - mix) * 0.9; cBase[i*3+2] = _cCol.b * mix + (1 - mix);
+        }
+      }
+
+      // ══ Floating holographic logo ════════════════════════════════
+      const logoTex = texLoader.load('pixelogic-logo.png', undefined, undefined, () => {});
+      logoTex.colorSpace = THREE.SRGBColorSpace;
+      const logoMat = new THREE.MeshBasicMaterial({ map: logoTex, transparent: true, opacity: 0.92, depthWrite: false, side: THREE.DoubleSide });
+      logoMat.toneMapped = false;
+      const logo = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), logoMat);
+      logo.position.set(0, 13, -16);
+      scene.add(logo);
+      const logoGlowMat = new THREE.MeshBasicMaterial({ map: logoTex, transparent: true, opacity: 0.28, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide });
+      logoGlowMat.toneMapped = false;
+      const logoGlow = new THREE.Mesh(new THREE.PlaneGeometry(9, 9), logoGlowMat);
+      logoGlow.position.copy(logo.position); logoGlow.position.z -= 0.1;
+      scene.add(logoGlow);
+
+      // ══ Post-processing ══════════════════════════════════════════
+      const composer = new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene, camera));
+      const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.62, 0.75, 0.2);
+      composer.addPass(bloom);
+
+      const GradeShader = {
+        uniforms: {
+          tDiffuse: { value: null }, uTime: { value: 0 },
+          uAber: { value: 0.0016 }, uVignette: { value: 1.5 },
+        },
+        vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);}`,
+        fragmentShader: `
+          precision highp float;
+          varying vec2 vUv; uniform sampler2D tDiffuse; uniform float uTime; uniform float uAber; uniform float uVignette;
+          float rand(vec2 c){ return fract(sin(dot(c, vec2(12.9898,78.233))) * 43758.5453); }
+          void main(){
+            vec2 d = vUv - 0.5;
+            float r = texture2D(tDiffuse, vUv + d * uAber).r;
+            float g = texture2D(tDiffuse, vUv).g;
+            float b = texture2D(tDiffuse, vUv - d * uAber).b;
+            vec3 col = vec3(r, g, b);
+            float vig = 1.0 - dot(d, d) * uVignette;
+            col *= clamp(vig, 0.0, 1.0);
+            float grain = (rand(vUv * (uTime + 1.0)) - 0.5) * 0.03;
+            col += grain;
+            gl_FragColor = vec4(col, 1.0);
+          }`,
+      };
+      const grade = new ShaderPass(GradeShader);
+      grade.renderToScreen = true;
+      composer.addPass(grade);
+
+      // ══ Interaction ══════════════════════════════════════════════
+      const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+      window.addEventListener('pointermove', e => {
+        pointer.tx = (e.clientX / window.innerWidth - 0.5);
+        pointer.ty = (e.clientY / window.innerHeight - 0.5);
+      });
+      window.addEventListener('deviceorientation', e => {
+        if (e.gamma == null) return;
+        pointer.tx = Math.max(-0.5, Math.min(0.5, e.gamma / 60));
+        pointer.ty = Math.max(-0.5, Math.min(0.5, (e.beta - 45) / 60));
+      });
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight);
+        bloom.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // manual cue trigger
+      let cueFlash = 0, paletteIndex = 0, beamPattern = 0;
+      const meterBars = [...document.querySelectorAll('#meter i')];
+
+      function newCue() {
+        paletteIndex = (paletteIndex + 1) % PALETTES.length;
+        beamPattern = (beamPattern + 1) % 4;
+        const [ca, cb] = PALETTES[paletteIndex];
+        ledMat.uniforms.uColA.value.setHex(ca);
+        ledMat.uniforms.uColB.value.setHex(cb);
+        fixtures.forEach((f, i) => {
+          f.target.setHex(i % 2 === 0 ? ca : cb);
+          const t = i / (NFIX - 1) - 0.5;
+          if (beamPattern === 0) f.tPan = t * 1.4;                 // fan out
+          else if (beamPattern === 1) f.tPan = (i % 2 ? 0.55 : -0.55); // cross
+          else if (beamPattern === 2) f.tPan = Math.sin(i * 0.9) * 0.9; // wave
+          else f.tPan = -f.panBase;                                // converge
+          f.tTilt = 0.12 + Math.random() * 0.5 * modeCfg.energy + 0.1;
+        });
+        lasers.forEach(l => l.uniforms.uColor.value.setHex(PALETTES[(paletteIndex + 2) % PALETTES.length][0]));
+        cueFlash = 1;
+        if (modeCfg.confetti) spawnBurst(ca, 70);
+
+        // cycle the product screen content
+        shotIndex = (shotIndex + 1) % shotTextures.length;
+        screenMat.map = shotTextures[shotIndex];
+        screenMat.needsUpdate = true;
+
+        // director cut: jump to a fresh camera angle most of the time
+        if (Math.random() < 0.7) {
+          camShot = (camShot + 1 + Math.floor(Math.random() * 2)) % CAM_SHOTS.length;
+          const s = CAM_SHOTS[camShot];
+          camPosT.set(s.pos[0], s.pos[1], s.pos[2]);
+          camLookT.set(s.look[0], s.look[1], s.look[2]);
+        }
+      }
+      document.getElementById('btn-cue').addEventListener('click', newCue);
+
+      // click / tap anywhere = strobe burst + cue
+      let strobeBurst = 0;
+      window.addEventListener('pointerdown', e => {
+        if (e.target.closest('a, button')) return; // don't hijack UI clicks
+        strobeBurst = 1;
+        spawnBurst(PALETTES[paletteIndex][0], 60);
+        newCue();
+      });
+
+      // ── Mode presets ──────────────────────────────────────────
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const m = btn.dataset.mode;
+          if (!MODES[m]) return;
+          modeCfg = MODES[m];
+          PALETTES = modeCfg.palettes;
+          paletteIndex = 0;
+          document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b === btn));
+          newCue();
+        });
+      });
+
+      // ── Audio-reactive synth ──────────────────────────────────
+      let AC, master, noiseBuf, schedTimer, nextTime = 0, step16 = 0;
+      const soundBtn = document.getElementById('btn-sound');
+      soundBtn.addEventListener('click', () => audio.on ? stopAudio() : startAudio());
+
+      function makeNoise(ctx) {
+        const b = ctx.createBuffer(1, ctx.sampleRate * 0.5, ctx.sampleRate);
+        const d = b.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+        return b;
+      }
+      function kick(t) {
+        const o = AC.createOscillator(), g = AC.createGain();
+        o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(46, t + 0.14);
+        g.gain.setValueAtTime(1.0, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+        o.connect(g).connect(master); o.start(t); o.stop(t + 0.24);
+      }
+      function hat(t) {
+        const s = AC.createBufferSource(); s.buffer = noiseBuf;
+        const hp = AC.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 8000;
+        const g = AC.createGain(); g.gain.setValueAtTime(0.35, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+        s.connect(hp).connect(g).connect(master); s.start(t); s.stop(t + 0.06);
+      }
+      function clap(t) {
+        const s = AC.createBufferSource(); s.buffer = noiseBuf;
+        const bp = AC.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1600; bp.Q.value = 1.2;
+        const g = AC.createGain(); g.gain.setValueAtTime(0.5, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+        s.connect(bp).connect(g).connect(master); s.start(t); s.stop(t + 0.16);
+      }
+      const BASSLINE = [55, 55, 82.4, 55, 73.4, 55, 65.4, 82.4];
+      function bass(t, i) {
+        const o = AC.createOscillator(), g = AC.createGain(), lp = AC.createBiquadFilter();
+        o.type = 'sawtooth'; o.frequency.value = BASSLINE[i % BASSLINE.length];
+        lp.type = 'lowpass'; lp.frequency.value = 420;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.32, t + 0.02); g.gain.exponentialRampToValueAtTime(0.001, t + 0.24);
+        o.connect(lp).connect(g).connect(master); o.start(t); o.stop(t + 0.26);
+      }
+      function playStep(step, t) {
+        if (step % 4 === 0) kick(t);
+        if (step % 4 === 2) hat(t);
+        if (step % 8 === 4) clap(t);
+        if (step % 2 === 0) bass(t, step / 2);
+        if (step === 0) newCue();
+      }
+      function scheduler() {
+        while (nextTime < AC.currentTime + 0.16) {
+          playStep(step16, nextTime);
+          nextTime += (beatDur / 4);
+          step16 = (step16 + 1) % 16;
+        }
+        schedTimer = setTimeout(scheduler, 25);
+      }
+      function startAudio() {
+        AC = new (window.AudioContext || window.webkitAudioContext)();
+        master = AC.createGain(); master.gain.value = 0.0001;
+        audio.analyser = AC.createAnalyser(); audio.analyser.fftSize = 256; audio.analyser.smoothingTimeConstant = 0.75;
+        audio.data = new Uint8Array(audio.analyser.frequencyBinCount);
+        master.connect(audio.analyser); audio.analyser.connect(AC.destination);
+        master.gain.exponentialRampToValueAtTime(0.22, AC.currentTime + 1.4);
+        noiseBuf = makeNoise(AC);
+        nextTime = AC.currentTime + 0.1; step16 = 0;
+        scheduler();
+        audio.on = true;
+        soundBtn.classList.add('active');
+        soundBtn.lastChild.textContent = ' Live';
+      }
+      function stopAudio() {
+        audio.on = false;
+        soundBtn.classList.remove('active');
+        soundBtn.lastChild.textContent = ' Go Live';
+        clearTimeout(schedTimer);
+        if (AC) { try { master.gain.exponentialRampToValueAtTime(0.0001, AC.currentTime + 0.3); } catch(_){} const c = AC; setTimeout(() => c.close(), 500); AC = null; }
+      }
+
+      function readLevels(time) {
+        if (audio.on && audio.analyser) {
+          audio.analyser.getByteFrequencyData(audio.data);
+          const d = audio.data, n = d.length;
+          let bass = 0, mid = 0, treb = 0;
+          for (let i = 0; i < 6; i++) bass += d[i]; bass /= (6 * 255);
+          for (let i = 6; i < 40; i++) mid += d[i]; mid /= (34 * 255);
+          for (let i = 40; i < n; i++) treb += d[i]; treb /= ((n - 40) * 255);
+          // fill spectrum tex from fft
+          for (let i = 0; i < SPEC; i++) {
+            const v = d[Math.floor(i / SPEC * n)] || 0;
+            specData[i*4] = v; specData[i*4+1] = v; specData[i*4+2] = v; specData[i*4+3] = 255;
+          }
+          specTex.needsUpdate = true;
+          return { bass: bass * 1.3, mid, treb };
+        } else {
+          const beat = time / beatDur;
+          const ph = beat - Math.floor(beat);
+          const bass = Math.pow(1 - ph, 4);
+          const mid = 0.35 + 0.3 * Math.abs(Math.sin(time * 2.0));
+          const treb = Math.max(0, Math.sin(time * 9.0)) * (0.4 + Math.random() * 0.4);
+          for (let i = 0; i < SPEC; i++) {
+            const env = Math.sin((i / SPEC) * Math.PI);
+            const v = (0.25 + 0.75 * bass) * env * (0.6 + 0.4 * Math.sin(time * 4 + i * 0.4));
+            specData[i*4] = Math.max(0, Math.min(255, v * 255));
+            specData[i*4+1] = specData[i*4]; specData[i*4+2] = specData[i*4]; specData[i*4+3] = 255;
+          }
+          specTex.needsUpdate = true;
+          return { bass, mid, treb };
+        }
+      }
+
+      // auto-advance cue every 4 bars when not driven by audio
+      let lastBar = -1;
+
+      // ══ Render loop ══════════════════════════════════════════════
+      const clock = new THREE.Clock();
+      let smoothLevel = 0;
+      let fpsAccum = 0, fpsFrames = 0, qualityDropped = false;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const dt = Math.min(clock.getDelta(), 0.05);
+        const time = clock.elapsedTime;
+        const lv = readLevels(time);
+        smoothLevel += (lv.bass - smoothLevel) * 0.3;
+
+        const seg = Math.floor(time / modeCfg.cueEvery);
+        if (!audio.on && seg !== lastBar) { lastBar = seg; newCue(); }
+
+        // fixtures: pan/tilt easing + color + beam intensity
+        fixtures.forEach((f, i) => {
+          f.pan += (f.tPan - f.pan) * 0.05;
+          f.tilt += (f.tTilt - f.tilt) * 0.05;
+          const sweep = Math.sin(time * (0.4 + modeCfg.energy * 0.5) + f.phase) * modeCfg.sweep;
+          f.group.rotation.z = f.panBase + f.pan + sweep;
+          f.group.rotation.x = (f.front ? -1 : 1) * (0.45 + f.tilt) + Math.sin(time * 0.5 + f.phase) * 0.12;
+          f.color.lerp(f.target, 0.06);
+          const inten = 0.32 + smoothLevel * 1.15 + Math.max(0, Math.sin(time * 1.3 + f.phase)) * 0.16;
+          f.beamMat.uniforms.uColor.value.copy(f.color);
+          f.beamMat.uniforms.uIntensity.value = inten;
+          f.bulbMat.color.copy(f.color).multiplyScalar(0.9 + smoothLevel * 0.7);
+        });
+
+        // lasers: flash on treble, sweep fast
+        laserGroup.rotation.y = Math.sin(time * 0.8) * 0.5;
+        laserGroup.rotation.x = 0.9 + Math.sin(time * 0.5) * 0.15;
+        const laserOn = lv.treb;
+        lasers.forEach((l, i) => {
+          l.uniforms.uIntensity.value = laserOn > 0.4 ? (0.35 + laserOn * 0.9) : laserOn * 0.08;
+        });
+
+        // LED wall
+        ledMat.uniforms.uTime.value = time;
+
+        // particles drift up through the light
+        const pa = pGeo.attributes.position.array;
+        for (let i = 0; i < PCOUNT; i++) {
+          pa[i*3+1] += pSpeed[i] * dt;
+          if (pa[i*3+1] > 26) pa[i*3+1] = -9;
+        }
+        pGeo.attributes.position.needsUpdate = true;
+        pMat.color.setHex(PALETTES[paletteIndex][0]).lerp(new THREE.Color(0xffffff), 0.3);
+        particles.rotation.y = Math.sin(time * 0.05) * 0.05;
+
+        // floating content screen: gentle bob + tilt
+        screen.position.y = 5 + Math.sin(time * 0.6) * 0.35;
+        screen.rotation.z = Math.sin(time * 0.35) * 0.012;
+        bezel.position.y = screen.position.y;
+        bezel.rotation.z = screen.rotation.z;
+
+        // crowd bob to the beat
+        for (let i = 0; i < crowd.length; i++) {
+          const c = crowd[i];
+          c.g.position.y = c.base + Math.max(0, Math.sin(time * 5.0 + c.phase)) * (0.15 + smoothLevel * 0.7);
+          c.g.rotation.z = Math.sin(time * 1.5 + c.phase) * c.sway * 0.15;
+        }
+
+        // confetti / spark physics
+        let cDirty = false;
+        for (let i = 0; i < CMAX; i++) {
+          if (cLife[i] > 0) {
+            cVel[i*3+1] -= 15 * dt;
+            cPos[i*3]   += cVel[i*3] * dt;
+            cPos[i*3+1] += cVel[i*3+1] * dt;
+            cPos[i*3+2] += cVel[i*3+2] * dt;
+            cLife[i] -= dt * 0.55;
+            const l = Math.max(0, cLife[i]);
+            cCol[i*3] = cBase[i*3] * l; cCol[i*3+1] = cBase[i*3+1] * l; cCol[i*3+2] = cBase[i*3+2] * l;
+            if (cLife[i] <= 0 || cPos[i*3+1] < -9) { cLife[i] = 0; cPos[i*3+1] = -9999; }
+            cDirty = true;
+          }
+        }
+        if (cDirty) { cGeo.attributes.position.needsUpdate = true; cGeo.attributes.color.needsUpdate = true; }
+
+        // floating holographic logo
+        logo.position.y = 13 + Math.sin(time * 0.8) * 0.35;
+        logo.rotation.y = Math.sin(time * 0.5) * 0.28;
+        logoMat.opacity = 0.82 + Math.sin(time * 2.0) * 0.1;
+        logoGlow.position.y = logo.position.y;
+        logoGlow.rotation.y = logo.rotation.y;
+
+        // camera: director-style eased cuts + parallax + beat push
+        pointer.x += (pointer.tx - pointer.x) * 0.05;
+        pointer.y += (pointer.ty - pointer.y) * 0.05;
+        camPos.lerp(camPosT, 0.028);
+        camLook.lerp(camLookT, 0.04);
+        const orbit = Math.sin(time * 0.12) * 2.0;
+        camera.position.set(
+          camPos.x + orbit + pointer.x * 8,
+          camPos.y + pointer.y * -4 + smoothLevel * 0.4,
+          camPos.z - smoothLevel * 1.0
+        );
+        camera.lookAt(camLook);
+
+        // post
+        renderer.toneMappingExposure = 0.82 + smoothLevel * 0.22;
+        bloom.strength = (qualityDropped ? modeCfg.bloom * 0.8 : modeCfg.bloom) + smoothLevel * 0.45;
+        grade.uniforms.uTime.value = time;
+        grade.uniforms.uAber.value = 0.0012 + laserOn * 0.003;
+
+        // strobe / cue flash (+ click burst)
+        if (strobeBurst > 0) strobeBurst -= dt * 5.0;
+        const flash = Math.max(cueFlash * 0.28, Math.max(0, strobeBurst) * 0.6);
+        if (cueFlash > 0) cueFlash -= dt * 3.2;
+        strobeEl.style.opacity = Math.max(0, flash);
+
+        // dock meter
+        const m = audio.on ? lv.bass : smoothLevel;
+        meterBars.forEach((b, i) => {
+          const h = Math.max(8, Math.min(100, (m * 120) * (0.5 + Math.random() * 0.9) - i * 4 + 30));
+          b.style.height = h + '%';
+        });
+
+        // auto quality scaler: drop cost once if the frame rate is low
+        fpsAccum += dt; fpsFrames++;
+        if (fpsAccum >= 2.5) {
+          const fps = fpsFrames / fpsAccum;
+          if (!qualityDropped && fps < 38) {
+            qualityDropped = true;
+            renderer.setPixelRatio(1);
+            mirror.visible = false;
+          }
+          fpsAccum = 0; fpsFrames = 0;
+        }
+
+        composer.render();
+      }
+
+      // hide loader once first frame is ready
+      requestAnimationFrame(() => { animate(); setTimeout(() => loader.classList.add('hide'), 500); });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PixelLogic — Shape-Based Pixel Map (Prototype)</title>
+<style>
+  :root{
+    --bg:#0f172a; --panel:#1e293b; --panel2:#162033; --line:#334155;
+    --text:#e2e8f0; --muted:#94a3b8; --accent:#6366f1; --accent2:#ec4899;
+    --on:#3b82f6; --on2:#1d4ed8; --off:#0b1322;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text)}
+  header{padding:16px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px}
+  header h1{font-size:18px;margin:0;font-weight:600}
+  header .tag{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:3px 8px;border-radius:999px}
+  .wrap{display:flex;gap:0;min-height:calc(100vh - 59px)}
+  .sidebar{width:320px;flex:none;background:var(--panel);border-right:1px solid var(--line);padding:18px;overflow:auto}
+  .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px;gap:16px;overflow:auto}
+  .group{margin-bottom:20px}
+  .group h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px}
+  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+  select,input[type=number]{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);
+    border-radius:8px;padding:8px 10px;font-size:13px}
+  .row{display:flex;gap:10px}
+  .row>div{flex:1}
+  .shapes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .shape-btn{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 4px;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--muted);transition:.15s}
+  .shape-btn:hover{border-color:var(--accent)}
+  .shape-btn.active{border-color:var(--accent);background:rgba(99,102,241,.15);color:var(--text)}
+  .shape-btn svg{width:26px;height:26px}
+  .btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;
+    padding:10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px}
+  .btn.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text)}
+  .canvas-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+  canvas{display:block;background:#0b1322;border-radius:8px;image-rendering:pixelated}
+  .stats{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+  .stats b{color:var(--text);font-weight:600}
+  .hint{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
+  .toggle{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-top:10px;cursor:pointer}
+  .toggle input{accent-color:var(--accent)}
+  .legend{display:flex;gap:14px;font-size:11px;color:var(--muted);align-items:center}
+  .legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+</style>
+</head>
+<body>
+<header>
+  <h1>PixelLogic</h1>
+  <span class="tag">Shape-Based Pixel Map · Prototype</span>
+</header>
+<div class="wrap">
+  <aside class="sidebar">
+    <div class="group">
+      <h3>Wall Shape</h3>
+      <div class="shapes" id="shapeButtons"></div>
+    </div>
+
+    <div class="group">
+      <h3>Grid (panels)</h3>
+      <div class="row">
+        <div>
+          <label>Columns</label>
+          <input type="number" id="cols" value="16" min="1" max="80" />
+        </div>
+        <div>
+          <label>Rows</label>
+          <input type="number" id="rows" value="12" min="1" max="80" />
+        </div>
+      </div>
+      <label>Panel resolution (px, each tile)</label>
+      <div class="row">
+        <div><input type="number" id="resW" value="128" min="1" /></div>
+        <div><input type="number" id="resH" value="128" min="1" /></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Edit</h3>
+      <label class="toggle"><input type="checkbox" id="paintMode" /> Manual paint mode (click/drag panels)</label>
+      <div class="hint">In paint mode, drag across panels to toggle them on/off — for custom shapes (logos, letters, arrows).</div>
+      <button class="btn secondary" id="allOn" style="margin-top:12px">Enable all</button>
+      <button class="btn secondary" id="allOff">Disable all</button>
+      <button class="btn" id="reapply">Re-apply shape mask</button>
+    </div>
+
+    <div class="group">
+      <h3>Export</h3>
+      <button class="btn secondary" id="exportPng">Download PNG</button>
+      <button class="btn secondary" id="copyData">Copy panels[] array</button>
+    </div>
+  </aside>
+
+  <main class="stage">
+    <div class="canvas-card">
+      <canvas id="map" width="800" height="600"></canvas>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="legend">
+      <span><span class="sw" style="background:#1d4ed8"></span>Active panel (inside shape)</span>
+      <span><span class="sw" style="background:#0b1322;border:1px solid #334155"></span>Disabled panel</span>
+    </div>
+    <div class="hint" style="max-width:640px;text-align:center">
+      This mirrors PixelLogic's real model: a rectangular bounding grid where panels outside the shape are
+      <code>panels[i] = false</code>. Everything else (export, 3D, patching, power) keeps working unchanged.
+    </div>
+  </main>
+</div>
+
+<script>
+// ───────────────────────── State (mirrors PixelLogic's pixel map object) ─────────────────────────
+const state = {
+  cols: 16,
+  rows: 12,
+  resW: 128,
+  resH: 128,
+  shape: 'rectangle',
+  panels: [],          // flat boolean array, exactly like index.html's map.panels
+  paintMode: false,
+};
+
+// ───────────────────────── Shape definitions ─────────────────────────
+// Each returns true if the panel at grid (c,r) is INSIDE the shape.
+// Uses normalized coordinates: panel center mapped to [-1, 1] on both axes.
+const SHAPES = {
+  rectangle: { label:'Rectangle', icon:'<rect x="3" y="5" width="20" height="16" rx="2"/>',
+    test:()=>true },
+  circle: { label:'Circle', icon:'<circle cx="13" cy="13" r="10"/>',
+    test:(nx,ny)=> (nx*nx + ny*ny) <= 1.0 },
+  ellipse: { label:'Ellipse', icon:'<ellipse cx="13" cy="13" rx="11" ry="7"/>',
+    test:(nx,ny)=> (nx*nx)/1.0 + (ny*ny)/1.0 <= 1.0 }, // square grid → circle; non-square cols/rows makes oval
+  triangle: { label:'Triangle', icon:'<polygon points="13,3 23,22 3,22"/>',
+    test:(nx,ny)=>{
+      // upward triangle: apex at top center, base at bottom
+      const y = (ny+1)/2;             // 0 top .. 1 bottom
+      const halfWidth = y;            // width grows linearly to base
+      return Math.abs(nx) <= halfWidth + 1e-6;
+    }},
+  diamond: { label:'Diamond', icon:'<polygon points="13,2 24,13 13,24 2,13"/>',
+    test:(nx,ny)=> (Math.abs(nx)+Math.abs(ny)) <= 1.0 },
+  hexagon: { label:'Hexagon', icon:'<polygon points="13,2 23,8 23,18 13,24 3,18 3,8"/>',
+    test:(nx,ny)=>{
+      // pointy-top hexagon via half-plane intersection
+      const x=Math.abs(nx), y=Math.abs(ny);
+      if (y>1) return false;
+      return x <= (1 - y*0.5) && x <= 0.92;
+    }},
+  cross: { label:'Cross', icon:'<polygon points="9,3 17,3 17,9 23,9 23,17 17,17 17,23 9,23 9,17 3,17 3,9 9,9"/>',
+    test:(nx,ny)=>{
+      const arm = 0.34;
+      return Math.abs(nx)<=arm || Math.abs(ny)<=arm;
+    }},
+  custom: { label:'Custom', icon:'<path d="M4 13 L11 6 L11 10 L22 10 L22 16 L11 16 L11 20 Z"/>',
+    test:null }, // custom = keep current panels, user paints
+};
+
+// ───────────────────────── Mask application ─────────────────────────
+function applyShapeMask(){
+  const {cols, rows, shape} = state;
+  const def = SHAPES[shape];
+  state.panels = new Array(cols*rows);
+  if (shape === 'custom' || !def.test){
+    state.panels.fill(true);
+    return;
+  }
+  for (let r=0;r<rows;r++){
+    for (let c=0;c<cols;c++){
+      // panel center → normalized [-1,1]
+      const nx = ((c + 0.5)/cols)*2 - 1;
+      const ny = ((r + 0.5)/rows)*2 - 1;
+      state.panels[r*cols + c] = def.test(nx, ny);
+    }
+  }
+}
+
+// ───────────────────────── Rendering (mirrors drawVisualizerCanvas) ─────────────────────────
+const canvas = document.getElementById('map');
+const ctx = canvas.getContext('2d');
+
+function render(){
+  const {cols, rows, panels} = state;
+  // Fit canvas to a max box while keeping square-ish tiles
+  const maxW = 820, maxH = 620, pad = 0;
+  const tile = Math.max(6, Math.floor(Math.min((maxW)/cols, (maxH)/rows)));
+  const w = cols*tile, h = rows*tile;
+  canvas.width = w; canvas.height = h;
+
+  ctx.fillStyle = '#0b1322';
+  ctx.fillRect(0,0,w,h);
+
+  let active=0;
+  for (let r=0;r<rows;r++){
+    for (let c=0;c<cols;c++){
+      const idx = r*cols+c;
+      const on = panels[idx] !== false;
+      const x=c*tile, y=r*tile;
+      if (on){
+        active++;
+        // checker fill like PixelLogic
+        const checker = (r+c)%2===0;
+        const g = ctx.createLinearGradient(x,y,x+tile,y+tile);
+        g.addColorStop(0, checker ? '#2563eb' : '#1d4ed8');
+        g.addColorStop(1, checker ? '#1d4ed8' : '#1e40af');
+        ctx.fillStyle = g;
+        ctx.fillRect(x+1,y+1,tile-2,tile-2);
+        ctx.strokeStyle = 'rgba(255,255,255,.12)';
+        ctx.strokeRect(x+1.5,y+1.5,tile-3,tile-3);
+      } else {
+        ctx.fillStyle = '#0b1322';
+        ctx.fillRect(x,y,tile,tile);
+        ctx.strokeStyle = 'rgba(255,255,255,.04)';
+        ctx.strokeRect(x+.5,y+.5,tile-1,tile-1);
+      }
+    }
+  }
+  updateStats(active, tile);
+}
+
+function updateStats(active, tile){
+  const {cols,rows,resW,resH} = state;
+  const total = cols*rows;
+  const totalPx = active*resW*resH;
+  document.getElementById('stats').innerHTML =
+    `Shape: <b>${SHAPES[state.shape].label}</b>` +
+    ` &nbsp;·&nbsp; Active panels: <b>${active}</b> / ${total}` +
+    ` &nbsp;·&nbsp; Disabled: <b>${total-active}</b>` +
+    ` &nbsp;·&nbsp; Resolution: <b>${cols*resW} × ${rows*resH}</b> px (bounding)` +
+    ` &nbsp;·&nbsp; Lit pixels: <b>${totalPx.toLocaleString()}</b>`;
+}
+
+// ───────────────────────── Manual paint ─────────────────────────
+let painting=false, paintValue=true;
+function panelAt(evt){
+  const rect = canvas.getBoundingClientRect();
+  const x = (evt.clientX-rect.left) * (canvas.width/rect.width);
+  const y = (evt.clientY-rect.top) * (canvas.height/rect.height);
+  const tile = canvas.width/state.cols;
+  const c = Math.floor(x/tile), r = Math.floor(y/tile);
+  if (c<0||r<0||c>=state.cols||r>=state.rows) return -1;
+  return r*state.cols+c;
+}
+canvas.addEventListener('mousedown', e=>{
+  if(!state.paintMode) return;
+  const idx = panelAt(e); if(idx<0) return;
+  painting=true; paintValue = !(state.panels[idx]!==false);
+  state.panels[idx]=paintValue; render();
+});
+canvas.addEventListener('mousemove', e=>{
+  if(!painting) return;
+  const idx = panelAt(e); if(idx<0) return;
+  state.panels[idx]=paintValue; render();
+});
+window.addEventListener('mouseup', ()=>painting=false);
+
+// ───────────────────────── UI wiring ─────────────────────────
+function buildShapeButtons(){
+  const host = document.getElementById('shapeButtons');
+  host.innerHTML='';
+  Object.entries(SHAPES).forEach(([key,def])=>{
+    const b=document.createElement('button');
+    b.className='shape-btn'+(key===state.shape?' active':'');
+    b.dataset.shape=key;
+    b.innerHTML=`<svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6">${def.icon}</svg>${def.label}`;
+    b.onclick=()=>{
+      state.shape=key;
+      buildShapeButtons();
+      applyShapeMask();
+      render();
+      if(key==='custom'){ document.getElementById('paintMode').checked=true; state.paintMode=true; }
+    };
+    host.appendChild(b);
+  });
+}
+
+document.getElementById('cols').oninput = e=>{ state.cols=clamp(e.target.value,1,80); applyShapeMask(); render(); };
+document.getElementById('rows').oninput = e=>{ state.rows=clamp(e.target.value,1,80); applyShapeMask(); render(); };
+document.getElementById('resW').oninput = e=>{ state.resW=Math.max(1,+e.target.value||1); render(); };
+document.getElementById('resH').oninput = e=>{ state.resH=Math.max(1,+e.target.value||1); render(); };
+document.getElementById('paintMode').onchange = e=>{ state.paintMode=e.target.checked; canvas.style.cursor=e.target.checked?'crosshair':'default'; };
+document.getElementById('allOn').onclick = ()=>{ state.panels.fill(true); render(); };
+document.getElementById('allOff').onclick = ()=>{ state.panels.fill(false); render(); };
+document.getElementById('reapply').onclick = ()=>{ applyShapeMask(); render(); };
+document.getElementById('exportPng').onclick = ()=>{
+  const a=document.createElement('a'); a.download=`pixelmap-${state.shape}.png`; a.href=canvas.toDataURL('image/png'); a.click();
+};
+document.getElementById('copyData').onclick = ()=>{
+  const txt = `panels: [${state.panels.map(v=>v?'true':'false').join(', ')}]`;
+  navigator.clipboard.writeText(txt).then(()=>{ alert('panels[] array copied to clipboard.'); });
+};
+
+function clamp(v,min,max){ v=+v||min; return Math.min(max,Math.max(min,v)); }
+
+// ───────────────────────── Init ─────────────────────────
+buildShapeButtons();
+applyShapeMask();
+render();
+</script>
+</body>
+</html>

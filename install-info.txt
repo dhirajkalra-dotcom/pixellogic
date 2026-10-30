@@ -1,0 +1,15 @@
+PIXELOGIC - END USER LICENSE AGREEMENT
+=======================================
+
+Copyright (c) Dhiraj Kalra. All rights reserved.
+
+By installing this software you agree to the following terms:
+
+1. This software is provided for personal and professional use.
+2. Redistribution or resale of this software is not permitted without
+   explicit written permission from the author.
+3. The software is provided "as-is", without warranty of any kind.
+4. The author shall not be liable for any damages arising from use of
+   this software.
+
+For support, please use the built-in Help tab inside the application.

@@ -1,0 +1,38 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Placeholder for the background image */
+            background-image: url('{{TEMPLATE_BACKGROUND_IMAGE}}');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 210mm;
+            height: 297mm;
+        }
+        .content {
+            padding: 40px; 
+        }
+        .logo {
+            max-width: 250px; /* Set a size for your logo */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <img src="{{LOGO_IMAGE}}" alt="Logo" class="logo">
+
+        <h1>Project Report: {{projectName}}</h1>
+        
+        <h2>Summary</h2>
+        <ul>
+            <li><b>Total Width:</b> {{totalWidth}}px</li>
+            <li><b>Total Height:</b> {{totalHeight}}px</li>
+            <li><b>Total Pixels:</b> {{totalPixels}}</li>
+        </ul>
+    </div>
+</body>
+</html>

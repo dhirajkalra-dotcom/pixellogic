@@ -1,0 +1,16 @@
+{
+  "name": "pixellogic-mobile",
+  "version": "0.7.0",
+  "private": true,
+  "description": "PixelLogic Mobile — PWA + Capacitor wrapper for Android/iOS.",
+  "scripts": {
+    "start": "http-server . -p 5173 -c-1",
+    "build:www": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/build-www.ps1",
+    "cap:sync": "npm run build:www && cap sync",
+    "cap:android": "npm run cap:sync && cap open android",
+    "cap:ios": "npm run cap:sync && cap open ios"
+  },
+  "keywords": ["pixellogic", "led", "pwa", "capacitor"],
+  "author": "Dhiraj Kalra",
+  "license": "UNLICENSED"
+}

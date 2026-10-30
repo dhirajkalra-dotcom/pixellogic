@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixelogic — Coming Soon</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta name="description" content="Pixelogic — Professional AV & Event Production Software. Coming Soon.">
+  <meta property="og:title" content="Pixelogic — Coming Soon">
+  <meta property="og:description" content="Professional AV & Event Production Software. Launching Soon.">
+  <meta property="og:image" content="https://www.pixelogic.co.in/og-image.png">
+  <meta property="og:url" content="https://www.pixelogic.co.in/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #050510;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f1f5f9;
+    }
+
+    canvas#particles {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: grid-scroll 20s linear infinite;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    .bg-grid.show { opacity: 1; }
+    @keyframes grid-scroll {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(60px, 60px); }
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%; filter: blur(120px); z-index: 0;
+      opacity: 0; transition: opacity 3s ease;
+    }
+    .orb.show { opacity: var(--o, 0.25); animation: orbFloat 8s ease-in-out infinite; }
+    .orb-1 { width: 500px; height: 500px; background: #6366f1; top: -150px; left: -100px; --o: 0.25; }
+    .orb-2 { width: 400px; height: 400px; background: #06b6d4; bottom: -100px; right: -100px; --o: 0.2; animation-delay: -4s; }
+    .orb-3 { width: 350px; height: 350px; background: #f43f5e; top: 60%; left: 60%; --o: 0.12; animation-delay: -2s; }
+    .orb-4 { width: 250px; height: 250px; background: #eab308; top: 20%; right: 15%; --o: 0.08; animation-delay: -6s; }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .content {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 40px 24px;
+      max-width: 640px;
+    }
+
+    .logo {
+      width: 100px; height: auto;
+      mix-blend-mode: screen; filter: brightness(1.2);
+      margin-bottom: 28px;
+      opacity: 0; transform: translateY(20px) scale(0.8);
+      transition: all 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .logo.show { opacity: 1; transform: translateY(0) scale(1); animation: logoFloat 4s ease-in-out infinite; }
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1); }
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.2rem; font-weight: 700;
+      background: linear-gradient(135deg, #818cf8, #06b6d4, #818cf8);
+      background-size: 200% 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: gradShift 4s ease infinite;
+      margin-bottom: 12px;
+      opacity: 0; transform: translateY(20px);
+      transition: all 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    h1.show { opacity: 1; transform: translateY(0); }
+    @keyframes gradShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+    .tagline {
+      font-size: 1.05rem; color: #94a3b8; line-height: 1.7; margin-bottom: 24px;
+      letter-spacing: 0.3px;
+      opacity: 0; transform: translateY(20px);
+      transition: all 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .tagline.show { opacity: 1; transform: translateY(0); }
+
+    .coming-soon-badge {
+      display: inline-block;
+      padding: 14px 42px; border-radius: 50px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem; font-weight: 600;
+      letter-spacing: 6px; text-transform: uppercase;
+      color: #f1f5f9; margin-bottom: 20px;
+      opacity: 0; transform: translateY(20px);
+      transition: all 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .coming-soon-badge.show { opacity: 1; transform: translateY(0); animation: pulse-glow 3s ease-in-out infinite; }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.15), 0 0 60px rgba(6,182,212,0.08); }
+      50% { box-shadow: 0 0 40px rgba(99,102,241,0.3), 0 0 100px rgba(6,182,212,0.15); }
+    }
+
+    .divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, transparent, #6366f1, #06b6d4, transparent);
+      margin: 32px auto; border-radius: 2px;
+      opacity: 0; transition: opacity 1s ease;
+    }
+    .divider.show { opacity: 1; }
+
+    .launch-date {
+      font-size: 1rem; color: #94a3b8; letter-spacing: 1.5px; margin-bottom: 32px;
+      opacity: 0; transform: translateY(20px);
+      transition: all 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .launch-date.show { opacity: 1; transform: translateY(0); }
+    .launch-date span { color: #818cf8; font-weight: 600; font-size: 1.1rem; }
+
+    .description {
+      font-size: 0.9rem; color: #64748b; line-height: 1.7;
+      margin-bottom: 36px; max-width: 440px; margin-left: auto; margin-right: auto;
+      opacity: 0; transform: translateY(20px);
+      transition: all 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .description.show { opacity: 1; transform: translateY(0); }
+
+    .social-links {
+      display: flex; justify-content: center; gap: 16px;
+      opacity: 0; transform: translateY(20px);
+      transition: all 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .social-links.show { opacity: 1; transform: translateY(0); }
+
+    .social-link {
+      display: flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px); color: #94a3b8; text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .social-link:hover {
+      background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2);
+      color: #f1f5f9; transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(99,102,241,0.2);
+    }
+    .social-link svg { width: 20px; height: 20px; fill: currentColor; }
+
+    .footer {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 1;
+      text-align: center; padding: 20px;
+      font-size: 0.78rem; color: #334155; letter-spacing: 0.5px;
+      opacity: 0; transition: opacity 1s ease;
+    }
+    .footer.show { opacity: 1; }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.4rem; }
+      .coming-soon-badge { font-size: 0.95rem; letter-spacing: 4px; padding: 12px 28px; }
+      .tagline { font-size: 0.95rem; }
+      .social-link { width: 44px; height: 44px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid" id="bgGrid"></div>
+  <div class="orb orb-1" id="orb1"></div>
+  <div class="orb orb-2" id="orb2"></div>
+  <div class="orb orb-3" id="orb3"></div>
+  <div class="orb orb-4" id="orb4"></div>
+  <canvas id="particles"></canvas>
+
+  <div class="content">
+    <img src="pixelogic-logo.png" alt="Pixelogic Logo" class="logo" id="elLogo">
+    <h1 id="elTitle">Pixelogic</h1>
+    <p class="tagline" id="elTagline">Professional AV & Event Production Software.<br>Something amazing is on its way.</p>
+    <div class="coming-soon-badge" id="elBadge">Coming Soon</div>
+    <div class="divider" id="elDivider"></div>
+    <p class="launch-date" id="elLaunchDate">Launching <span>April 24, 2026</span></p>
+    <p class="description" id="elDesc">We're crafting powerful tools for AV engineers, video professionals, and event production teams. Stay connected for updates.</p>
+    <div class="social-links" id="elSocial">
+      <a href="mailto:dhiraj.kalra@gmail.com" class="social-link" title="Email" aria-label="Email">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/dhirajkalra82" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/im_dhiraj.kalra" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <footer class="footer" id="elFooter">&copy; 2026 Pixelogic. All rights reserved.</footer>
+
+  <script>
+  (function() {
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H;
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const PARTICLE_COUNT = 800;
+    const particles = [];
+    const colors = ['#818cf8', '#06b6d4', '#f1f5f9', '#94a3b8', '#6366f1', '#22d3ee'];
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        tx: 0, ty: 0,
+        r: Math.random() * 2 + 0.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: Math.random() * 0.5 + 0.3,
+        hasTarget: false,
+        wobbleX: Math.random() * Math.PI * 2,
+        wobbleY: Math.random() * Math.PI * 2,
+        wobbleSpeedX: Math.random() * 0.02 + 0.005,
+        wobbleSpeedY: Math.random() * 0.02 + 0.005
+      });
+    }
+
+    function getTextPositions(text, fontSize, fontFamily) {
+      const off = document.createElement('canvas');
+      off.width = W; off.height = H;
+      const octx = off.getContext('2d');
+      octx.fillStyle = '#fff';
+      octx.font = 'bold ' + fontSize + 'px ' + fontFamily;
+      octx.textAlign = 'center';
+      octx.textBaseline = 'middle';
+      octx.fillText(text, W / 2, H / 2);
+      const data = octx.getImageData(0, 0, W, H).data;
+      const positions = [];
+      const step = 4;
+      for (let y = 0; y < H; y += step) {
+        for (let x = 0; x < W; x += step) {
+          if (data[(y * W + x) * 4 + 3] > 128) {
+            positions.push({ x: x, y: y });
+          }
+        }
+      }
+      return positions;
+    }
+
+    const fontSize = Math.min(W / 8, 120);
+    const textPositions = getTextPositions('COMING SOON', fontSize, 'Space Grotesk, sans-serif');
+
+    for (let i = textPositions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      var tmp = textPositions[i]; textPositions[i] = textPositions[j]; textPositions[j] = tmp;
+    }
+    const usedCount = Math.min(particles.length, textPositions.length);
+    for (let i = 0; i < usedCount; i++) {
+      particles[i].tx = textPositions[i].x;
+      particles[i].ty = textPositions[i].y;
+      particles[i].hasTarget = true;
+    }
+
+    var phase = 'wander';
+    var phaseStart = performance.now();
+    var TIMINGS = {
+      wander: 1500,
+      converge: 2500,
+      hold: 1800,
+      scatter: 1500,
+      reveal: 5000
+    };
+
+    function setPhase(p) {
+      phase = p;
+      phaseStart = performance.now();
+      if (p === 'converge') {
+        for (var i = 0; i < particles.length; i++) {
+          particles[i].sx = particles[i].x;
+          particles[i].sy = particles[i].y;
+          if (particles[i].hasTarget) {
+            var dx = particles[i].tx - W / 2;
+            var dy = particles[i].ty - H / 2;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            particles[i].delay = (dist / (Math.max(W, H) * 0.6)) * 0.35;
+          }
+        }
+      }
+      if (p === 'scatter') {
+        for (var i = 0; i < particles.length; i++) {
+          particles[i].sx = particles[i].x;
+          particles[i].sy = particles[i].y;
+          if (particles[i].hasTarget) {
+            var angle = Math.atan2(particles[i].ty - H / 2, particles[i].tx - W / 2) + (Math.random() - 0.5) * 1.2;
+            var spd = 300 + Math.random() * 400;
+            particles[i].vx = Math.cos(angle) * spd;
+            particles[i].vy = Math.sin(angle) * spd;
+          }
+        }
+      }
+    }
+
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    var revealOrder = [
+      { el: 'bgGrid', delay: 0 },
+      { el: 'orb1', delay: 0 },
+      { el: 'orb2', delay: 200 },
+      { el: 'orb3', delay: 400 },
+      { el: 'orb4', delay: 500 },
+      { el: 'elLogo', delay: 300 },
+      { el: 'elTitle', delay: 600 },
+      { el: 'elTagline', delay: 900 },
+      { el: 'elBadge', delay: 1100 },
+      { el: 'elDivider', delay: 1300 },
+      { el: 'elLaunchDate', delay: 1500 },
+      { el: 'elDesc', delay: 1800 },
+      { el: 'elSocial', delay: 2200 },
+      { el: 'elFooter', delay: 2600 }
+    ];
+    var revealTriggered = false;
+
+    function triggerReveal() {
+      if (revealTriggered) return;
+      revealTriggered = true;
+      revealOrder.forEach(function(item) {
+        setTimeout(function() {
+          document.getElementById(item.el).classList.add('show');
+        }, item.delay);
+      });
+    }
+
+    var globalAlpha = 1;
+
+    function render(now) {
+      var elapsed = now - phaseStart;
+      ctx.clearRect(0, 0, W, H);
+
+      if (phase === 'wander' && elapsed > TIMINGS.wander) setPhase('converge');
+      else if (phase === 'converge' && elapsed > TIMINGS.converge) setPhase('hold');
+      else if (phase === 'hold' && elapsed > TIMINGS.hold) setPhase('scatter');
+      else if (phase === 'scatter' && elapsed > TIMINGS.scatter) { setPhase('reveal'); triggerReveal(); }
+      else if (phase === 'reveal' && elapsed > TIMINGS.reveal) setPhase('ambient');
+
+      var progress = Math.min(1, elapsed / (TIMINGS[phase] || 1));
+      var ep = easeInOutCubic(progress);
+
+      if (phase === 'reveal') {
+        globalAlpha = Math.max(0.12, 1 - progress * 0.88);
+      } else if (phase === 'ambient') {
+        globalAlpha = 0.12;
+      }
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+
+        if (phase === 'wander') {
+          p.wobbleX += p.wobbleSpeedX;
+          p.wobbleY += p.wobbleSpeedY;
+          p.x += Math.sin(p.wobbleX) * 0.8;
+          p.y += Math.cos(p.wobbleY) * 0.5;
+          if (p.x < -10) p.x = W + 10;
+          if (p.x > W + 10) p.x = -10;
+          if (p.y < -10) p.y = H + 10;
+          if (p.y > H + 10) p.y = -10;
+        }
+        else if (phase === 'converge') {
+          if (p.hasTarget) {
+            var t = Math.max(0, Math.min(1, (progress - (p.delay || 0)) / (1 - (p.delay || 0))));
+            var et = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            p.x = p.sx + (p.tx - p.sx) * et;
+            p.y = p.sy + (p.ty - p.sy) * et;
+            if (et < 0.95) {
+              var spiral = (1 - et) * 12;
+              p.x += Math.sin(now * 0.005 + i * 0.7) * spiral;
+              p.y += Math.cos(now * 0.006 + i * 0.7) * spiral;
+            }
+          } else {
+            p.wobbleX += p.wobbleSpeedX;
+            p.wobbleY += p.wobbleSpeedY;
+            p.x += Math.sin(p.wobbleX) * 0.5;
+            p.y += Math.cos(p.wobbleY) * 0.3;
+          }
+        }
+        else if (phase === 'hold') {
+          if (p.hasTarget) {
+            p.x = p.tx + Math.sin(now * 0.002 + i * 0.5) * 1.0;
+            p.y = p.ty + Math.cos(now * 0.0025 + i * 0.5) * 1.0;
+          }
+        }
+        else if (phase === 'scatter') {
+          if (p.hasTarget) {
+            var t = progress;
+            var et = t * t;
+            p.x = p.sx + p.vx * et;
+            p.y = p.sy + p.vy * et;
+          } else {
+            p.wobbleX += p.wobbleSpeedX;
+            p.x += Math.sin(p.wobbleX) * 0.5;
+            p.y += Math.cos(p.wobbleY) * 0.3;
+          }
+        }
+        else {
+          p.wobbleX += p.wobbleSpeedX * 0.5;
+          p.wobbleY += p.wobbleSpeedY * 0.5;
+          p.x += Math.sin(p.wobbleX) * 0.3;
+          p.y += Math.cos(p.wobbleY) * 0.3;
+          if (p.x < -10) p.x = W + 10;
+          if (p.x > W + 10) p.x = -10;
+          if (p.y < -10) p.y = H + 10;
+          if (p.y > H + 10) p.y = -10;
+        }
+
+        var da = p.alpha * globalAlpha;
+        if (phase === 'converge' && !p.hasTarget) da *= (1 - ep * 0.6);
+        if (phase === 'hold' && p.hasTarget) da = Math.min(1, p.alpha * 1.5);
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = da;
+        ctx.fill();
+
+        if (phase === 'hold' && p.hasTarget) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.globalAlpha = da * 0.15;
+          ctx.fill();
+        }
+      }
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
+  })();
+  </script>
+</body>
+</html>

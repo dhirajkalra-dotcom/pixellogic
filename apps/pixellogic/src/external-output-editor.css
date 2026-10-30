@@ -1,0 +1,64 @@
+#output-editor[hidden] { display: none; }
+body:has(#output-editor:not([hidden])) { cursor: default; }
+#output-editor { position: fixed; inset: 0; z-index: 1; pointer-events: none; cursor: default; font: 13px Arial, sans-serif; }
+#output-edit-toolbar { position: absolute; z-index: 10; bottom: 12px; left: 12px; right: 12px; display: flex; flex-direction: column; gap: 10px; max-height: calc(100% - 24px); box-sizing: border-box; padding: 12px; color: #f8fafc; background: #0f172af5; border: 1px solid #38bdf8; border-radius: 8px; pointer-events: auto; }
+#output-toolbar-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; overflow-y: auto; min-height: 0; }
+#output-toolbar-controls[hidden] { display: none; }
+#output-edit-toolbar:has(#output-toolbar-controls[hidden]) { right: auto; max-width: calc(100% - 24px); }
+#output-edit-toolbar label { display: flex; align-items: center; gap: 4px; }
+.output-toolbar-heading { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; gap: 12px; }
+#output-size { position: absolute; top: 12px; right: 12px; z-index: 3; padding: 6px 10px; border-radius: 4px; background: #0f172add; color: #7dd3fc; font-weight: bold; text-align: right; pointer-events: none; }
+.output-snap-guide { position: absolute; z-index: 2; pointer-events: none; background: #facc15; }
+.output-snap-guide.vertical { top: 0; bottom: 0; width: 1px; }
+.output-snap-guide.horizontal { left: 0; right: 0; height: 1px; }
+#output-edit-toolbar button, #output-edit-toolbar select, #output-edit-toolbar input[type=number] { color: #fff; background: #334155; border: 1px solid #64748b; border-radius: 4px; padding: 6px; }
+#output-edit-toolbar select { max-width: 180px; }
+#output-edit-toolbar input[type=number] { width: 76px; }
+#output-edit-toolbar button:disabled, #output-edit-toolbar input:disabled, #output-edit-toolbar select:disabled { opacity: .45; cursor: not-allowed; }
+#output-edit-status { flex-basis: 100%; color: #bae6fd; }
+.output-map-box { position: absolute; box-sizing: border-box; border: 1px dashed #cbd5e1; pointer-events: auto; cursor: move; touch-action: none; }
+.output-map-box.selected { border: 2px solid #38bdf8; z-index: 1; }
+.output-map-label { position: absolute; bottom: 100%; left: 0; white-space: nowrap; color: #fff; background: #0f172add; padding: 2px 5px; max-width: 300px; overflow: hidden; text-overflow: ellipsis; }
+.output-resize-handle { position: absolute; width: 14px; height: 14px; background: #38bdf8; border: 1px solid #fff; }
+.output-resize-handle[data-corner=nw] { left: -8px; top: -8px; cursor: nwse-resize; }
+.output-resize-handle[data-corner=ne] { right: -8px; top: -8px; cursor: nesw-resize; }
+.output-resize-handle[data-corner=sw] { left: -8px; bottom: -8px; cursor: nesw-resize; }
+.output-resize-handle[data-corner=se] { right: -8px; bottom: -8px; cursor: nwse-resize; }
+
+/* Scale and Canvas Info Badge (Bottom-Right) */
+#output-scale-info {
+    position: absolute;
+    bottom: 96px;
+    right: 12px;
+    z-index: 15;
+    padding: 10px 14px;
+    background: rgba(7, 13, 24, 0.95);
+    border: 1px solid #38bdf8;
+    color: #f8fafc;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7);
+    pointer-events: auto;
+    user-select: text;
+}
+.output-scale-title {
+    font-weight: 800;
+    color: #38bdf8;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 4px;
+    margin-bottom: 5px;
+    letter-spacing: 0.05em;
+    font-size: 11px;
+}
+.output-scale-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+.output-scale-row .k { color: #94a3b8; }
+.output-scale-row .v { color: #ffffff; font-weight: 700; text-align: right; }
+.output-scale-row.highlight { margin-top: 4px; padding-top: 4px; border-top: 1px dashed #334155; }
+.output-scale-row .v.red { color: #fbbf24; }
+.output-scale-row .v.native { color: #34d399; }
+.output-scale-row .v.enlarged { color: #f472b6; }

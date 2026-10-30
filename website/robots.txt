@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /cgi-bin/
+Disallow: /screencontrol.html
+Disallow: /screencontrol-app/
+
+Sitemap: https://www.pixelogic.co.in/sitemap.xml

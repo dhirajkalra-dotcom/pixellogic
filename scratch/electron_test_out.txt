@@ -1,0 +1,69 @@
+
+(electron) 'console-message' arguments are deprecated and will be removed. Please use Event<WebContentsConsoleMessageEventParams> object instead.
+Error occurred in handler for 'get-installed-template': Error: No handler registered for 'get-installed-template'
+    at Session.<anonymous> (node:electron/js2c/browser_init:2:107383)
+    at Session.emit (node:events:519:28)
+Error occurred in handler for 'get-app-version': Error: No handler registered for 'get-app-version'
+    at Session.<anonymous> (node:electron/js2c/browser_init:2:107383)
+    at Session.emit (node:events:519:28)
+[BROWSER CONSOLE 2] Could not load installed template Error: Error invoking remote method 'get-installed-template': Error: No handler registered for 'get-installed-template'
+Error occurred in handler for 'get-system-fonts': Error: No handler registered for 'get-system-fonts'
+    at Session.<anonymous> (node:electron/js2c/browser_init:2:107383)
+    at Session.emit (node:events:519:28)
+[BROWSER CONSOLE 2] The specified value "rgba(255, 255, 255, 0.2)" does not conform to the required format.  The format is "#rrggbb" where rr, gg, bb are two-digit hexadecimal numbers.
+Error occurred in handler for 'check-first-run': Error: No handler registered for 'check-first-run'
+    at Session.<anonymous> (node:electron/js2c/browser_init:2:107383)
+    at Session.emit (node:events:519:28)
+[BROWSER CONSOLE 2] The specified value "rgba(255, 255, 255, 0.2)" does not conform to the required format.  The format is "#rrggbb" where rr, gg, bb are two-digit hexadecimal numbers.
+Error occurred in handler for 'license-status': Error: No handler registered for 'license-status'
+    at Session.<anonymous> (node:electron/js2c/browser_init:2:107383)
+    at Session.emit (node:events:519:28)
+[BROWSER CONSOLE 2] System font detection failed Error: Error invoking remote method 'get-system-fonts': Error: No handler registered for 'get-system-fonts'
+[BROWSER CONSOLE 3] [licensing] status failed Error: Error invoking remote method 'license-status': Error: No handler registered for 'license-status'
+[BROWSER CONSOLE 2] %cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security
+  Policy set or a policy with "unsafe-eval" enabled. This exposes users of
+  this app to unnecessary security risks.
+
+For more information and help, consult
+https://electronjs.org/docs/tutorial/security.
+This warning will not show up
+once the app is packaged.
+[BROWSER CONSOLE 2] The specified value "rgba(255, 255, 255, 0.2)" does not conform to the required format.  The format is "#rrggbb" where rr, gg, bb are two-digit hexadecimal numbers.
+Result: {
+  "success": true,
+  "canvasFound": true,
+  "presetTests": {
+    "front": {
+      "activeClass": true,
+      "hudText": "View: PERSP | Dist: 5.7m | Target: (-1.2, 2.0, 0.0)"
+    },
+    "left": {
+      "activeClass": true,
+      "hudText": "View: PERSP | Dist: 5.7m | Target: (-1.2, 2.0, 0.0)"
+    },
+    "right": {
+      "activeClass": true,
+      "hudText": "View: PERSP | Dist: 5.7m | Target: (-1.2, 2.0, 0.0)"
+    },
+    "top": {
+      "activeClass": true,
+      "hudText": "View: PERSP | Dist: 5.7m | Target: (-1.2, 2.0, 0.0)"
+    },
+    "back": {
+      "activeClass": true,
+      "hudText": "View: PERSP | Dist: 5.7m | Target: (-1.2, 2.0, 0.0)"
+    },
+    "persp": {
+      "activeClass": true,
+      "hudText": "View: PERSP | Dist: 5.7m | Target: (-1.2, 2.0, 0.0)"
+    }
+  },
+  "toolTests": {
+    "translate": true,
+    "rotate": true,
+    "scale": true,
+    "select": true
+  },
+  "deckAdded": true,
+  "totalDecks": 2
+}

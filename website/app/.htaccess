@@ -1,0 +1,7 @@
+# Force the PHP gate to be the directory index, not app.html.
+DirectoryIndex index.php
+
+# Defence in depth: deny direct access to app.html — must come through index.php
+<Files "app.html">
+    Require all denied
+</Files>

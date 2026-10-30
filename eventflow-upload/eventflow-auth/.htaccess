@@ -1,0 +1,7 @@
+# Hide partial templates and the data dir from direct access.
+<Files "_header.php">
+    Require all denied
+</Files>
+<Files "_footer.php">
+    Require all denied
+</Files>
