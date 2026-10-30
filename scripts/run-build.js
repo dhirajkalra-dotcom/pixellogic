@@ -32,16 +32,21 @@ function main() {
 
   // 1) Ensure CSS is built
   run('npm run css');
-  run('node ./scripts/generate-tutorial-pdf.js');
+  try {
+    run('node ./scripts/generate-tutorial-pdf.js');
+  } catch (e) {
+    console.warn('Tutorial PDF generation skipped:', e?.message || e);
+  }
 
   // 2) Set a unique BUILD_ID for this run (YYYYMMDD-HHMMSS)
   process.env.BUILD_ID = process.env.BUILD_ID || ts();
+  if (!process.env.CSC_IDENTITY_AUTO_DISCOVERY) {
+    process.env.CSC_IDENTITY_AUTO_DISCOVERY = 'false';
+  }
   console.log(`Using BUILD_ID=${process.env.BUILD_ID}`);
 
   // 3) Run electron-builder with the environment variable set
-  const ebCmd = process.platform === 'win32'
-    ? '".\\node_modules\\.bin\\electron-builder.cmd"'
-    : './node_modules/.bin/electron-builder';
+  const ebCmd = 'npx --no-install electron-builder';
   const publishMode = String(process.env.ELECTRON_BUILDER_PUBLISH || 'never').trim();
   const extraArgs = process.argv.slice(2).join(' ');
   const ebWithArgs = `${ebCmd} --publish ${publishMode} ${extraArgs}`.trim();

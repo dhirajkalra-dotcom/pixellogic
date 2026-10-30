@@ -141,6 +141,7 @@
       "license": "install-info.txt"
     },
     "mac": {
+      "identity": null,
       "icon": "build/icon.icns",
       "category": "public.app-category.graphics-design",
       "artifactName": "${productName}-${version}-${arch}.dmg",
@@ -160,7 +161,6 @@
           ]
         }
       ],
-      "hardenedRuntime": true,
       "gatekeeperAssess": false
     },
     "dmg": {

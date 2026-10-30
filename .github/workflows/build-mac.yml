@@ -26,6 +26,7 @@ jobs:
       - name: Build macOS
         env:
           SKIP_VERSION_BUMP: "1"
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
         run: npm run build:mac
 
       - name: Upload artifacts
